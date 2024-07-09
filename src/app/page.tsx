@@ -61,7 +61,7 @@ function TokenBoundExample() {
         </button>
       )}
 
-      {isOpen && (
+      {/* {isOpen && (
         <TokenBoundModal
           isOpen={isOpen}
           closeModal={closeModal}
@@ -71,7 +71,7 @@ function TokenBoundExample() {
           handleChangeInput={handleChangeInput}
           onConnect={connectTBA}
         />
-      )}
+      )} */}
     </div>
   );
 }
