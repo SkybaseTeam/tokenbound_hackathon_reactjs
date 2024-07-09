@@ -53,7 +53,7 @@ function TokenBoundExample() {
           className="button"
           onClick={openModal}
         >
-          Connect Wallet
+          Connect 
         </button>
       ) : (
         <button className="" onClick={disconnectTBA}>
