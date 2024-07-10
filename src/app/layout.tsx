@@ -8,8 +8,8 @@ import Layout from '@/Layouts';
 import { StarknetProvider } from '@/context/StarknetProvider';
 
 export const metadata: Metadata = {
-  title: 'Ventorii',
-  description: 'Ventorii - NFT Marketplace',
+  title: 'BlingBling',
+  description: 'BlingBling - Starknet Tokenbound Hackathon',
 };
 
 const SpaceMono = Space_Mono({

@@ -79,35 +79,17 @@ export default function Home() {
     setLoading(true);
 
     try {
-      const allowance = await erc20Contract?.allowance(
-        address,
-        process.env.NEXT_PUBLIC_ERC721_CONTRACT_ADDRESS as string
-      );
-
-      const isNeedToApprove = Number(allowance) < MINT_PRICE * 10 ** 18;
-      console.log(isNeedToApprove);
-
       const tx = await account?.execute([
-        ...(!isNeedToApprove
-          ? []
-          : [
-              {
-                contractAddress: process.env
-                  .NEXT_PUBLIC_ERC20_CONTRACT_ADDRESS as string,
-                entrypoint: 'approve',
-                calldata: CallData.compile({
-                  spender: process.env
-                    .NEXT_PUBLIC_ERC721_CONTRACT_ADDRESS as string,
-                  amount: cairo.uint256(MINT_PRICE * 10 ** 18),
-                }),
-              },
-            ]),
         {
           contractAddress: process.env
-            .NEXT_PUBLIC_ERC721_CONTRACT_ADDRESS as string,
-          entrypoint: 'mint_nft',
+            .NEXT_PUBLIC_REGISTRY_CONTRACT_ADDRESS as string,
+          entrypoint: 'create_account',
           calldata: CallData.compile({
-            pool_mint: 1,
+            implementation_hash: process.env
+              .NEXT_PUBLIC_ACCOUNT_CLASSHASH as string,
+            token_contract: process.env
+              .NEXT_PUBLIC_ERC721_CONTRACT_ADDRESS as string,
+            salt: 123,
           }),
         },
       ]);
