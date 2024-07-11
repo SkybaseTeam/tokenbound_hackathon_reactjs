@@ -26,7 +26,7 @@ const config: Config = {
         primary: '#DCFC36',
         'primary-hover': '#C8E531',
         secondary: '#0538BD',
-        'secondary-hover': '#042F9A',
+        tertiary: '#41516C',
         placeholder: '#6D7080',
         disabled: '#6D7080',
         grey: '#A1B0CC',
@@ -36,6 +36,7 @@ const config: Config = {
       },
       fontFamily: {
         glancyr: ['var(--font-glancyr)'],
+        jarkata: ['var(--font-jakarta)'],
       },
     },
   },

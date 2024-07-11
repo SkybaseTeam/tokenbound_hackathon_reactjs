@@ -1,16 +1,22 @@
 import type { Metadata } from 'next';
 import localFont from 'next/font/local';
+import { Plus_Jakarta_Sans } from 'next/font/google';
 import '@/styles/globals.css';
 import '@/styles/custom.scss';
 import { ConfigProvider } from 'antd';
 import StoreProvider from '@/context/store';
-import Layout from '@/Layouts';
 import { StarknetProvider } from '@/context/StarknetProvider';
+import Layout from '@/Layouts';
 
 export const metadata: Metadata = {
   title: 'BlingBling',
   description: 'BlingBling - Starknet Tokenbound Hackathon',
 };
+
+const jakarta = Plus_Jakarta_Sans({
+  subsets: ['latin'],
+  variable: '--font-jakarta',
+});
 
 const glancyr = localFont({
   src: [
@@ -50,7 +56,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang='en'>
-      <body className={`${glancyr.variable} font-glancyr`}>
+      <body className={`${glancyr.variable} ${jakarta.variable} font-glancyr`}>
         <StarknetProvider>
           <StoreProvider>
             <ConfigProvider

@@ -1,8 +1,7 @@
 import React from 'react';
-import useResponsive from '@/hook/useResponsive';
 import Header from './Header';
 
-const LayoutPrimary = ({ children }) => {
+const LayoutPrimary = ({ children }: any) => {
   return (
     <div>
       <Header />

@@ -3,9 +3,9 @@
 import React, { useEffect, useState } from 'react';
 import useMounted from '@/hook/useMounted';
 import { usePathname } from 'next/navigation';
+import Loading from '@/app/loading';
 import LayoutPrimary from './LayoutPrimary';
 import LayoutAdmin from './LayoutAdmin';
-import Loading from '@/app/loading';
 
 const Layout = ({ children }: any) => {
   const { isMounted } = useMounted();

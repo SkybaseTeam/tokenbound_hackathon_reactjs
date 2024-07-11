@@ -4,13 +4,13 @@
 
 @layer base {
   html {
-    @apply bg-layer-1 text-white;
+    @apply bg-[#0538BD] text-white;
   }
 }
 
 @layer components {
   .btn-primary {
-    @apply font-mono rounded-lg h-10 flex justify-center items-center font-semibold border-none text-[18px] text-semi-black bg-primary hover:bg-primary-hover hover:!text-semi-black;
+    @apply text-[16px] font-[700] font-jarkata text-[#0538BD] hover:!text-[#0538BD] bg-[#DCFC36] hover:border-none hover:!bg-[#C8E531] h-[48px] px-[20px] rounded-2xl;
   }
 
   .btn-secondary {
