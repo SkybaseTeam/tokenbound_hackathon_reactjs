@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { Space_Mono } from 'next/font/google';
+import localFont from 'next/font/local';
 import '@/styles/globals.css';
 import '@/styles/custom.scss';
 import { ConfigProvider } from 'antd';
@@ -12,10 +12,35 @@ export const metadata: Metadata = {
   description: 'BlingBling - Starknet Tokenbound Hackathon',
 };
 
-const SpaceMono = Space_Mono({
-  subsets: ['latin'],
-  weight: ['400', '700'],
-  variable: '--font-mono',
+const glancyr = localFont({
+  src: [
+    {
+      path: '../assets/fonts/glancyr/glancyr-glancyr-bold-700.otf',
+      weight: '700',
+      style: 'bold',
+    },
+    {
+      path: '../assets/fonts/glancyr/glancyr-glancyr-semibold-600.otf',
+      weight: '600',
+      style: 'semi-bold',
+    },
+    {
+      path: '../assets/fonts/glancyr/glancyr-glancyr-medium-500.otf',
+      weight: '500',
+      style: 'medium',
+    },
+    {
+      path: '../assets/fonts/glancyr/glancyr-glancyr-regular-400.otf',
+      weight: '400',
+      style: 'normal',
+    },
+    {
+      path: '../assets/fonts/glancyr/glancyr-glancyr-thin-200.otf',
+      weight: '200',
+      style: 'light',
+    },
+  ],
+  variable: '--font-glancyr',
 });
 
 export default function RootLayout({
@@ -25,7 +50,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang='en'>
-      <body className={`${SpaceMono.variable} font-mono`}>
+      <body className={`${glancyr.variable} font-glancyr`}>
         <StarknetProvider>
           <StoreProvider>
             <ConfigProvider

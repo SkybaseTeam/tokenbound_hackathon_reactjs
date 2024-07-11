@@ -23,10 +23,10 @@ const config: Config = {
         focus: '#4F5C71',
       },
       colors: {
-        primary: '#00C089',
-        'primary-hover': '#008861',
-        secondary: '#94A7C6',
-        tertiary: '#41516C',
+        primary: '#DCFC36',
+        'primary-hover': '#C8E531',
+        secondary: '#0538BD',
+        'secondary-hover': '#042F9A',
         placeholder: '#6D7080',
         disabled: '#6D7080',
         grey: '#A1B0CC',
@@ -35,7 +35,7 @@ const config: Config = {
         dark: '#030209',
       },
       fontFamily: {
-        montserrat: ['var(--font-mono)'],
+        glancyr: ['var(--font-glancyr)'],
       },
     },
   },
