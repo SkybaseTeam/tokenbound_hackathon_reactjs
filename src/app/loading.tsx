@@ -5,14 +5,15 @@ import React from 'react';
 
 const Loading = () => {
   return (
-    <div className='fixed inset-0 z-[9999] flex items-center justify-center bg-layer-1'>
+    <div className='fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-[#0538BD]'>
       <CustomImage
-        src='/images/logo.png'
+        src='/images/logo.webp'
         alt='loading'
         className='animate-bounce'
         width={100}
         height={100}
       />
+      <p className='text-[30px] font-[500] mt-[20px]'>Loading...</p>
     </div>
   );
 };

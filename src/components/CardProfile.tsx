@@ -1,7 +1,7 @@
 import React from 'react';
 import CustomImage from './custom/CustomImage';
 import CustomButton from './custom/CustomButton';
-import logo from '../../public/images/logo.png';
+import logo from '../../public/images/logo.webp';
 import { useAccount } from '@starknet-react/core';
 import { useStore } from '@/context/store';
 import IconVerified from '@/assets/icons/IconVerified';

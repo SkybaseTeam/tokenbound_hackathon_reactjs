@@ -7,7 +7,7 @@ const Logo = () => {
     <Link href='/'>
       <div className='flex items-center gap-[0.5rem] text-[16px] font-[500] text-[#DCFC36] uppercase'>
         {/* <CustomImage
-          src={'/images/logo.png'}
+          src={'/images/logo.webp'}
           alt='err'
           width={50}
           height={50}

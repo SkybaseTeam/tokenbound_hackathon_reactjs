@@ -16,6 +16,7 @@ import erc20ABI from '@/abi/erc20.json';
 import { removeItemLocalStorage } from '@/utils/localStorage';
 import useCopyToClipboard from '@/hook/useCopyToClipboard';
 import Link from 'next/link';
+import IconLogout from '@/assets/icons/IconLogout';
 
 const Header = () => {
   const { disconnect } = useDisconnect();
@@ -39,7 +40,7 @@ const Header = () => {
     },
     {
       title: 'Profile',
-      link: '/market/profile',
+      link: `/market/profile/${address}`,
     },
   ];
 
@@ -54,17 +55,17 @@ const Header = () => {
   };
 
   return (
-    <div className='grid grid-cols-3 items-center py-[10px] px-[64px]'>
+    <div className='grid grid-cols-3 items-center py-[10px] px-[64px] fixed w-full top-0 h-[68px]'>
       <Logo />
 
-      <div className='flex items-center gap-[12px]'>
+      <div className='flex items-center gap-[12px] justify-center'>
         {menuData.map((item: any, index: any) => (
           <Link
             href={item?.link}
-            className={`${path === item?.link && '!text-[#0538BD] bg-white'} h-[36px] text-white border-white px-[12px] flex items-center rounded-[32px] border text-[16px] font-[400]`}
+            className={`${path === item?.link && '!text-[#0538BD] bg-white'} hover:!text-[#0538BD] hover:bg-white h-[36px] transition-all text-white border-white px-[12px] flex items-center rounded-[32px] border text-[16px] font-[400]`}
             key={index}
           >
-            {item.title}
+            <p className='mt-[0.3rem]'> {item.title}</p>
           </Link>
         ))}
       </div>
@@ -72,35 +73,39 @@ const Header = () => {
       <div className='flex items-center justify-end'>
         {isConnected ? (
           <div className='flex items-center gap-[1rem] max-md:hidden'>
-            <div className='max-md:hidden'>
-              {dcoin && address ? formatToken(dcoin, 18) : 0}{' '}
-              <span className='font-[700]'>DCOIN</span> |{' '}
-              {ethBalance?.data && address
-                ? parseFloat(
-                    formatToken(ethBalance?.data?.value as any, 18)
-                  ).toFixed(3) + ' '
-                : '0'}{' '}
-              <span className='font-[700]'>
+            <div className='max-md:hidden border border-[#DCFC36]  px-[12px] h-[36px] rounded-[32px] flex items-center '>
+              <div className='text-[16px] font-[400] text-[#DCFC36] mt-[0.3rem]'>
+                {dcoin && address ? formatToken(dcoin, 18) : 0} BLING
+                <span className='px-[10px]'>|</span>
+                {ethBalance?.data && address
+                  ? parseFloat(
+                      formatToken(ethBalance?.data?.value as any, 18)
+                    ).toFixed(3) + ' '
+                  : '0'}{' '}
                 {ethBalance?.data?.symbol || 'ETH'}
-              </span>
+              </div>
             </div>
-            <p
-              onClick={() => {
-                router.push(`/market/profile/${address}`);
-              }}
-              className='cursor-pointer'
-            >
-              {formatWallet(address)}
-            </p>
-            <CustomTooltip title='Copied' placement='right' trigger={['click']}>
-              <IconCopy
+
+            <div className='flex items-center rounded-[32px] gap-[10px] px-[12px] h-[36px] text-[16px] font-[400] border border-white'>
+              <CustomTooltip
+                title='Copied'
+                placement='right'
+                trigger={['click']}
+              >
+                <div>
+                  <p
+                    onClick={() => copy(address as string)}
+                    className='cursor-pointer mt-[0.3rem]'
+                  >
+                    {formatWallet(address)}
+                  </p>
+                </div>
+              </CustomTooltip>
+              <IconLogout
                 className='cursor-pointer'
-                onClick={() => copy(address as string)}
+                onClick={handleDisconnect}
               />
-            </CustomTooltip>
-            <CustomButton onClick={handleDisconnect} className='btn-secondary'>
-              Disconnect
-            </CustomButton>
+            </div>
           </div>
         ) : (
           <CustomButton
