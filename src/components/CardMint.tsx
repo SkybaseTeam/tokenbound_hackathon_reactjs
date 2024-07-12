@@ -2,10 +2,12 @@ import Link from 'next/link';
 import React from 'react';
 import CustomImage from './custom/CustomImage';
 import CustomButton from './custom/CustomButton';
+import { useRouter } from 'next/navigation';
 
 const CardMint = ({ data }: any) => {
+  const router = useRouter();
   return (
-    <div className='p-[12px] rounded-2xl bg-[#E6EBF8] border border-[#B2C1EB] text-[#0538BD] group cursor-pointer'>
+    <div className='p-[12px] rounded-2xl bg-[#E6EBF8] border border-[#B2C1EB] text-[#0538BD] group'>
       <div className='aspect-square w-full relative overflow-hidden rounded-2xl'>
         <CustomImage
           src={data?.image}
@@ -20,18 +22,13 @@ const CardMint = ({ data }: any) => {
         </p>
         <div className='flex items-center gap-[12px] mt-[12px]  font-[300] text-[16px]'>
           <p className='text-[#587AD3]'>Price</p>
-          <p className='text-[18px] font-[400]'>{data?.price || ''} BLING</p>
+          <p className='text-[18px] font-[400]'>{data?.price || 'FREE'}</p>
         </div>
       </div>
       <CustomButton
-        // onClick={() => {
-        //   if (!isConnected) {
-        //     connectWallet();
-        //     return;
-        //   }
-        //   setSelectedNFT(data);
-        //   setOpenModalBuyNTF(true);
-        // }}
+        onClick={() => {
+          router.push('/#mint_section');
+        }}
         className='btn-secondary w-full'
       >
         Mint

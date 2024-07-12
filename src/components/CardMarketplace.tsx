@@ -9,7 +9,7 @@ const CardMarketplace = ({ setOpenModalBuyNTF, data, setSelectedNFT }: any) => {
   const { isConnected } = useAccount();
   const { connectWallet } = useStore();
   return (
-    <div className='p-[12px] rounded-2xl bg-white border border-[#EFFEA3] bg-[#FBFDEB] text-[#031F68] group cursor-pointer'>
+    <div className='p-[12px] rounded-2xl border border-[#EFFEA3] bg-[#FBFDEB] text-[#031F68] group cursor-pointer'>
       <div className='aspect-square w-full relative overflow-hidden rounded-2xl'>
         <CustomImage
           src={data?.image}
