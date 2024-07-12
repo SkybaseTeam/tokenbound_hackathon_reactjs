@@ -10,15 +10,15 @@
 
 .custom-input,
 .custom-input[disabled] {
-  @apply bg-layer-2 border-none rounded-lg text-white text-base placeholder:text-secondary h-14;
+  @apply bg-[#E6EBF8] border-none rounded-lg text-[#587AD3] text-base placeholder:text-[#587AD3] h-[48px];
 
   &:hover,
   &:focus-within {
-    @apply border border-solid border-primary bg-layer-2;
-    box-shadow: 0px 0px 16px rgba(0, 175, 125, 0.25) !important;
+    @apply border border-solid border-[#587AD3] bg-[#E6EBF8];
+    box-shadow: 0px 0px 16px #587ad3 !important;
   }
   input.ant-input {
-    @apply bg-layer-2 border-none rounded-lg text-white text-base placeholder:text-secondary;
+    @apply bg-[#E6EBF8] border-none rounded-lg text-[#0538BD] text-base placeholder:text-[#587AD3];
   }
 }
 

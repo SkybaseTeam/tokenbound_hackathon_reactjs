@@ -10,6 +10,9 @@ import useMounted from '@/hook/useMounted';
 import { listedNFT } from '@/fetching/client/home';
 import NftSkeleton from '@/components/custom/CustomSkeleton/NftSkeleton';
 import CustomImage from '@/components/custom/CustomImage';
+import CustomButton from '@/components/custom/CustomButton';
+import CustomInput from '@/components/custom/CustomInput';
+import IconSearch from '@/assets/icons/IconSearch';
 
 const MarketContainer = () => {
   const [openModalBuyNTF, setOpenModalBuyNTF] = useState(false);
@@ -40,7 +43,7 @@ const MarketContainer = () => {
   }, [isMounted]);
 
   return (
-    <div className='bg-[url("/images/bg.webp")] bg-center bg-cover bg-no-repeat bg-fixed'>
+    <div className='bg-[url("/images/bg.webp")] pt-[8rem] pb-[8rem] bg-center bg-cover bg-no-repeat bg-fixed'>
       <ModalBuyNFT
         open={openModalBuyNTF}
         onCancel={() => {
@@ -49,7 +52,7 @@ const MarketContainer = () => {
         selectedNFT={selectedNFT}
       />
 
-      <div className='pt-[8rem] pb-[97px] flex flex-col items-center'>
+      <div className='mb-[97px] flex flex-col items-center'>
         <CustomImage
           src='/images/marketplace/title.webp'
           width={806}
@@ -62,27 +65,38 @@ const MarketContainer = () => {
         </p>
       </div>
 
-      <div className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 bg-white w-full px-[90px] py-[84px] rounded-[32px] gap-[1rem] max-w-[1440px] mx-auto'>
-        {collection?.length !== undefined ? (
-          collection?.map((item: any) => (
-            <div key={item?._id}>
-              <CardMint data={item} />
-            </div>
-          ))
-        ) : (
-          <NftSkeleton />
-        )}
-        {listedNFTData?.length !== undefined
-          ? listedNFTData?.map((item: any) => (
+      <div className=' bg-white w-full px-[90px] py-[84px] rounded-[32px] gap-[1rem] max-w-[1440px] mx-auto'>
+        <div className='flex items-center gap-[16px]'>
+          <CustomInput
+            prefix={<IconSearch />}
+            placeholder='Search'
+            className='w-[443px]'
+          />
+          <CustomButton className='w-[163px] btn-primary'>Search</CustomButton>
+        </div>
+
+        <div className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 mt-[40px] gap-[16px]'>
+          {collection?.length !== undefined ? (
+            collection?.map((item: any) => (
               <div key={item?._id}>
-                <CardMarketplace
-                  data={item}
-                  setOpenModalBuyNTF={setOpenModalBuyNTF}
-                  setSelectedNFT={setSelectedNFT}
-                />
+                <CardMint data={item} />
               </div>
             ))
-          : [...new Array(5)].map((_, index) => <NftSkeleton key={index} />)}
+          ) : (
+            <NftSkeleton />
+          )}
+          {listedNFTData?.length !== undefined
+            ? listedNFTData?.map((item: any) => (
+                <div key={item?._id}>
+                  <CardMarketplace
+                    data={item}
+                    setOpenModalBuyNTF={setOpenModalBuyNTF}
+                    setSelectedNFT={setSelectedNFT}
+                  />
+                </div>
+              ))
+            : [...new Array(5)].map((_, index) => <NftSkeleton key={index} />)}
+        </div>
       </div>
     </div>
   );
