@@ -55,7 +55,7 @@ const Header = () => {
   };
 
   return (
-    <div className='grid grid-cols-3 items-center py-[10px] px-[64px] fixed w-full top-0 h-[68px]'>
+    <div className='grid grid-cols-3 items-center py-[10px] px-[64px] fixed z-[999] backdrop-blur-sm w-full top-0 h-[68px] '>
       <Logo />
 
       <div className='flex items-center gap-[12px] justify-center'>
@@ -65,7 +65,7 @@ const Header = () => {
             className={`${path === item?.link && '!text-[#0538BD] bg-white'} hover:!text-[#0538BD] hover:bg-white h-[36px] transition-all text-white border-white px-[12px] flex items-center rounded-[32px] border text-[16px] font-[400]`}
             key={index}
           >
-            <p className='mt-[0.3rem]'> {item.title}</p>
+            <p /* className='mt-[0.3rem]' */> {item.title}</p>
           </Link>
         ))}
       </div>
@@ -73,8 +73,8 @@ const Header = () => {
       <div className='flex items-center justify-end'>
         {isConnected ? (
           <div className='flex items-center gap-[1rem] max-md:hidden'>
-            <div className='max-md:hidden border border-[#DCFC36]  px-[12px] h-[36px] rounded-[32px] flex items-center '>
-              <div className='text-[16px] font-[400] text-[#DCFC36] mt-[0.3rem]'>
+            <div className='max-md:hidden border border-[#DCFC36] text-[16px] font-[400] text-[#DCFC36] px-[12px] h-[36px] rounded-[32px] flex items-center '>
+              <div /* className=' mt-[0.3rem]' */>
                 {dcoin && address ? formatToken(dcoin, 18) : 0} BLING
                 <span className='px-[10px]'>|</span>
                 {ethBalance?.data && address
@@ -92,10 +92,10 @@ const Header = () => {
                 placement='right'
                 trigger={['click']}
               >
-                <div>
+                <div className='cursor-pointer '>
                   <p
                     onClick={() => copy(address as string)}
-                    className='cursor-pointer mt-[0.3rem]'
+                    // className='mt-[0.3rem]'
                   >
                     {formatWallet(address)}
                   </p>

@@ -3,8 +3,8 @@ import CustomImage from '../custom/CustomImage';
 
 const Intro = () => {
   return (
-    <div className='min-h-screen flex flex-col items-center justify-center'>
-      <div className='relative'>
+    <div className='h-screen flex flex-col items-center justify-center'>
+      <div className='relative mt-[-5rem]'>
         <CustomImage
           src='/images/intro/sound.webp'
           alt='bling'
@@ -14,7 +14,7 @@ const Intro = () => {
         />
         <CustomImage
           src='/images/intro/stonk.webp'
-          alt='bling'
+          alt='err'
           className='absolute top-[0rem] right-[-2rem]'
           width={267.993}
           height={136.993}
@@ -22,7 +22,7 @@ const Intro = () => {
 
         <CustomImage
           src='/images/intro/bling.webp'
-          alt='bling'
+          alt='err'
           width={1159}
           height={280}
         />
@@ -38,7 +38,7 @@ const Intro = () => {
       <div className='relative'>
         <CustomImage
           src='/images/intro/arrow.webp'
-          alt='bling'
+          alt='err'
           className='absolute top-[-1rem] left-[6rem]'
           width={142}
           height={118}
@@ -46,11 +46,11 @@ const Intro = () => {
         <CustomImage
           src='/images/intro/mint.webp'
           alt='err'
-          className='absolute bottom-[-10rem] left-[14rem] cursor-pointer'
+          className='absolute bottom-[-10.7rem] left-[14rem] cursor-pointer'
           width={200}
           height={215}
         />
-        <div className='absolute bottom-[-9.5rem] right-[-3rem] cursor-pointer'>
+        <div className='absolute bottom-[-10rem] right-[-3rem] cursor-pointer'>
           <div className='relative'>
             <CustomImage
               src='/images/intro/mint-tba.webp'

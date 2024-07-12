@@ -4,7 +4,7 @@
 
 @layer base {
   body {
-    @apply bg-[url("/images/bg.webp")] min-h-screen bg-center bg-cover bg-no-repeat text-white;
+    @apply bg-[#0538BD] text-white;
   }
 }
 

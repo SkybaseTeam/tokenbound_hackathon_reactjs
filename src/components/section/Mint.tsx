@@ -13,6 +13,7 @@ import { useEffect, useState } from 'react';
 import { cairo, CallData } from 'starknet';
 import erc721ABI from '@/abi/erc721.json';
 import erc20ABI from '@/abi/erc20.json';
+import ImageSkeleton from '../custom/CustomSkeleton/ImageSkeleton';
 
 export default function Mint() {
   const router = useRouter();
@@ -108,42 +109,60 @@ export default function Mint() {
   };
 
   return (
-    <div className='max-w-[1000px] layout-container flex flex-col items-center py-[5rem]'>
-      <div className=' w-full'>
-        <div className='flex items-start  gap-[2rem] max-sm:flex-col'>
-          <div className='basis-1/2 max-sm:w-full aspect-square border-[2px] border-white rounded-lg relative'>
-            <CustomImage src={collection?.image} alt='err' fill />
-          </div>
-          <div className='basis-1/2 max-sm:w-full flex flex-col'>
-            <h1 className='text-[24px] font-[700]'>{collection?.name}</h1>
-            <div className='flex items-center justify-between mt-[1rem]'>
-              <p>Minted Item</p>
-              <p>
-                {remainingPool ? TOTAL_POOL_MINT - Number(remainingPool) : 0}/
-                {TOTAL_POOL_MINT}
-              </p>
+    <div className='bg-white rounded-[32px] pt-[86px] pb-[110px] text-[#031F68] '>
+      <div className='max-w-[1000px] layout-container flex flex-col items-center'>
+        <h2 className='text-[48px] font-[500] font-glancyr'>
+          ERC-6551 Token-bound Account
+        </h2>
+        <div className=' w-full mt-[63px]'>
+          <div className='flex items-start gap-[56px] max-sm:flex-col'>
+            <div className='p-[16px] rounded-2xl bg-[#E6EBF8] basis-2/5 max-sm:w-full '>
+              <div className='aspect-square relative rounded-2xl'>
+                {collection?.image ? (
+                  <CustomImage
+                    src={collection?.image}
+                    className='rounded-2xl'
+                    alt='err'
+                    fill
+                  />
+                ) : (
+                  <ImageSkeleton />
+                )}
+              </div>
             </div>
-            <CustomProgress
-              showInfo={false}
-              percent={
-                remainingPool
-                  ? ((TOTAL_POOL_MINT - Number(remainingPool)) /
-                      TOTAL_POOL_MINT) *
-                    100
-                  : 0
-              }
-            />
-            <div className='flex items-center justify-between  mt-[5rem]'>
-              <p>Price</p>
-              <p>Free</p>
+            <div className='basis-3/5 max-sm:w-full flex flex-col'>
+              <h1 className='text-[30px] font-[400] font-glancyr'>
+                Mint your first Token-bound account and play game!
+              </h1>
+              <div className='flex items-center justify-between mt-[1rem]'>
+                <p>Minted Item</p>
+                <p>
+                  {remainingPool ? TOTAL_POOL_MINT - Number(remainingPool) : 0}/
+                  {TOTAL_POOL_MINT}
+                </p>
+              </div>
+              <CustomProgress
+                showInfo={false}
+                percent={
+                  remainingPool
+                    ? ((TOTAL_POOL_MINT - Number(remainingPool)) /
+                        TOTAL_POOL_MINT) *
+                      100
+                    : 0
+                }
+              />
+              <div className='flex items-center justify-between  mt-[5rem]'>
+                <p>Price</p>
+                <p>Free</p>
+              </div>
+              <CustomButton
+                loading={loading}
+                onClick={onMint}
+                className='btn-primary mt-[1rem]'
+              >
+                Mint
+              </CustomButton>
             </div>
-            <CustomButton
-              loading={loading}
-              onClick={onMint}
-              className='btn-primary mt-[1rem]'
-            >
-              Mint
-            </CustomButton>
           </div>
         </div>
       </div>
