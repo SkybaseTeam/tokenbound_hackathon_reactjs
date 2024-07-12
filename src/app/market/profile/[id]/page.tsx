@@ -71,7 +71,7 @@ const Profile = () => {
             alt='err'
             className='rounded-2xl'
           />
-          <div className=''>
+          <div className='mt-[-1.5rem]'>
             <CustomImage
               src='/images/profile/title.webp'
               width={340}

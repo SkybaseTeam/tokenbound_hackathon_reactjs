@@ -1,10 +1,11 @@
 .ant-modal-mask {
-  background-color: rgba(0, 0, 0, 0.6) !important;
+  background-color: rgba(73, 82, 110, 0.4) !important;
+  backdrop-filter: blur(25px) !important;
 }
 
 .custom-modal {
   .ant-modal-content {
-    @apply p-0 bg-layer-1 rounded-lg border border-solid border-stroke;
+    @apply p-0 bg-white rounded-2xl;
   }
 }
 

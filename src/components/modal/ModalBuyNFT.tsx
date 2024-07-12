@@ -88,23 +88,22 @@ const ModalBuyNFT = ({ open, onCancel, selectedNFT }: any) => {
 
   return (
     <CustomModal width={435} open={open} onCancel={onCancel}>
-      <div className='p-4 md:p-8 '>
-        <h4 className='text-xl text-white font-medium mb-4'>Checkout</h4>
-        <p className='text-secondary text-base'>You decide to buy</p>
+      <div className='sm:p-[24px] p-[12px] font-glancyr text-[#031F68]'>
+        <h4 className='text-[48px] font-[500] text-[#031F68] text-center'>
+          Checkout
+        </h4>
 
         <div className='overflow-y-auto scrollbar-custom max-h-[80vh]'>
-          <div className='text-white flex justify-between items-center space-x-2 py-8 border-b border-solid border-stroke'>
+          <div className='text-white flex justify-between items-center gap-[24px]'>
             <CustomImage
               src={selectedNFT?.image}
               alt='nft'
-              width={50}
-              height={50}
-              className='rounded-lg'
+              width={100}
+              height={100}
+              className='rounded-2xl'
             />
             <div className='flex-1 flex flex-col justify-between truncate'>
-              <span className='text-lg font-medium truncate'>
-                {selectedNFT?.name}
-              </span>
+              <span className='truncate text-[24px]'>{selectedNFT?.name}</span>
               <div className='flex items-center space-x-2'>
                 <IconVerified />
                 <span className='text-secondary text-sm font-medium truncate'>

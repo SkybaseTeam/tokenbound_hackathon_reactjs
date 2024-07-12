@@ -7,7 +7,12 @@ import { useRouter } from 'next/navigation';
 const CardMint = ({ data }: any) => {
   const router = useRouter();
   return (
-    <div className='p-[12px] rounded-2xl bg-[#E6EBF8] border border-[#B2C1EB] text-[#0538BD] group'>
+    <div
+      onClick={() => {
+        router.push('/#mint_section');
+      }}
+      className='p-[12px] rounded-2xl bg-[#E6EBF8] border border-[#B2C1EB] text-[#0538BD] group cursor-pointer'
+    >
       <div className='aspect-square w-full relative overflow-hidden rounded-2xl'>
         <CustomImage
           src={data?.image}
@@ -25,14 +30,7 @@ const CardMint = ({ data }: any) => {
           <p className='text-[18px] font-[400]'>{data?.price || 'FREE'}</p>
         </div>
       </div>
-      <CustomButton
-        onClick={() => {
-          router.push('/#mint_section');
-        }}
-        className='btn-secondary w-full'
-      >
-        Mint
-      </CustomButton>
+      <CustomButton className='btn-secondary w-full'>Mint</CustomButton>
     </div>
   );
 };
