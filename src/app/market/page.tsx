@@ -1,11 +1,12 @@
 'use client';
-import HomeContainer from '@/container/Home';
-import HomePageStoreProvider from '@/container/Home/context';
+
+import MarketContainer from '@/container/Market';
+import MarketStoreProvider from '@/container/Market/context';
 
 export default function Home() {
   return (
-    <HomePageStoreProvider>
-      <HomeContainer />
-    </HomePageStoreProvider>
+    <MarketStoreProvider>
+      <MarketContainer />
+    </MarketStoreProvider>
   );
 }

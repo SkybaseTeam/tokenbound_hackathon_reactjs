@@ -8,9 +8,10 @@ import { collectionData } from '@/fetching/client/mint';
 import { toastError } from '@/utils/toast';
 import useMounted from '@/hook/useMounted';
 import { listedNFT } from '@/fetching/client/home';
-import NftSkeleton from '@/components/custom/CustomSkeleton/nftSkeleton';
+import NftSkeleton from '@/components/custom/CustomSkeleton/NftSkeleton';
+import CustomImage from '@/components/custom/CustomImage';
 
-const HomeContainer = () => {
+const MarketContainer = () => {
   const [openModalBuyNTF, setOpenModalBuyNTF] = useState(false);
   const [collection, setCollection] = useState<any>();
   const [listedNFTData, setListedNFTData] = useState<any>();
@@ -39,7 +40,7 @@ const HomeContainer = () => {
   }, [isMounted]);
 
   return (
-    <div className='layout-container my-[3rem]'>
+    <div className='bg-[url("/images/bg.webp")] bg-center bg-cover bg-no-repeat bg-fixed'>
       <ModalBuyNFT
         open={openModalBuyNTF}
         onCancel={() => {
@@ -47,8 +48,21 @@ const HomeContainer = () => {
         }}
         selectedNFT={selectedNFT}
       />
-      <h1 className='text-[32px] font-[700]  mb-[2rem]'>Mint Now</h1>
-      <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-[1rem]'>
+
+      <div className='pt-[8rem] pb-[97px] flex flex-col items-center'>
+        <CustomImage
+          src='/images/marketplace/title.webp'
+          width={806}
+          height={74}
+          alt='err'
+        />
+        <p className='text-[16px] font-[300] text-white mt-[16px]'>
+          Find rare and exciting Tokenbound assets on the Marketplace, your
+          one-stop shop for buying and selling.
+        </p>
+      </div>
+
+      <div className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 bg-white w-full px-[90px] py-[84px] rounded-[32px] gap-[1rem] max-w-[1440px] mx-auto'>
         {collection?.length !== undefined ? (
           collection?.map((item: any) => (
             <div key={item?._id}>
@@ -58,12 +72,6 @@ const HomeContainer = () => {
         ) : (
           <NftSkeleton />
         )}
-      </div>
-
-      <h1 className='text-[32px] font-[700] mb-[2rem] mt-[5rem]'>
-        Marketplace
-      </h1>
-      <div className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-[1rem]'>
         {listedNFTData?.length !== undefined
           ? listedNFTData?.map((item: any) => (
               <div key={item?._id}>
@@ -80,4 +88,4 @@ const HomeContainer = () => {
   );
 };
 
-export default HomeContainer;
+export default MarketContainer;
