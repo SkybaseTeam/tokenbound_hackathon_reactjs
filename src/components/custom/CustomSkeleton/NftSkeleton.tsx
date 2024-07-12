@@ -3,7 +3,7 @@ import React from 'react';
 
 const NftSkeleton = () => {
   return (
-    <div className='w-full bg-layer-2 rounded-lg p-2'>
+    <div className='w-full rounded-lg p-2'>
       <Skeleton.Button
         shape='square'
         active
