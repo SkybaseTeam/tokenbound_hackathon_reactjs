@@ -4,8 +4,8 @@ import React from 'react';
 interface ICustomProgress extends ProgressProps {}
 
 const CustomProgress = ({
-  strokeColor = '#00C089',
-  trailColor = '#ffffff',
+  strokeColor = '#0538BD',
+  trailColor = '#B2C1EB',
   className = '',
   ...props
 }: ICustomProgress) => {

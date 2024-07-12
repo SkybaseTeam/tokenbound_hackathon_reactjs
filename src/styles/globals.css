@@ -3,6 +3,9 @@
 @tailwind utilities;
 
 @layer base {
+  html {
+    @apply scroll-smooth;
+  }
   body {
     @apply bg-[#0538BD] text-white;
   }
@@ -10,7 +13,7 @@
 
 @layer components {
   .btn-primary {
-    @apply text-[16px] font-[700] font-jarkata text-[#0538BD] hover:!text-[#0538BD] bg-[#DCFC36] hover:border-none hover:!bg-[#C8E531] h-[48px] px-[20px] rounded-2xl;
+    @apply text-[16px] font-[700] font-jarkata text-[#0538BD] hover:!text-[#0538BD] bg-[#DCFC36] border-none hover:!bg-[#C8E531] h-[48px] px-[20px] rounded-2xl;
   }
 
   .btn-secondary {
@@ -55,6 +58,34 @@
     background: #555;
   }
   /* end custom scroll bar */
+
+  .animateIntroPlay {
+    animation-name: anchor-swing;
+    animation-duration: 1.5s;
+    animation-timing-function: ease-in-out;
+    transform-origin: top left;
+    animation-iteration-count: infinite;
+  }
+
+  .animateIntroMint {
+    animation-name: anchor-swing;
+    animation-duration: 1.3s;
+    animation-timing-function: ease-in-out;
+    transform-origin: top;
+    animation-iteration-count: infinite;
+  }
+
+  @keyframes anchor-swing {
+    0% {
+      transform: rotate(0deg);
+    }
+    50% {
+      transform: rotate(10deg);
+    }
+    100% {
+      transform: rotate(0deg);
+    }
+  }
 }
 
 @layer utilities {

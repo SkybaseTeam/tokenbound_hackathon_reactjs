@@ -38,7 +38,7 @@ const glancyr = localFont({
     {
       path: '../assets/fonts/glancyr/glancyr-glancyr-regular-400.otf',
       weight: '400',
-      style: 'normal',
+      style: 'regular',
     },
     {
       path: '../assets/fonts/glancyr/glancyr-glancyr-thin-200.otf',

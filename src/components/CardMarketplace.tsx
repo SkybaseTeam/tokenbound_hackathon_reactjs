@@ -9,48 +9,37 @@ const CardMarketplace = ({ setOpenModalBuyNTF, data, setSelectedNFT }: any) => {
   const { isConnected } = useAccount();
   const { connectWallet } = useStore();
   return (
-    <div className='bg-layer-2 border border-solid rounded-lg p-2 border-stroke group'>
-      <div className='flex flex-col space-y-2'>
-        <div className='relative'>
-          <div className='aspect-square w-full overflow-hidden relative rounded-lg'>
-            <CustomImage
-              src={data?.image}
-              fill
-              alt='Nft'
-              className='object-cover w-full h-full group-hover:scale-110 !transition !duration-300 !ease-in-out group-hover:blur-sm'
-            />
-          </div>
-          <div className='items-center space-x-2 w-[90%] hidden group-hover:flex absolute bottom-3 right-1/2 translate-x-1/2 z-5'>
-            <CustomButton
-              onClick={() => {
-                if (!isConnected) {
-                  connectWallet();
-                  return;
-                }
-                setSelectedNFT(data);
-                setOpenModalBuyNTF(true);
-              }}
-              className='btn-primary flex-1'
-            >
-              Buy
-            </CustomButton>
-          </div>
-        </div>
-        <div className='flex flex-col space-y-1'>
-          <span className='text-white text-base font-medium leading-6 truncate'>
-            {data?.name}
-          </span>
-          <div className='flex justify-between leading-[18px]'>
-            <span className='text-secondary text-xs font-medium'>Price</span>
-            <div className='flex items-center space-x-1'>
-              <span className='text-white text-xs font-medium'>
-              {data?.price
-                    } DCOIN
-              </span>
-            </div>
-          </div>
+    <div className='p-[12px] rounded-2xl bg-white text-[#031F68] group cursor-pointer'>
+      <div className='aspect-square w-full relative overflow-hidden rounded-2xl'>
+        <CustomImage
+          src={data?.image}
+          fill
+          alt='Nft'
+          className='object-cover w-full rounded-2xl group-hover:scale-110 transition-all duration-500 ease-in-out'
+        />
+      </div>
+      <div className='my-[16px]'>
+        <p className='text-[18px] uppercase font-[400] truncate'>
+          {data?.name || 'NFT Name'}
+        </p>
+        <div className='flex items-center gap-[12px] mt-[12px]  font-[300] text-[16px]'>
+          <p className='text-[#546678]'>Price</p>
+          <p className='text-[18px] font-[400]'>{data?.price || ''} BLING</p>
         </div>
       </div>
+      <CustomButton
+        onClick={() => {
+          if (!isConnected) {
+            connectWallet();
+            return;
+          }
+          setSelectedNFT(data);
+          setOpenModalBuyNTF(true);
+        }}
+        className='btn-primary w-full'
+      >
+        Buy
+      </CustomButton>
     </div>
   );
 };

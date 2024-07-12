@@ -1,22 +1,16 @@
-import IconCopy from '@/assets/icons/IconCopy';
 import Logo from '@/components/Logo';
 import CustomButton from '@/components/custom/CustomButton';
 import CustomTooltip from '@/components/custom/CustomTooltip';
 import { useStore } from '@/context/store';
 import { formatToken, formatWallet } from '@/utils';
-import {
-  useAccount,
-  useBalance,
-  useContractRead,
-  useDisconnect,
-} from '@starknet-react/core';
+import { useAccount, useBalance, useDisconnect } from '@starknet-react/core';
 import { usePathname, useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
-import erc20ABI from '@/abi/erc20.json';
 import { removeItemLocalStorage } from '@/utils/localStorage';
 import useCopyToClipboard from '@/hook/useCopyToClipboard';
 import Link from 'next/link';
 import IconLogout from '@/assets/icons/IconLogout';
+import useMounted from '@/hook/useMounted';
 
 const Header = () => {
   const { disconnect } = useDisconnect();
@@ -25,6 +19,7 @@ const Header = () => {
   const [text, copy] = useCopyToClipboard();
   const { connectWallet, dcoin } = useStore();
   const path = usePathname();
+
   const menuData: any = [
     {
       title: 'Homepage',
@@ -55,7 +50,10 @@ const Header = () => {
   };
 
   return (
-    <div className='grid grid-cols-3 items-center py-[10px] px-[64px] fixed z-[999] backdrop-blur-sm w-full top-0 h-[68px] '>
+    <div
+      id='header'
+      className={`bg-[#0538BD] transition-all duration-500 grid grid-cols-3 items-center py-[10px] px-[64px] fixed z-[999] w-full top-0 h-[68px]`}
+    >
       <Logo />
 
       <div className='flex items-center gap-[12px] justify-center'>

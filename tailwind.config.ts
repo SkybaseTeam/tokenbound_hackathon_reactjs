@@ -5,7 +5,7 @@ const config: Config = {
   theme: {
     extend: {
       animation: {
-        'spin-slow': 'spin 8s linear infinite',
+        'spin-slow': 'spin 12s linear infinite',
       },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',

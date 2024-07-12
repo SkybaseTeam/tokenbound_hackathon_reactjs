@@ -1,14 +1,18 @@
 import React from 'react';
 import CustomImage from '../custom/CustomImage';
+import Link from 'next/link';
 
 const Intro = () => {
   return (
-    <div className='h-screen flex flex-col items-center justify-center'>
+    <section
+      id='intro_section'
+      className='h-screen flex flex-col items-center justify-center'
+    >
       <div className='relative mt-[-5rem]'>
         <CustomImage
           src='/images/intro/sound.webp'
           alt='bling'
-          className='absolute top-[-3rem] left-[-2rem]'
+          className='absolute top-[-3rem] left-[-2rem] '
           width={196.747}
           height={140.464}
         />
@@ -26,13 +30,18 @@ const Intro = () => {
           width={1159}
           height={280}
         />
-        <CustomImage
-          src='/images/intro/play.webp'
-          alt='err'
-          className='absolute top-[-4rem] left-1/2 -translate-x-1/2 cursor-pointer'
-          width={200}
-          height={215}
-        />
+        <Link
+          href='/play'
+          className='absolute top-[-4rem] left-1/2  -translate-x-1/2 cursor-pointer'
+        >
+          <CustomImage
+            src='/images/intro/play.webp'
+            alt='err'
+            className=' animateIntroPlay'
+            width={200}
+            height={215}
+          />
+        </Link>
       </div>
 
       <div className='relative'>
@@ -43,14 +52,23 @@ const Intro = () => {
           width={142}
           height={118}
         />
-        <CustomImage
-          src='/images/intro/mint.webp'
-          alt='err'
+        <a
+          href='#mint_section'
           className='absolute bottom-[-10.7rem] left-[14rem] cursor-pointer'
-          width={200}
-          height={215}
-        />
-        <div className='absolute bottom-[-10rem] right-[-3rem] cursor-pointer'>
+        >
+          <CustomImage
+            src='/images/intro/mint.webp'
+            alt='err'
+            className=' animateIntroMint'
+            width={200}
+            height={215}
+          />
+        </a>
+
+        <a
+          href='#mint_section'
+          className='absolute bottom-[-10rem] right-[-3rem] cursor-pointer'
+        >
           <div className='relative'>
             <CustomImage
               src='/images/intro/mint-tba.webp'
@@ -69,13 +87,13 @@ const Intro = () => {
               />
             </div>
           </div>
-        </div>
+        </a>
 
         <h2 className='text-[60px] font-[500] text-center'>
           Reach the Future <br /> Trade ERC-6551 Token-Bound Accounts
         </h2>
       </div>
-    </div>
+    </section>
   );
 };
 

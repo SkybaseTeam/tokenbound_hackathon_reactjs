@@ -1,6 +1,6 @@
 import Image, { ImageProps } from 'next/image';
 import { useEffect, useState } from 'react';
-import logo from '../../../public/images/logo.webp';
+import logo from '../../../public/images/default.webp';
 
 export interface ICustomImageProps extends ImageProps {
   defaultImage?: string;
