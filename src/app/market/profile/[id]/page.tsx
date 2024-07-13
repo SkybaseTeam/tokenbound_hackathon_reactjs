@@ -48,7 +48,7 @@ const Profile = () => {
   });
 
   return (
-    <div className='bg-[url("/images/bg.webp")] pt-[8rem] pb-[8rem] bg-center bg-cover bg-no-repeat bg-fixed'>
+    <div className='bg-[url("/images/bg.webp")] pt-[6rem] md:pt-[8rem] pb-[8rem] bg-center bg-cover bg-no-repeat bg-fixed md:px-[32px]'>
       <ModalListNFT
         open={openModalListNFT}
         onCancel={() => {
@@ -71,20 +71,21 @@ const Profile = () => {
         showBuy={false}
       />
 
-      <div className='flex items-center justify-between max-w-[1260px] mx-auto'>
+      <div className='flex items-center justify-between max-lg:flex-col max-lg:items-start max-lg:gap-[2rem] max-w-[1260px] mx-auto max-md:px-[16px] max-lg:px-[32px]'>
         <div className='flex items-center gap-[24px]'>
           <CustomImage
             src='/images/default.webp'
             width={163}
             height={163}
             alt='err'
-            className='rounded-2xl'
+            className='rounded-2xl max-md:w-[100px]'
           />
           <div className='mt-[-1.5rem]'>
             <CustomImage
               src='/images/profile/title.webp'
               width={340}
               height={74}
+              className='max-md:w-[200px]'
               alt='err'
             />
             <p className='text-[18px] py-[12px] font-[400]'>
@@ -106,22 +107,22 @@ const Profile = () => {
         </div>
 
         <div className='grid grid-cols-3 gap-[3rem]'>
-          <div className='text-right'>
+          <div className='md:text-right'>
             <p className='text-[18px] font-[400]'>Rank</p>
-            <p className='text-[48px] font-[500] text-[#DCFC36]'>#100</p>
+            <p className='text-[24px] md:text-[48px] font-[500] text-[#DCFC36]'>#100</p>
           </div>
-          <div className='text-right'>
+          <div className='md:text-right'>
             <p className='text-[18px] font-[400]'>Owned Tokens</p>
-            <p className='text-[48px] font-[500] text-[#DCFC36]'>5</p>
+            <p className='text-[24px] md:text-[48px] font-[500] text-[#DCFC36]'>5</p>
           </div>
-          <div className='text-right'>
+          <div className='md:text-right'>
             <p className='text-[18px] font-[400]'>Listed Tokens</p>
-            <p className='text-[48px] font-[500] text-[#DCFC36]'>4</p>
+            <p className='text-[24px] md:text-[48px] font-[500] text-[#DCFC36]'>4</p>
           </div>
         </div>
       </div>
 
-      <div className=' bg-white w-full px-[90px] py-[84px] rounded-[32px] gap-[1rem] max-w-[1440px] mx-auto mt-[5rem]'>
+      <div className=' bg-white w-full px-[16px] sm:px-[32px] py-[53px] lg:px-[90px] lg:py-[84px] rounded-[32px] gap-[1rem] max-w-[1440px] mx-auto mt-[3rem] md:mt-[5rem]'>
         <div className='flex items-center gap-[16px]'>
           <CustomInput
             prefix={<IconSearch />}
@@ -131,7 +132,7 @@ const Profile = () => {
           <CustomButton className='w-[163px] btn-primary'>Search</CustomButton>
         </div>
 
-        <div className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-[1rem] mt-[40px]'>
+        <div className='grid extra-sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 mt-[40px] gap-[16px]'>
           {[...Array(5)]?.map((item: any, index: any) => (
             <div key={item?._id || index}>
               <CardProfile

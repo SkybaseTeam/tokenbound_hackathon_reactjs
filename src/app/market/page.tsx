@@ -45,7 +45,7 @@ const MarketContainer = () => {
   }, [isMounted]);
 
   return (
-    <div className='bg-[url("/images/bg.webp")] pt-[8rem] pb-[8rem] bg-center bg-cover bg-no-repeat bg-fixed'>
+    <div className='bg-[url("/images/bg.webp")] pt-[6rem] sm:pt-[8rem] pb-[8rem] bg-center bg-cover bg-no-repeat bg-fixed md:px-[32px]'>
       <ModalTbaDetail
         open={openModalTbaDetail}
         onCancel={() => {
@@ -62,20 +62,20 @@ const MarketContainer = () => {
         selectedNFT={selectedNFT}
       />
 
-      <div className='mb-[97px] flex flex-col items-center'>
+      <div className='mb-[64px] sm:mb-[97px] flex flex-col items-center px-[16px] md:px-[32px]'>
         <CustomImage
           src='/images/marketplace/title.webp'
           width={806}
           height={74}
           alt='err'
         />
-        <p className='text-[16px] font-[300] text-white mt-[16px]'>
+        <p className='text-[16px] font-[300] text-white mt-[16px] max-lg:text-center'>
           Find rare and exciting Tokenbound assets on the Marketplace, your
           one-stop shop for buying and selling.
         </p>
       </div>
 
-      <div className=' bg-white w-full px-[90px] py-[84px] rounded-[32px] gap-[1rem] max-w-[1440px] mx-auto'>
+      <div className=' bg-white w-full px-[16px] sm:px-[32px] py-[53px] lg:px-[90px] lg:py-[84px] rounded-[32px] gap-[1rem] max-w-[1440px] mx-auto'>
         <div className='flex items-center gap-[16px]'>
           <CustomInput
             prefix={<IconSearch />}
@@ -85,7 +85,7 @@ const MarketContainer = () => {
           <CustomButton className='w-[163px] btn-primary'>Search</CustomButton>
         </div>
 
-        <div className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 mt-[40px] gap-[16px]'>
+        <div className='grid extra-sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 mt-[40px] gap-[16px]'>
           {collection?.length !== undefined ? (
             collection?.map((item: any) => (
               <div key={item?._id}>

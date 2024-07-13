@@ -3,11 +3,47 @@
 @tailwind utilities;
 
 @layer base {
+  :root {
+    --100vh: calc(100vh);
+  }
+  @media only screen and (max-width: 1600px) {
+    html {
+      zoom: 0.8;
+    }
+    :root {
+      --100vh: calc(100vh / 0.8);
+    }
+  }
+  @media only screen and (max-width: 1350px) {
+    html {
+      zoom: 0.7;
+    }
+    :root {
+      --100vh: calc(100vh / 0.7);
+    }
+  }
+  @media only screen and (max-width: 1200px) {
+    html {
+      zoom: 0.6;
+    }
+    :root {
+      --100vh: calc(100vh / 0.6);
+    }
+  }
+  @media only screen and (max-width: 1024px) {
+    html {
+      zoom: 1;
+    }
+    :root {
+      --100vh: 100vh;
+    }
+  }
+
   html {
     @apply scroll-smooth;
   }
   body {
-    @apply bg-[#0538BD] text-white;
+    @apply bg-[#0538BD] text-white  overflow-x-hidden;
   }
 }
 

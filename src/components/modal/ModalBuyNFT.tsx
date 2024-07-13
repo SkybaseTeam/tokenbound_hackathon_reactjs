@@ -89,7 +89,7 @@ const ModalBuyNFT = ({ open, onCancel, selectedNFT }: any) => {
           Checkout
         </h4>
 
-        <div className='overflow-y-auto scrollbar-custom max-h-[80vh] mt-[30px]'>
+        <div className='overflow-y-auto scrollbar-custom mt-[30px]'>
           <div className='text-white flex justify-between items-center gap-[24px]'>
             <CustomImage
               src={selectedNFT?.image}

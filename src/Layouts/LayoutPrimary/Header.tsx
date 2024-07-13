@@ -11,6 +11,12 @@ import useCopyToClipboard from '@/hook/useCopyToClipboard';
 import Link from 'next/link';
 import IconLogout from '@/assets/icons/IconLogout';
 import useMounted from '@/hook/useMounted';
+import IconHamburger from '@/assets/icons/IconHamburger';
+import DrawerMobile from '@/components/drawer/DrawerMobile';
+import IconHome from '@/assets/icons/IconHome';
+import IconMarketPlace from '@/assets/icons/IcconMarketPlace';
+import IconGamePlay from '@/assets/icons/IconGamePlay';
+import IconProfile from '@/assets/icons/IconProfile';
 
 const Header = () => {
   const { disconnect } = useDisconnect();
@@ -19,23 +25,34 @@ const Header = () => {
   const [text, copy] = useCopyToClipboard();
   const { connectWallet, dcoin } = useStore();
   const path = usePathname();
+  const [showDrawerMobile, setShowDrawerMobile] = useState(false);
 
   const menuData: any = [
     {
       title: 'Homepage',
       link: '/',
+      icon: <IconHome fill={path === '/' ? '#0538BD' : '#8CA3E1'} />,
     },
     {
       title: 'Marketplace',
       link: '/market',
+      icon: (
+        <IconMarketPlace fill={path === '/market' ? '#0538BD' : '#8CA3E1'} />
+      ),
     },
     {
       title: 'Gameplay',
       link: '/play',
+      icon: <IconGamePlay fill={path === '/play' ? '#0538BD' : '#8CA3E1'} />,
     },
     {
       title: 'Profile',
       link: `/market/profile/${address}`,
+      icon: (
+        <IconProfile
+          fill={path === `/market/profile/${address}` ? '#0538BD' : '#8CA3E1'}
+        />
+      ),
     },
   ];
 
@@ -52,11 +69,28 @@ const Header = () => {
   return (
     <div
       id='header'
-      className={`bg-[#0538BD]  transition-all duration-500 grid grid-cols-3 items-center py-[10px] px-[64px] fixed z-[999] w-full top-0 h-[68px]`}
+      className={`bg-[#0538BD] transition-all duration-500  flex gap-[9px] lg:grid lg:grid-cols-3 items-center py-[10px] px-[16px] sm:px-[32px] lg:px-[64px] fixed z-[999] w-full top-0 h-[56px] lg:h-[68px]`}
     >
+      <DrawerMobile
+        ethBalance={ethBalance}
+        open={showDrawerMobile}
+        onClose={() => {
+          setShowDrawerMobile(false);
+        }}
+        handleDisconnect={handleDisconnect}
+      />
+
+      <IconHamburger
+        onClick={() => {
+          setShowDrawerMobile(true);
+        }}
+        className='lg:hidden cursor-auto'
+      />
+
       <Logo />
 
-      <div className='flex items-center gap-[12px] justify-center'>
+      {/* PC */}
+      <div className='flex items-center gap-[12px] justify-center max-lg:hidden'>
         {menuData.map((item: any, index: any) => (
           <Link
             href={item?.link}
@@ -67,8 +101,23 @@ const Header = () => {
           </Link>
         ))}
       </div>
+      {/* Mobile */}
+      <div
+        className={` bg-white lg:hidden p-[16px] rounded-tl-[16px] rounded-tr-[16px] fixed bottom-0 left-0 right-0 flex border-[#587AD3] border-t border-r border-l justify-between`}
+      >
+        {menuData.map((item: any, index: any) => (
+          <Link
+            href={item?.link}
+            key={index}
+            className={`${path === item?.link && '!text-[#0538BD]'} text-[#8CA3E1] text-[12px] font-[400] flex flex-col items-center gap-[4px]`}
+          >
+            {item?.icon}
+            {item?.title}
+          </Link>
+        ))}
+      </div>
 
-      <div className='flex items-center justify-end'>
+      <div className='flex items-center justify-end max-lg:hidden'>
         {isConnected ? (
           <div className='flex items-center gap-[1rem] max-md:hidden'>
             <div className='max-md:hidden border border-[#DCFC36] text-[16px] font-[400] text-[#DCFC36] px-[12px] h-[36px] rounded-[32px] flex items-center '>

@@ -111,7 +111,7 @@ export default function Mint() {
   return (
     <section id="mint_section" className='bg-white rounded-[32px] pt-[86px] pb-[110px] text-[#031F68] '>
       <div className='layout-container flex flex-col items-center'>
-        <h2 className='text-[48px] font-[500] font-glancyr'>
+        <h2 className='text-[48px] font-[500] font-glancyr max-sm:text-center'>
           ERC-6551 Token-bound Account
         </h2>
         <div className=' w-full mt-[63px]'>

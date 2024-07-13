@@ -6,15 +6,15 @@ const Intro = () => {
   return (
     <section
       id='intro_section'
-      className='h-screen flex flex-col items-center justify-center'
+      className='h-[var(--100vh)] flex flex-col items-center justify-center max-sm:px-[32px] max-lg:px-[64px]'
     >
-      <div className='relative mt-[-5rem]'>
+      <div className='relative mt-[-5rem] max-lg:hidden'>
         <div className={'absolute top-[-3rem] left-[-2rem]'}>
           <CustomImage
             src='/images/intro/sound.webp'
             alt='bling'
-            data-aos='zoom-in-right'
-            data-aos-delay='400'
+            // data-aos='zoom-in-right'
+            // data-aos-delay='400'
             className=' '
             width={196.747}
             height={140.464}
@@ -24,8 +24,8 @@ const Intro = () => {
           <CustomImage
             src='/images/intro/stonk.webp'
             alt='err'
-            data-aos='zoom-in-right'
-            data-aos-delay='600'
+            // data-aos='zoom-in-right'
+            // data-aos-delay='600'
             width={267.993}
             height={136.993}
           />
@@ -34,8 +34,8 @@ const Intro = () => {
         <CustomImage
           src='/images/intro/bling.webp'
           alt='err'
-          data-aos='flip-down'
-          data-aos-delay='200'
+          // data-aos='flip-down'
+          // data-aos-delay='200'
           width={1159}
           height={280}
         />
@@ -53,13 +53,24 @@ const Intro = () => {
         </Link>
       </div>
 
+      <CustomImage
+        src='/images/intro/bling-mobile.webp'
+        alt='err'
+        className='lg:hidden'
+        // data-aos='flip-down'
+        // data-aos-delay='200'
+        width={379}
+        height={299}
+      />
+
       <div className='relative'>
         <div className='absolute top-[-1rem] left-[6rem]'>
           <CustomImage
             src='/images/intro/arrow.webp'
             alt='err'
-            data-aos='zoom-in-right'
-            data-aos-delay='200'
+            // data-aos='zoom-in-right'
+            // data-aos-delay='200'
+            className='max-lg:hidden'
             width={142}
             height={118}
           />
@@ -72,7 +83,7 @@ const Intro = () => {
           <CustomImage
             src='/images/intro/mint.webp'
             alt='err'
-            className=' animateIntroMint'
+            className=' animateIntroMint max-lg:hidden'
             width={200}
             height={215}
           />
@@ -82,7 +93,7 @@ const Intro = () => {
           href='#mint_section'
           className='absolute bottom-[-10rem] right-[-3rem] cursor-pointer'
         >
-          <div className='relative'>
+          <div className='relative max-lg:hidden'>
             <CustomImage
               src='/images/intro/mint-tba.webp'
               alt='err'
@@ -94,7 +105,6 @@ const Intro = () => {
               <CustomImage
                 src='/images/intro/arrow-tba.webp'
                 alt='err'
-                // className='mt-[2rem] animate-bounce'
                 width={45}
                 height={97.42}
               />
@@ -102,7 +112,7 @@ const Intro = () => {
           </div>
         </a>
 
-        <h2 className='text-[60px] font-[500] text-center'>
+        <h2 className='text-[16px] sm:text-[32px] lg:text-[60px] font-[500] text-center'>
           Reach the Future <br /> Trade ERC-6551 Token-Bound Accounts
         </h2>
       </div>

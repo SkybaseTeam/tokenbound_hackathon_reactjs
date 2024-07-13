@@ -8,8 +8,8 @@ import Marketplace from '@/components/section/Marketplace';
 import Why from '@/components/section/Why';
 import { useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
-import Aos from 'aos';
-import 'aos/dist/aos.css';
+// import Aos from 'aos';
+// import 'aos/dist/aos.css';
 
 export default function Home() {
   const searchParam = useSearchParams();
@@ -22,12 +22,12 @@ export default function Home() {
     }
   }, [searchParam]);
 
-  useEffect(() => {
-    Aos.init({
-      duration: 1000,
-      once: true,
-    });
-  }, []);
+  // useEffect(() => {
+  //   Aos.init({
+  //     duration: 1000,
+  //     once: true,
+  //   });
+  // }, []);
 
   return (
     <div className='bg-[url("/images/bg.webp")] bg-center bg-cover bg-no-repeat bg-fixed'>

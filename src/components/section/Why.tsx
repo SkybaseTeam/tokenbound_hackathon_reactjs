@@ -16,13 +16,13 @@ export default function Why() {
           width={120}
           height={112}
         />
-        <h2 className='text-[48px] font-[500] font-glancyr'>
+        <h2 className='text-[48px] font-[500] font-glancyr max-sm:text-center'>
           Why BLING BLING?!?
         </h2>
-        <div className=' w-full mt-[63px] grid grid-cols-3 gap-[24px] font-glancyr min-h-[360px]'>
+        <div className=' w-full mt-[63px] grid sm:grid-cols-2 lg:grid-cols-3 gap-[24px] font-glancyr min-h-[360px]'>
           <div
-            data-aos='fade-right'
-            data-aos-delay={200}
+            // data-aos='fade-right'
+            // data-aos-delay={200}
             className='p-[24px] rounded-2xl bg-[#0538BD]'
           >
             <h2 className='text-[48px] text-[#DCFC36]'>ERC-6551</h2>
@@ -33,8 +33,8 @@ export default function Why() {
             </p>
           </div>
           <div
-            data-aos='fade-right'
-            data-aos-delay={400}
+            // data-aos='fade-right'
+            // data-aos-delay={400}
             className='p-[24px] rounded-2xl bg-[#E3FD5E]'
           >
             <h2 className='text-[48px]  text-[#0538BD] leading-[56px]'>
@@ -47,8 +47,8 @@ export default function Why() {
             </p>
           </div>
           <div
-            data-aos='fade-right'
-            data-aos-delay={600}
+            // data-aos='fade-right'
+            // data-aos-delay={600}
             className='p-[24px] rounded-2xl bg-[#F4FEC1]'
           >
             <h2 className='text-[48px]  text-[#0538BD]'>Security</h2>

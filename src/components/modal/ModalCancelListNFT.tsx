@@ -51,7 +51,7 @@ const ModalCancelListNFT = ({ open, onCancel, data }: any) => {
       <div className='p-4 md:p-8 '>
         <h4 className='text-xl text-white font-medium mb-4'>Cancel List</h4>
 
-        <div className='overflow-y-auto scrollbar-custom max-h-[80vh]'>
+        <div className='overflow-y-auto scrollbar-custom'>
           <div className='text-white flex justify-between items-center space-x-2 pb-8 pt-2 border-b border-solid border-stroke'>
             <CustomImage
               src={data?.image}

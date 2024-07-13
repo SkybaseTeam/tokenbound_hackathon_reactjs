@@ -4,6 +4,10 @@ const config: Config = {
   content: ['./src/**/*.{js,ts,jsx,tsx,mdx}'],
   theme: {
     extend: {
+      screens: {
+        'extra-sm': '410px',
+
+      },
       animation: {
         'spin-slow': 'spin 12s linear infinite',
       },

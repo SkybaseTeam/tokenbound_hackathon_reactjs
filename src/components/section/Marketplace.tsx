@@ -9,7 +9,7 @@ const Marketplace = () => {
   const [openModalBuyNTF, setOpenModalBuyNTF] = useState(false);
   const [selectedNFT, setSelectedNFT] = useState<any>(null);
   return (
-    <section id='market_section' className='pt-[8rem] pb-[185px]'>
+    <section id='market_section' className='pt-[8rem] pb-[185px] px-[32px] max-sm:px-[16px]'>
       <div className='max-w-[1260px] mx-auto'>
         <div className='flex items-center flex-col'>
           <CustomImage
@@ -30,7 +30,7 @@ const Marketplace = () => {
             </CustomButton>
           </Link>
 
-          <div className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-[1rem] mt-[52px]  w-full'>
+          <div className='grid extra-sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-[1rem] mt-[52px]  w-full'>
             {[...new Array(4)]?.length !== undefined
               ? [...new Array(4)]?.map((item: any, index: any) => (
                   <Link href={'/market'} key={index}>
@@ -38,8 +38,8 @@ const Marketplace = () => {
                       data={item}
                       setOpenModalBuyNTF={setOpenModalBuyNTF}
                       setSelectedNFT={setSelectedNFT}
-                      data-aos='fade-right'
-                      data-aos-delay={(index + 1) * 200}
+                    /*   data-aos='fade-right'
+                      data-aos-delay={(index + 1) * 200} */
                     />
                   </Link>
                 ))
