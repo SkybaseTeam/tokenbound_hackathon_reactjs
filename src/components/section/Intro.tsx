@@ -6,7 +6,7 @@ const Intro = () => {
   return (
     <section
       id='intro_section'
-      className='h-[var(--100vh)] flex flex-col items-center justify-center max-sm:px-[32px] max-lg:px-[64px]'
+      className='min-h-[var(--100vh)] flex flex-col items-center justify-center max-sm:px-[32px] max-lg:px-[64px]'
     >
       <div className='relative mt-[-5rem] max-lg:hidden'>
         <div className={'absolute top-[-3rem] left-[-2rem]'}>

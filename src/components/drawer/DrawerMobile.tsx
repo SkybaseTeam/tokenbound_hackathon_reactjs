@@ -19,7 +19,7 @@ const DrawerMobile = ({ open, onClose, handleDisconnect, ethBalance }: any) => {
 
   return (
     <CustomDrawer open={open} onClose={onClose} width={400}>
-      <div className='font-glancyr px-[16px] py-[32px] bg-[#0538BD]  h-[var(--100vh)]'>
+      <div className='font-glancyr px-[16px] py-[32px] bg-[#0538BD]  min-h-[var(--100vh)]'>
         <div className='flex justify-between mb-[2rem]'>
           <p className='text-[24px] text-[#DCFC36]'>My Wallet</p>
           <IconCloseDrawer onClick={onClose} />
