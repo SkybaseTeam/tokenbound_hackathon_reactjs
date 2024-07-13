@@ -20,7 +20,11 @@ export default function Why() {
           Why BLING BLING?!?
         </h2>
         <div className=' w-full mt-[63px] grid grid-cols-3 gap-[24px] font-glancyr min-h-[360px]'>
-          <div className='p-[24px] rounded-2xl bg-[#0538BD]'>
+          <div
+            data-aos='fade-right'
+            data-aos-delay={200}
+            className='p-[24px] rounded-2xl bg-[#0538BD]'
+          >
             <h2 className='text-[48px] text-[#DCFC36]'>ERC-6551</h2>
             <p className='mt-[27px] text-[16px] font-[300] text-[#E8FD78]'>
               {`They're not just pictures; they're like mini-vaults on the
@@ -28,7 +32,11 @@ export default function Why() {
               like other tokens or even cryptocurrency.`}
             </p>
           </div>
-          <div className='p-[24px] rounded-2xl bg-[#E3FD5E]'>
+          <div
+            data-aos='fade-right'
+            data-aos-delay={400}
+            className='p-[24px] rounded-2xl bg-[#E3FD5E]'
+          >
             <h2 className='text-[48px]  text-[#0538BD] leading-[56px]'>
               User-friendly Interface
             </h2>
@@ -38,7 +46,11 @@ export default function Why() {
               data you need and manage your token portfolio effortlessly.`}
             </p>
           </div>
-          <div className='p-[24px] rounded-2xl bg-[#F4FEC1]'>
+          <div
+            data-aos='fade-right'
+            data-aos-delay={600}
+            className='p-[24px] rounded-2xl bg-[#F4FEC1]'
+          >
             <h2 className='text-[48px]  text-[#0538BD]'>Security</h2>
             <p className='mt-[27px] text-[16px] font-[300] text-[#587AD3]'>
               {`We utilize industry-leading security measures to safeguard your ERC-6551 tokens.

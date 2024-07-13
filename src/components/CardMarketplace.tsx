@@ -10,11 +10,15 @@ const CardMarketplace = ({
   data,
   setSelectedNFT,
   setOpenModalTbaDetail = () => {},
+  ...props
 }: any) => {
   const { isConnected } = useAccount();
   const { connectWallet } = useStore();
   return (
-    <div className='p-[12px] rounded-2xl border border-[#EFFEA3] bg-[#FBFDEB] text-[#031F68] '>
+    <div
+      {...props}
+      className='p-[12px] rounded-2xl border border-[#EFFEA3] bg-[#FBFDEB] text-[#031F68] '
+    >
       <div
         onClick={() => {
           setSelectedNFT(data);

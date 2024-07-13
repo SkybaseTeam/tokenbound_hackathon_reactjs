@@ -32,12 +32,14 @@ const Marketplace = () => {
 
           <div className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-[1rem] mt-[52px]  w-full'>
             {[...new Array(4)]?.length !== undefined
-              ? [...new Array(4)]?.map((item: any) => (
-                  <Link href={'/market'} key={item?._id}>
+              ? [...new Array(4)]?.map((item: any, index: any) => (
+                  <Link href={'/market'} key={index}>
                     <CardMarketplace
                       data={item}
                       setOpenModalBuyNTF={setOpenModalBuyNTF}
                       setSelectedNFT={setSelectedNFT}
+                      data-aos='fade-right'
+                      data-aos-delay={(index + 1) * 200}
                     />
                   </Link>
                 ))

@@ -9,24 +9,33 @@ const Intro = () => {
       className='h-screen flex flex-col items-center justify-center'
     >
       <div className='relative mt-[-5rem]'>
-        <CustomImage
-          src='/images/intro/sound.webp'
-          alt='bling'
-          className='absolute top-[-3rem] left-[-2rem] '
-          width={196.747}
-          height={140.464}
-        />
-        <CustomImage
-          src='/images/intro/stonk.webp'
-          alt='err'
-          className='absolute top-[0rem] right-[-2rem]'
-          width={267.993}
-          height={136.993}
-        />
+        <div className={'absolute top-[-3rem] left-[-2rem]'}>
+          <CustomImage
+            src='/images/intro/sound.webp'
+            alt='bling'
+            data-aos='zoom-in-right'
+            data-aos-delay='400'
+            className=' '
+            width={196.747}
+            height={140.464}
+          />
+        </div>
+        <div className='absolute top-[0rem] right-[-2rem]'>
+          <CustomImage
+            src='/images/intro/stonk.webp'
+            alt='err'
+            data-aos='zoom-in-right'
+            data-aos-delay='600'
+            width={267.993}
+            height={136.993}
+          />
+        </div>
 
         <CustomImage
           src='/images/intro/bling.webp'
           alt='err'
+          data-aos='flip-down'
+          data-aos-delay='200'
           width={1159}
           height={280}
         />
@@ -45,13 +54,17 @@ const Intro = () => {
       </div>
 
       <div className='relative'>
-        <CustomImage
-          src='/images/intro/arrow.webp'
-          alt='err'
-          className='absolute top-[-1rem] left-[6rem]'
-          width={142}
-          height={118}
-        />
+        <div className='absolute top-[-1rem] left-[6rem]'>
+          <CustomImage
+            src='/images/intro/arrow.webp'
+            alt='err'
+            data-aos='zoom-in-right'
+            data-aos-delay='200'
+            width={142}
+            height={118}
+          />
+        </div>
+
         <a
           href='#mint_section'
           className='absolute bottom-[-10.7rem] left-[14rem] cursor-pointer'

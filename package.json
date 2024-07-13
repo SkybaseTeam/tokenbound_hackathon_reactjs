@@ -13,6 +13,7 @@
   "dependencies": {
     "@next/third-parties": "^14.2.4",
     "@starknet-react/core": "^2.8.3",
+    "@types/aos": "^3.0.7",
     "antd": "^5.18.1",
     "aos": "^2.3.4",
     "axios": "^1.7.2",
