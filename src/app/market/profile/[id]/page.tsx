@@ -25,11 +25,17 @@ const Profile = () => {
   const { dcoin } = useStore();
 
   useEffect(() => {
+    console.log('address', address);
+  }, [address]);
+
+  useEffect(() => {
     if (!address) return;
 
     const getProfile = async () => {
       try {
-        const profileResponse: any = await profile();
+        const profileResponse: any = await profile(
+          address?.toLocaleLowerCase()
+        );
         const data = profileResponse?.data?.data;
         console.log(profileResponse);
         setProfileData(data);
@@ -69,6 +75,7 @@ const Profile = () => {
           setOpenModalTbaDetail(false);
         }}
         showBuy={false}
+        selectedNFT={selectedNFT}
       />
 
       <div className='flex items-center justify-between max-lg:flex-col max-lg:items-start max-lg:gap-[2rem] max-w-[1260px] mx-auto max-md:px-[16px] max-lg:px-[32px]'>
@@ -109,15 +116,21 @@ const Profile = () => {
         <div className='grid grid-cols-3 gap-[3rem]'>
           <div className='md:text-right'>
             <p className='text-[18px] font-[400]'>Rank</p>
-            <p className='text-[24px] md:text-[48px] font-[500] text-[#DCFC36]'>#100</p>
+            <p className='text-[24px] md:text-[48px] font-[500] text-[#DCFC36]'>
+              #100
+            </p>
           </div>
           <div className='md:text-right'>
             <p className='text-[18px] font-[400]'>Owned Tokens</p>
-            <p className='text-[24px] md:text-[48px] font-[500] text-[#DCFC36]'>5</p>
+            <p className='text-[24px] md:text-[48px] font-[500] text-[#DCFC36]'>
+              5
+            </p>
           </div>
           <div className='md:text-right'>
             <p className='text-[18px] font-[400]'>Listed Tokens</p>
-            <p className='text-[24px] md:text-[48px] font-[500] text-[#DCFC36]'>4</p>
+            <p className='text-[24px] md:text-[48px] font-[500] text-[#DCFC36]'>
+              4
+            </p>
           </div>
         </div>
       </div>

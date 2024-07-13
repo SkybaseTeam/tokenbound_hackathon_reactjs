@@ -45,7 +45,7 @@ const MarketContainer = () => {
   }, [isMounted]);
 
   return (
-    <div className='bg-[url("/images/bg.webp")] pt-[6rem] sm:pt-[8rem] pb-[8rem] bg-center bg-cover bg-no-repeat bg-fixed md:px-[32px]'>
+    <div className='pt-[6rem] sm:pt-[8rem] pb-[8rem] md:px-[32px]'>
       <ModalTbaDetail
         open={openModalTbaDetail}
         onCancel={() => {

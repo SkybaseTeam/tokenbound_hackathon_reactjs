@@ -56,17 +56,13 @@
     @apply text-[16px] font-[700] font-jarkata text-[#DCFC36] hover:!text-[#DCFC36] bg-[#0538BD] border-none hover:!bg-[#0539bded] h-[48px] px-[20px] rounded-2xl;
   }
 
-  .btn-ghost {
-    @apply font-mono rounded-lg h-10 flex justify-center items-center text-[18px] font-semibold text-secondary !border-stroke hover:!bg-layer-focus hover:!text-secondary;
-  }
-
   button.btn-primary[disabled],
   button.btn-secondary[disabled] {
     @apply bg-[#EFFEA3] text-[#0538BD] bg-none hover:!text-[#0538BD] hover:!bg-[#EFFEA3];
   }
 
   .layout-container {
-    @apply font-mono max-w-[1400px] mx-auto px-[16px] sm:px-[24px];
+    @apply max-w-[1400px] mx-auto px-[16px] sm:px-[24px];
   }
 
   .three_dot_2_line {
@@ -120,6 +116,25 @@
     }
     100% {
       transform: rotate(0deg);
+    }
+  }
+
+  .bling {
+    position: absolute;
+    font-size: 20px;
+    color: gold;
+    animation: bling-animation 2s ease-out forwards;
+    pointer-events: none;
+  }
+
+  @keyframes bling-animation {
+    0% {
+      transform: translateY(0);
+      opacity: 1;
+    }
+    100% {
+      transform: translateY(-100px);
+      opacity: 0;
     }
   }
 }

@@ -30,7 +30,7 @@ export default function Home() {
   // }, []);
 
   return (
-    <div className='bg-[url("/images/bg.webp")] bg-center bg-cover bg-no-repeat bg-fixed'>
+    <div className=''>
       <Intro />
       <Mint />
       <Marketplace />

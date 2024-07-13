@@ -1,5 +1,5 @@
 import { axiosClient } from './config';
 
-export const profile = async () => {
-  return await axiosClient.get('/user/profile');
+export const profile = async (address: any) => {
+  return await axiosClient.get(`/tokenbound/profile/${address}`);
 };

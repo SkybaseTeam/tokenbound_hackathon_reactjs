@@ -56,6 +56,8 @@ const Header = () => {
     },
   ];
 
+  console.log(path);
+
   const ethBalance = useBalance({
     address,
     watch: false,
@@ -92,13 +94,23 @@ const Header = () => {
       {/* PC */}
       <div className='flex items-center gap-[12px] justify-center max-lg:hidden'>
         {menuData.map((item: any, index: any) => (
-          <Link
-            href={item?.link}
-            className={`${path === item?.link && '!text-[#0538BD] bg-white'} hover:!text-[#0538BD] hover:bg-white h-[36px] transition-all text-white border-white px-[12px] flex items-center rounded-[32px] border text-[16px] font-[400]`}
+          <div
+            onClick={() => {
+              if (
+                (item?.link?.includes('/market/profile') ||
+                  item?.link === '/play') &&
+                !isConnected
+              ) {
+                connectWallet();
+                return;
+              }
+              router.push(item?.link);
+            }}
+            className={`${path === item?.link && '!text-[#0538BD] bg-white'} cursor-pointer hover:!text-[#0538BD] hover:bg-white h-[36px] transition-all text-white border-white px-[12px] flex items-center rounded-[32px] border text-[16px] font-[400]`}
             key={index}
           >
             <p /* className='mt-[0.3rem]' */> {item.title}</p>
-          </Link>
+          </div>
         ))}
       </div>
       {/* Mobile */}
@@ -106,14 +118,24 @@ const Header = () => {
         className={` bg-white lg:hidden p-[16px] rounded-tl-[16px] rounded-tr-[16px] fixed bottom-0 left-0 right-0 flex border-[#587AD3] border-t border-r border-l justify-between`}
       >
         {menuData.map((item: any, index: any) => (
-          <Link
-            href={item?.link}
+          <div
+            onClick={() => {
+              if (
+                (item?.link?.includes('/market/profile') ||
+                  item?.link === '/play') &&
+                !isConnected
+              ) {
+                connectWallet();
+                return;
+              }
+              router.push(item?.link);
+            }}
             key={index}
-            className={`${path === item?.link && '!text-[#0538BD]'} text-[#8CA3E1] text-[12px] font-[400] flex flex-col items-center gap-[4px]`}
+            className={`${path === item?.link && '!text-[#0538BD]'} cursor-pointer text-[#8CA3E1] text-[12px] font-[400] flex flex-col items-center gap-[4px]`}
           >
             {item?.icon}
             {item?.title}
-          </Link>
+          </div>
         ))}
       </div>
 
