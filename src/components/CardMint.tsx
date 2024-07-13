@@ -9,7 +9,7 @@ const CardMint = ({ data }: any) => {
   return (
     <div
       onClick={() => {
-        router.push('/#mint_section');
+        router.push('/?section=mint');
       }}
       className='p-[12px] rounded-2xl bg-[#E6EBF8] border border-[#B2C1EB] text-[#0538BD] group cursor-pointer'
     >

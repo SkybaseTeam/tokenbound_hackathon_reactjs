@@ -1,9 +1,9 @@
 import { Skeleton } from 'antd';
 import React from 'react';
 
-const NftSkeleton = () => {
+const NftSkeleton = ({ ...props }) => {
   return (
-    <div className='w-full rounded-lg p-2'>
+    <div {...props} className='w-full rounded-lg p-2'>
       <Skeleton.Button
         shape='square'
         active

@@ -102,46 +102,31 @@ const ModalBuyNFT = ({ open, onCancel, selectedNFT }: any) => {
               height={100}
               className='rounded-2xl'
             />
-            <div className='flex-1 flex flex-col justify-between truncate'>
-              <span className='truncate text-[24px]'>{selectedNFT?.name}</span>
-              <div className='flex items-center space-x-2'>
-                <IconVerified />
-                <span className='text-secondary text-sm font-medium truncate'>
-                  Ventorii x Meme Land Potatoz
+            <div className='flex-1 flex flex-col justify-between truncate '>
+              <span className='truncate text-[24px] text-[#031F68] font-[400]'>
+                {selectedNFT?.name}
+              </span>
+              <p className='text-[16px] font-[300] text-[#546678]'>
+                Price
+                <span className='text-[#031F68] text-[18px] font-[400] ml-[0.5rem]'>
+                  {selectedNFT?.price} BLING
                 </span>
-              </div>
+              </p>
             </div>
             <div className='space-x-1 flex items-center'>
               <span className='text-sm '>{selectedNFT?.price} DCOIN</span>
             </div>
           </div>
-          <div className='border-b border-solid border-stroke pb-5'>
-            <div className='mt-5'>
-              <p className='text-secondary text-base'>Your wallet:</p>
-              <div className='bg-layer-2 rounded-lg p-4 flex items-center space-x-2 mt-5'>
-                <div className='text-lg flex items-center gap-[1rem]'>
-                  {/* <span className="text-secondary">{getCurrency.currency}</span> */}
-                  <div className='text-white flex items-center font-medium space-x-2'>
-                    {formatWallet(address)}
-                  </div>
-                  <CustomTooltip
-                    title='Copied'
-                    placement='right'
-                    trigger={['click']}
-                  >
-                    <IconCopy
-                      className='cursor-pointer'
-                      onClick={() => copy(address as string)}
-                    />
-                  </CustomTooltip>
-                </div>
-              </div>
+          <div className='flex items-center justify-between text-[#031F68] mt-[40px]'>
+            <span className='text-[#546678] font-[300]'>Total Price</span>
+            <div className='space-x-1 flex items-center font-medium text-base'>
+              {selectedNFT?.price} BLING
             </div>
           </div>
-          <div className='flex items-center justify-between text-white mt-4'>
-            <span>You will pay</span>
+          <div className='flex items-center justify-between text-[#031F68] '>
+            <span className='text-[#546678] font-[300]'>You will pay</span>
             <div className='space-x-1 flex items-center font-medium text-base'>
-              {selectedNFT?.price} DCOIN
+              {selectedNFT?.price} BLING
             </div>
           </div>
         </div>
