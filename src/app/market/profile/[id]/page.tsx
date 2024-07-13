@@ -7,6 +7,7 @@ import CustomImage from '@/components/custom/CustomImage';
 import CustomInput from '@/components/custom/CustomInput';
 import ModalCancelListNFT from '@/components/modal/ModalCancelListNFT';
 import ModalListNFT from '@/components/modal/ModalListNFT';
+import ModalTbaDetail from '@/components/modal/ModalTbaDetail';
 import { useStore } from '@/context/store';
 import { profile } from '@/fetching/client/profile';
 import { formatToken, formatWallet } from '@/utils';
@@ -16,6 +17,7 @@ import React, { useEffect, useState } from 'react';
 
 const Profile = () => {
   const [openModalListNFT, setOpenModalListNFT] = useState(false);
+  const [openModalTbaDetail, setOpenModalTbaDetail] = useState(false);
   const [openModalCancelListNFT, setOpenModalCancelListNFT] = useState(false);
   const { address } = useAccount();
   const [profileData, setProfileData] = useState<any>(null);
@@ -60,6 +62,13 @@ const Profile = () => {
           setOpenModalCancelListNFT(false);
         }}
         data={selectedNFT}
+      />
+      <ModalTbaDetail
+        open={openModalTbaDetail}
+        onCancel={() => {
+          setOpenModalTbaDetail(false);
+        }}
+        showBuy={false}
       />
 
       <div className='flex items-center justify-between max-w-[1260px] mx-auto'>
@@ -129,6 +138,7 @@ const Profile = () => {
                 data={item}
                 setOpenModalListNFT={setOpenModalListNFT}
                 setOpenModalCancelListNFT={setOpenModalCancelListNFT}
+                setOpenModalTbaDetail={setOpenModalTbaDetail}
                 setSelectedNFT={setSelectedNFT}
               />
             </div>

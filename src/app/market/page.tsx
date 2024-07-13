@@ -13,9 +13,11 @@ import CustomImage from '@/components/custom/CustomImage';
 import CustomButton from '@/components/custom/CustomButton';
 import CustomInput from '@/components/custom/CustomInput';
 import IconSearch from '@/assets/icons/IconSearch';
+import ModalTbaDetail from '@/components/modal/ModalTbaDetail';
 
 const MarketContainer = () => {
   const [openModalBuyNTF, setOpenModalBuyNTF] = useState(false);
+  const [openModalTbaDetail, setOpenModalTbaDetail] = useState(false);
   const [collection, setCollection] = useState<any>();
   const [listedNFTData, setListedNFTData] = useState<any>();
   const { isMounted } = useMounted();
@@ -44,6 +46,14 @@ const MarketContainer = () => {
 
   return (
     <div className='bg-[url("/images/bg.webp")] pt-[8rem] pb-[8rem] bg-center bg-cover bg-no-repeat bg-fixed'>
+      <ModalTbaDetail
+        open={openModalTbaDetail}
+        onCancel={() => {
+          setOpenModalTbaDetail(false);
+        }}
+        setOpenModalBuyNTF={setOpenModalBuyNTF}
+        selectedNFT={selectedNFT}
+      />
       <ModalBuyNFT
         open={openModalBuyNTF}
         onCancel={() => {
@@ -90,6 +100,7 @@ const MarketContainer = () => {
                 <div key={item?._id}>
                   <CardMarketplace
                     data={item}
+                    setOpenModalTbaDetail={setOpenModalTbaDetail}
                     setOpenModalBuyNTF={setOpenModalBuyNTF}
                     setSelectedNFT={setSelectedNFT}
                   />

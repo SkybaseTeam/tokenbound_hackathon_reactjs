@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import CustomModal from '../custom/CustomModal';
 import CustomImage from '../custom/CustomImage';
-
 import IconVerified from '@/assets/icons/IconVerified';
 import CustomButton from '../custom/CustomButton';
-
 import { useAccount, useProvider } from '@starknet-react/core';
 import { useStore } from '@/context/store';
 import { toastError, toastSuccess } from '@/utils/toast';

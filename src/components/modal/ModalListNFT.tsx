@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import CustomModal from '../custom/CustomModal';
 import CustomImage from '../custom/CustomImage';
-import logo from '../../../public/images/logo.webp';
-import IconVerified from '@/assets/icons/IconVerified';
 import CustomButton from '../custom/CustomButton';
 import CustomInput from '../custom/CustomInput';
 import { useAccount, useProvider } from '@starknet-react/core';
