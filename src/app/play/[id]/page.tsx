@@ -78,7 +78,7 @@ const Game = () => {
         {blings.map((bling: any) => (
           <div
             key={bling.id}
-            className='bling'
+            className='bling z-[100]'
             style={{ left: `${bling.x}px`, top: `${bling.y}px` }}
           >
             bling

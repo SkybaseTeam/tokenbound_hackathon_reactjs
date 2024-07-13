@@ -106,7 +106,7 @@ const Header = () => {
               }
               router.push(item?.link);
             }}
-            className={`${path === item?.link && '!text-[#0538BD] bg-white'} cursor-pointer hover:!text-[#0538BD] hover:bg-white h-[36px] transition-all text-white border-white px-[12px] flex items-center rounded-[32px] border text-[16px] font-[400]`}
+            className={`${(path === item?.link || (item?.link === '/play' && path?.includes(item?.link))) && '!text-[#0538BD] bg-white'} cursor-pointer hover:!text-[#0538BD] hover:bg-white h-[36px] transition-all text-white border-white px-[12px] flex items-center rounded-[32px] border text-[16px] font-[400]`}
             key={index}
           >
             <p /* className='mt-[0.3rem]' */> {item.title}</p>
