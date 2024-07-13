@@ -23,7 +23,7 @@ const Play = () => {
         selectedNFT={selectedNFT}
       />
       <div className='py-[8rem] layout-container font-glancyr flex flex-col items-center'>
-        <h1 className='text-[48px]'>
+        <h1 className='text-[32px] sm:text-[48px]'>
           Select your Token-Bound Account to Play game!
         </h1>
         <div className='grid extra-sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 mt-[40px] gap-[16px] w-full'>
@@ -55,7 +55,7 @@ const Play = () => {
 
                   <CustomButton
                     onClick={() => {
-                      router.push(`/play/${1}`);
+                      router.push(`/game/menu`);
                     }}
                     className='btn-primary w-full'
                   >

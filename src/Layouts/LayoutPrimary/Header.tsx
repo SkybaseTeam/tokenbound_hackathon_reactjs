@@ -42,8 +42,10 @@ const Header = () => {
     },
     {
       title: 'Gameplay',
-      link: '/play',
-      icon: <IconGamePlay fill={path === '/play' ? '#0538BD' : '#8CA3E1'} />,
+      link: '/game',
+      icon: (
+        <IconGamePlay fill={path?.includes('/game') ? '#0538BD' : '#8CA3E1'} />
+      ),
     },
     {
       title: 'Profile',
@@ -98,7 +100,7 @@ const Header = () => {
             onClick={() => {
               if (
                 (item?.link?.includes('/market/profile') ||
-                  item?.link === '/play') &&
+                  item?.link === '/game') &&
                 !isConnected
               ) {
                 connectWallet();
@@ -106,7 +108,7 @@ const Header = () => {
               }
               router.push(item?.link);
             }}
-            className={`${(path === item?.link || (item?.link === '/play' && path?.includes(item?.link))) && '!text-[#0538BD] bg-white'} cursor-pointer hover:!text-[#0538BD] hover:bg-white h-[36px] transition-all text-white border-white px-[12px] flex items-center rounded-[32px] border text-[16px] font-[400]`}
+            className={`${(path === item?.link || (item?.link === '/game' && path?.includes(item?.link))) && '!text-[#0538BD] bg-white'} cursor-pointer hover:!text-[#0538BD] hover:bg-white h-[36px] transition-all text-white border-white px-[12px] flex items-center rounded-[32px] border text-[16px] font-[400]`}
             key={index}
           >
             <p /* className='mt-[0.3rem]' */> {item.title}</p>
@@ -122,7 +124,7 @@ const Header = () => {
             onClick={() => {
               if (
                 (item?.link?.includes('/market/profile') ||
-                  item?.link === '/play') &&
+                  item?.link === '/game') &&
                 !isConnected
               ) {
                 connectWallet();
@@ -131,7 +133,7 @@ const Header = () => {
               router.push(item?.link);
             }}
             key={index}
-            className={`${path === item?.link && '!text-[#0538BD]'} cursor-pointer text-[#8CA3E1] text-[12px] font-[400] flex flex-col items-center gap-[4px]`}
+            className={`${(path === item?.link || (item?.link === '/game' && path?.includes(item?.link))) && '!text-[#0538BD]'} cursor-pointer text-[#8CA3E1] text-[12px] font-[400] flex flex-col items-center gap-[4px]`}
           >
             {item?.icon}
             {item?.title}

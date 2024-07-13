@@ -5,6 +5,7 @@ import CustomImage from '@/components/custom/CustomImage';
 import CustomTooltip from '@/components/custom/CustomTooltip';
 import useCopyToClipboard from '@/hook/useCopyToClipboard';
 import { formatWallet } from '@/utils';
+import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 
 const Game = () => {
@@ -12,6 +13,7 @@ const Game = () => {
   const [text, copy] = useCopyToClipboard();
   const [blings, setBlings] = useState<any>([]);
   const [point, setPoint] = useState(0);
+  const router = useRouter();
 
   const handleClick = (e: any) => {
     setPoint((prevPoint) => prevPoint + 0.1);
@@ -62,7 +64,9 @@ const Game = () => {
                   <IconLogout
                     className='cursor-pointer'
                     fill='#ef4444'
-                    // onClick={handleDisconnect}
+                    onClick={() => {
+                      router.push('/game');
+                    }}
                   />
                 </div>
                 <div className='text-[16px] font-[400] text-[#031F68]  flex items-center mt-[8px]'>

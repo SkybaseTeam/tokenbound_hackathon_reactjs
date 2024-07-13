@@ -40,7 +40,7 @@ const Intro = () => {
           height={280}
         />
         <Link
-          href='/play'
+          href='/game'
           className='absolute top-[-4rem] left-1/2  -translate-x-1/2 cursor-pointer'
         >
           <CustomImage
