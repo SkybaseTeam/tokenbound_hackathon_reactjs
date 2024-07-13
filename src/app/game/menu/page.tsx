@@ -168,9 +168,9 @@ const Menu = () => {
         Play Now
       </CustomButton>
 
-      <div className='bg-white rounded-[32px] pt-[86px] pb-[110px] text-[#031F68] w-full mt-[10rem] sm:mt-[15rem]'>
+      <div className='bg-white rounded-[32px] pt-[86px] pb-[110px] text-[#031F68] w-full mt-[10rem]'>
         <div className='layout-container flex flex-col items-center'>
-          <h2 className='text-[48px] font-[500] font-glancyr max-sm:text-center'>
+          <h2 className='text-[48px] font-[500] font-glancyr max-sm:text-center '>
             Mint the Item for your Token-Bound Account
           </h2>
           <p className='max-sm:text-center'>(This will increase your Token-Bound Account Power)</p>

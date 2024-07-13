@@ -1,6 +1,7 @@
 'use client';
 
 import IconLogout from '@/assets/icons/IconLogout';
+import Achievement from '@/components/Achievement';
 import CustomImage from '@/components/custom/CustomImage';
 import CustomTooltip from '@/components/custom/CustomTooltip';
 import useCopyToClipboard from '@/hook/useCopyToClipboard';
@@ -33,9 +34,13 @@ const Game = () => {
   };
   return (
     <div className='layout-container py-[6rem] sm:py-[8rem]'>
-      <div className='flex items-center justify-between max-sm:flex-col  max-sm:gap-[3rem]'>
+      <div className='flex justify-center'>
+        <Achievement userPoints={point} />
+      </div>
+
+      <div className='flex items-center justify-between max-sm:flex-col max-sm:gap-[3rem] max-sm:mt-[1rem]'>
         <div className=''>
-          <p className='text-[18px]'>Your Token-Bound Account</p>
+          <p className='text-[18px] max-sm:hidden'>Your Token-Bound Account</p>
           <div className='inline-block'>
             <div className='flex items-center rounded-2xl gap-[12px] px-[12px] py-[10px] text-[16px] font-[400] border border-[#EFFEA3] bg-[#FBFDEB] mt-[1rem]'>
               <CustomImage
@@ -77,7 +82,7 @@ const Game = () => {
           </div>
         </div>
 
-        <div className='text-[32px]'>Point: {point.toFixed(3)}</div>
+        <div className='text-[32px]'>Points: {point.toFixed(3)}</div>
 
         {blings.map((bling: any) => (
           <div
@@ -94,7 +99,7 @@ const Game = () => {
         <p>Tappp me!</p>
         <div
           onClick={handleClick}
-          className='bg-[url("/images/game/touch.webp")] mt-[-8rem] sm:mt-[-15rem] bg-contain bg-no-repeat w-[200px] h-[400px]  sm:w-[400px] sm:h-[800px] cursor-pointer active:scale-[98%]'
+          className='bg-[url("/images/game/touch.webp")] mt-[1rem] bg-contain bg-no-repeat w-[200px] h-[400px]  sm:w-[400px] sm:h-[800px] cursor-pointer active:scale-[98%]'
         ></div>
       </div>
     </div>
