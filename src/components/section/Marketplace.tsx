@@ -33,13 +33,13 @@ const Marketplace = () => {
           <div className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-[1rem] mt-[52px]  w-full'>
             {[...new Array(4)]?.length !== undefined
               ? [...new Array(4)]?.map((item: any) => (
-                  <div key={item?._id}>
+                  <Link href={'/market'} key={item?._id}>
                     <CardMarketplace
                       data={item}
                       setOpenModalBuyNTF={setOpenModalBuyNTF}
                       setSelectedNFT={setSelectedNFT}
                     />
-                  </div>
+                  </Link>
                 ))
               : [...new Array(4)].map((_, index) => (
                   <NftSkeleton key={index} />

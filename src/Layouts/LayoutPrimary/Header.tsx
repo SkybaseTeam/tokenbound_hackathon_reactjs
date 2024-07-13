@@ -52,7 +52,7 @@ const Header = () => {
   return (
     <div
       id='header'
-      className={`bg-[#0538BD] bg-opacity-80 transition-all duration-500 grid grid-cols-3 items-center py-[10px] px-[64px] fixed z-[999] w-full top-0 h-[68px]`}
+      className={`bg-[#0538BD]  transition-all duration-500 grid grid-cols-3 items-center py-[10px] px-[64px] fixed z-[999] w-full top-0 h-[68px]`}
     >
       <Logo />
 

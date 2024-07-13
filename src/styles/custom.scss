@@ -12,11 +12,10 @@
 .custom-input,
 .custom-input[disabled] {
   @apply bg-[#E6EBF8] border-none rounded-lg text-[#587AD3] text-base placeholder:text-[#587AD3] h-[48px];
-
   &:hover,
   &:focus-within {
     @apply border border-solid border-[#587AD3] bg-[#E6EBF8];
-    box-shadow: 0px 0px 16px #587ad3 !important;
+    // box-shadow: 0px 0px 16px #587ad3 !important;
   }
   input.ant-input {
     @apply bg-[#E6EBF8] border-none rounded-lg text-[#0538BD] text-base placeholder:text-[#587AD3];
@@ -37,4 +36,20 @@
 .ant-skeleton-active .ant-skeleton-button,
 .ant-skeleton-avatar {
   background-image: white !important;
+}
+
+.ant-message-notice-content {
+  @apply font-glancyr text-[16px] mt-[4rem];
+}
+.ant-message-notice-success .ant-message-notice-content {
+  background-color: #dcfc36 !important;
+}
+.ant-message-success {
+  @apply text-[#0538BD];
+}
+.ant-message-error {
+  @apply text-[#E13333];
+}
+.ant-message-custom-content {
+  @apply flex items-center gap-[8px];
 }

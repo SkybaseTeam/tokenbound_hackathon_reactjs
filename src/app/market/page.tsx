@@ -5,7 +5,7 @@ import CardMarketplace from '@/components/CardMarketplace';
 import CardMint from '@/components/CardMint';
 import ModalBuyNFT from '@/components/modal/ModalBuyNFT';
 import { collectionData } from '@/fetching/client/mint';
-import { toastError } from '@/utils/toast';
+import { toastError, toastSuccess } from '@/utils/toast';
 import useMounted from '@/hook/useMounted';
 import { listedNFT } from '@/fetching/client/home';
 import NftSkeleton from '@/components/custom/CustomSkeleton/NftSkeleton';

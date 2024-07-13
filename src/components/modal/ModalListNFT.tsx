@@ -84,60 +84,69 @@ const ModalListNFT = ({ open, onCancel, data }: any) => {
 
   return (
     <CustomModal width={435} open={open} onCancel={onCancel}>
-      <div className='p-4 md:p-8 '>
-        <h4 className='text-xl text-white font-medium mb-4'>List Items</h4>
+      <div className='sm:p-[24px] p-[12px] font-glancyr text-[#031F68]'>
+        <h4 className='text-[48px] font-[500] text-[#031F68] text-center'>
+          List for Sale
+        </h4>
 
-        <div className='overflow-y-auto scrollbar-custom max-h-[80vh]'>
-          <div className='text-white flex justify-between items-center space-x-2 pb-8 pt-2 border-b border-solid border-stroke'>
+        <div className='overflow-y-auto scrollbar-custom max-h-[80vh] mt-[25px]'>
+          <div className='text-white flex justify-between items-center gap-[24px]'>
             <CustomImage
               src={data?.image}
               alt='nft'
-              width={50}
-              height={50}
-              className='rounded-lg'
+              width={100}
+              height={100}
+              className='rounded-2xl'
             />
-            <div className='flex-1 flex flex-col justify-between truncate'>
-              <span className='text-lg font-medium truncate'>{data?.name}</span>
-              <div className='flex items-center space-x-2'>
-                <IconVerified />
-                <span className='text-secondary text-sm font-medium truncate'>
-                  Ventorii x Meme Land Potatoz
-                </span>
-              </div>
+            <div className='flex-1 flex flex-col justify-between truncate '>
+              <span className='truncate text-[24px] text-[#031F68] font-[400]'>
+                {data?.name || "NFT's Name"}
+              </span>
             </div>
           </div>
-          <div className='border-b border-solid border-stroke pb-5'>
-            <div className='mt-5'>
-              <p className='text-secondary text-base mb-[1rem]'>Price:</p>
-              <CustomInput
-                placeholder='Price'
-                pattern='^\d*\.?\d*$'
-                value={price}
-                onChange={(e: any) => {
-                  if (!e.target.value) setPrice('');
-                  if (e.target.value && e.target.validity.valid)
-                    setPrice(e.target.value);
-                }}
-              />
-            </div>
+
+          <div className='mt-[24px] flex items-center gap-[12px]'>
+            <CustomInput
+              placeholder='Enter the price'
+              pattern='^\d*\.?\d*$'
+              value={price}
+              onChange={(e: any) => {
+                if (!e.target.value) setPrice('');
+                if (e.target.value && e.target.validity.valid)
+                  setPrice(e.target.value);
+              }}
+            />
+            <p className='text-[18px] text-[#0538BD]'> .BLING</p>
           </div>
-          <div className='flex items-center justify-between text-white mt-4'>
-            <span>Fee</span>
+
+          <div className='flex items-center text-[16px] justify-between text-[#031F68] mt-[40px]'>
+            <span className='text-[#546678] font-[300]'>Fee</span>
             <div className='space-x-1 flex items-center font-medium text-base'>
-              0 DCOIN
+              0 BLING
+            </div>
+          </div>
+          <div className='flex items-center text-[16px] justify-between text-[#031F68] mt-[10px]'>
+            <span className='text-[#546678] font-[300]'>
+              Creator Royalties (0%)
+            </span>
+            <div className='space-x-1 flex items-center font-medium text-base'>
+              0 BLING
+            </div>
+          </div>
+          <div className='flex items-center text-[16px] justify-between text-[#031F68] mt-[10px]'>
+            <span className='text-[#546678] font-[300]'>Platform (0%)</span>
+            <div className='space-x-1 flex items-center font-medium text-base'>
+              0 BLING
             </div>
           </div>
         </div>
 
         <div className='flex items-center mt-5 gap-[1rem]'>
-          <CustomButton onClick={onCancel} className='btn-secondary basis-1/2'>
-            Cancel
-          </CustomButton>
           <CustomButton
             disabled={price === ''}
             loading={loading}
             onClick={onList}
-            className='btn-primary basis-1/2'
+            className='btn-primary w-full'
           >
             List Now
           </CustomButton>

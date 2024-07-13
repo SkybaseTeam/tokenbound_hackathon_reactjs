@@ -1,22 +1,25 @@
-import { notification } from 'antd';
+import IconFailMessage from '@/assets/icons/IconFailMessage';
+import IconTickMessage from '@/assets/icons/IconTickMessage';
+import { message } from 'antd';
 
 export const toastSuccess = (content: string) => {
-  notification.success({
-    message: 'Succcess',
-    description: content,
+  message.success({
+    content,
+    icon: <IconTickMessage />,
   });
 };
 
 export const toastError = (content: string) => {
-  notification.error({
-    message: 'Error',
-    description: content,
+  message.error({
+    content,
+    icon: <IconFailMessage />,
   });
 };
 
 export const toastWarning = (content: string) => {
-  notification.warning({
-    message: 'Warning',
-    description: content,
+  message.warning({
+    content,
+    // duration: 10000000,
+    // icon: <IconTickMessage />,
   });
 };

@@ -87,13 +87,13 @@ const ModalBuyNFT = ({ open, onCancel, selectedNFT }: any) => {
   };
 
   return (
-    <CustomModal width={435} open={open} onCancel={onCancel}>
+    <CustomModal width={450} open={open} onCancel={onCancel}>
       <div className='sm:p-[24px] p-[12px] font-glancyr text-[#031F68]'>
         <h4 className='text-[48px] font-[500] text-[#031F68] text-center'>
           Checkout
         </h4>
 
-        <div className='overflow-y-auto scrollbar-custom max-h-[80vh]'>
+        <div className='overflow-y-auto scrollbar-custom max-h-[80vh] mt-[30px]'>
           <div className='text-white flex justify-between items-center gap-[24px]'>
             <CustomImage
               src={selectedNFT?.image}
@@ -117,13 +117,13 @@ const ModalBuyNFT = ({ open, onCancel, selectedNFT }: any) => {
               <span className='text-sm '>{selectedNFT?.price} DCOIN</span>
             </div>
           </div>
-          <div className='flex items-center justify-between text-[#031F68] mt-[40px]'>
+          <div className='flex items-center text-[16px] justify-between text-[#031F68] mt-[40px]'>
             <span className='text-[#546678] font-[300]'>Total Price</span>
             <div className='space-x-1 flex items-center font-medium text-base'>
               {selectedNFT?.price} BLING
             </div>
           </div>
-          <div className='flex items-center justify-between text-[#031F68] '>
+          <div className='flex items-center text-[16px] justify-between text-[#031F68] mt-[10px]'>
             <span className='text-[#546678] font-[300]'>You will pay</span>
             <div className='space-x-1 flex items-center font-medium text-base'>
               {selectedNFT?.price} BLING
@@ -131,13 +131,10 @@ const ModalBuyNFT = ({ open, onCancel, selectedNFT }: any) => {
           </div>
         </div>
 
-        <div className='flex items-center mt-5 gap-[1rem]'>
-          <CustomButton onClick={onCancel} className='btn-secondary basis-1/2'>
-            Cancel
-          </CustomButton>
+        <div className='mt-[40px]'>
           <CustomButton
             onClick={onBuy}
-            className='btn-primary basis-1/2'
+            className='btn-primary w-full'
             loading={loading}
           >
             Buy Now

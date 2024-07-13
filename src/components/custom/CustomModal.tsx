@@ -17,7 +17,7 @@ const CustomModal = ({
     <Modal
       footer={null}
       centered={centered}
-      closable={closable}
+      
       destroyOnClose={destroyOnClose}
       className={`custom-modal ${className}`}
       getContainer={getContainer}

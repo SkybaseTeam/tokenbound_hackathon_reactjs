@@ -26,7 +26,7 @@
 
   button.btn-primary[disabled],
   button.btn-secondary[disabled] {
-    @apply bg-layer-3 text-tertiary bg-none hover:!text-tertiary;
+    @apply bg-[#EFFEA3] text-[#0538BD] bg-none hover:!text-[#0538BD] hover:!bg-[#EFFEA3];
   }
 
   .layout-container {
