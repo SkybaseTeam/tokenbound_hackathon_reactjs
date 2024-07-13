@@ -99,7 +99,7 @@ const Game = () => {
         <p>Tappp me!</p>
         <div
           onClick={handleClick}
-          className='bg-[url("/images/game/touch.webp")] mt-[1rem] bg-contain bg-no-repeat w-[200px] h-[400px]  sm:w-[400px] sm:h-[800px] cursor-pointer active:scale-[98%]'
+          className='bg-[url("/images/game/touch.webp")] mt-[1rem] bg-contain bg-no-repeat w-[200px] h-[300px]  sm:w-[400px] sm:h-[600px] cursor-pointer active:scale-[98%]'
         ></div>
       </div>
     </div>
