@@ -14,10 +14,7 @@ import erc721ABI from '@/abi/erc721.json';
 import erc20ABI from '@/abi/erc20.json';
 import CustomProgress from '@/components/custom/CustomProgress';
 import { CallData } from 'starknet';
-import CustomTooltip from '@/components/custom/CustomTooltip';
-import useCopyToClipboard from '@/hook/useCopyToClipboard';
-import { formatWallet } from '@/utils';
-import IconLogout from '@/assets/icons/IconLogout';
+import TbaProfile from '@/components/TbaProfile';
 
 const Menu = () => {
   const router = useRouter();
@@ -28,8 +25,6 @@ const Menu = () => {
   const [collection, setCollection] = useState<any>([]);
   const { isMounted } = useMounted();
   const [remainingPool, setRemainingPool] = useState<any>(0);
-  const [text, copy] = useCopyToClipboard();
-  const [point, setPoint] = useState(0);
 
   useEffect(() => {
     if (!isMounted) return;
@@ -116,48 +111,7 @@ const Menu = () => {
 
   return (
     <div className='layout-container py-[8rem] flex flex-col items-center'>
-      <div className=''>
-        <p className='text-[18px]'>Your Token-Bound Account</p>
-        <div className='inline-block'>
-          <div className='flex items-center rounded-2xl gap-[12px] px-[12px] py-[10px] text-[16px] font-[400] border border-[#EFFEA3] bg-[#FBFDEB] mt-[1rem]'>
-            <CustomImage
-              src='/images/default.webp'
-              width={70}
-              height={70}
-              alt='err'
-              className='rounded-2xl'
-            />
-            <div>
-              <div className='flex items-center gap-[8px]'>
-                <CustomTooltip
-                  title='Copied'
-                  placement='right'
-                  trigger={['click']}
-                >
-                  <div className='cursor-pointer text-[#031F68]'>
-                    <p
-                      onClick={() => copy(address as string)}
-                      // className='mt-[0.3rem]'
-                    >
-                      {formatWallet(address)}
-                    </p>
-                  </div>
-                </CustomTooltip>
-                <IconLogout
-                  className='cursor-pointer'
-                  fill='#ef4444'
-                  onClick={() => {
-                    router.push('/game');
-                  }}
-                />
-              </div>
-              <div className='text-[16px] font-[400] text-[#031F68]  flex items-center mt-[8px]'>
-                <p>Points: {point.toFixed(3)}</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      <TbaProfile />
 
       <CustomButton
         onClick={() => {
@@ -173,7 +127,9 @@ const Menu = () => {
           <h2 className='text-[48px] font-[500] font-glancyr max-sm:text-center '>
             Mint the Item for your Token-Bound Account
           </h2>
-          <p className='max-sm:text-center'>(This will increase your Token-Bound Account Power)</p>
+          <p className='max-sm:text-center'>
+            (This will increase your Token-Bound Account Power)
+          </p>
           <div className=' w-full mt-[63px]'>
             <div className='flex justify-center items-center gap-[56px] max-sm:flex-col'>
               <div className='p-[16px] rounded-2xl bg-[#E6EBF8] w-[484px] max-sm:w-full '>

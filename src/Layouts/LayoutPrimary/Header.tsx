@@ -147,9 +147,7 @@ const Header = () => {
                 {dcoin && address ? formatToken(dcoin, 18) : 0} BLING
                 <span className='px-[10px]'>|</span>
                 {ethBalance?.data && address
-                  ? parseFloat(
-                      formatToken(ethBalance?.data?.value as any, 18)
-                    ).toFixed(3) + ' '
+                  ? formatToken(ethBalance?.data?.value as any, 18) + ' '
                   : '0'}{' '}
                 {ethBalance?.data?.symbol || 'ETH'}
               </div>

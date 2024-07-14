@@ -16,7 +16,7 @@ const Play = () => {
   const [openModalTbaDetail, setOpenModalTbaDetail] = useState(false);
   const [selectedNFT, setSelectedNFT] = useState<any>(null);
   const router = useRouter();
-  const { profileData, getProfile } = useStore();
+  const { profileData, getProfile, setTbaLoginData } = useStore();
   const { address } = useAccount();
   const { signTypedDataAsync } = useSignTypedData({ primaryType: 'Validate' });
   const [loading, setLoading] = useState(false);
@@ -27,11 +27,12 @@ const Play = () => {
     getProfile();
   }, [address]);
 
-  const onJoinGame = async (item: any) => {
+  const onLoginGame = async (item: any) => {
     setLoading(true);
     try {
       // Sign argentX Address
       const signature = await handleSign();
+
       // Login
       // const loginData = await login({
       //   walletAddress: address,
@@ -42,10 +43,13 @@ const Play = () => {
       //   signData,
       // });
       // console.log(loginData);
+
+      // Set Tba Login Data
+      setTbaLoginData(item);
       // Join Game
       router.push(`/game/menu`);
     } catch (error) {
-      toastError('Join Game failed');
+      toastError('Login Game failed');
       console.log('error', error);
     } finally {
       setLoading(false);
@@ -130,12 +134,12 @@ const Play = () => {
                     <CustomButton
                       onClick={() => {
                         setSelectedNFT(item);
-                        onJoinGame(item);
+                        onLoginGame(item);
                       }}
                       className='btn-primary w-full'
                       loading={selectedNFT?.id === item?.id && loading}
                     >
-                      Join Game
+                      Login Game
                     </CustomButton>
                   </div>
                 </div>

@@ -10,6 +10,7 @@ import { useStarknetkitConnectModal } from 'starknetkit';
 import erc20abi from '@/abi/erc20.json';
 import useMounted from '@/hook/useMounted';
 import { profile } from '@/fetching/client/profile';
+import { getPoint } from '@/fetching/client/game';
 
 const storeContext = createContext<any>(null);
 
@@ -21,35 +22,20 @@ const StoreProvider = ({ children }: any) => {
   const { connect, connectors } = useConnect();
   const [dcoin, setDcoin] = useState(0);
   const { isMounted } = useMounted();
+  const { address } = useAccount();
+  const [profileData, setProfileData] = useState<any>();
+  const [point, setPoint] = useState(0);
+  const [tbaLoginData, setTbaLoginData] = useState<any>();
+  const [accessToken, setAccessToken] = useState<any>();
+
   const { starknetkitConnectModal } = useStarknetkitConnectModal({
     connectors: connectors as any,
   });
-  const { address } = useAccount();
-  const [profileData, setProfileData] = useState<any>();
 
   const connectWallet = async () => {
     const { connector }: any = await starknetkitConnectModal();
     connect({ connector });
   };
-
-  useEffect(() => {
-    if (!address) return;
-
-    // const handleLogin = async () => {
-    //   try {
-    //     const loginResponse = await login({
-    //       address,
-    //     });
-    //     const token = loginResponse?.data?.data?.token;
-    //     setItemLocalStorage('token', token);
-    //   } catch (error) {
-    //     toastError('Login failed');
-    //     console.log(error);
-    //   }
-    // };
-
-    // handleLogin();
-  }, [address]);
 
   const getDcoin = async () => {
     const erc20Contract = new Contract(
@@ -78,6 +64,19 @@ const StoreProvider = ({ children }: any) => {
     }
   };
 
+  const fetchPoint = async (tbaAddress: string) => {
+    try {
+      const profileResponse: any = await getPoint(
+        tbaAddress?.toLocaleLowerCase()
+      );
+      const data = profileResponse?.data;
+      setPoint(data);
+    } catch (err) {
+      toastError('Get profile failed');
+      console.log(err);
+    }
+  };
+
   return (
     <storeContext.Provider
       value={{
@@ -88,6 +87,13 @@ const StoreProvider = ({ children }: any) => {
         dcoin,
         profileData,
         getProfile,
+        point,
+        setPoint,
+        fetchPoint,
+        tbaLoginData,
+        setTbaLoginData,
+        accessToken,
+        setAccessToken,
       }}
     >
       {children}
