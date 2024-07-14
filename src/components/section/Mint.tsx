@@ -32,8 +32,8 @@ export default function Mint() {
       try {
         const collectionResponse: any = await collectionData();
 
-        const collectionResponseData = collectionResponse?.data?.data;
-        setCollection(collectionResponseData[0]);
+        const collectionResponseData = collectionResponse?.data;
+        setCollection(collectionResponseData);
       } catch (err) {
         toastError('Get Collection Data failed');
         console.log(err);
@@ -109,10 +109,13 @@ export default function Mint() {
   };
 
   return (
-    <section id="mint_section" className='bg-white rounded-[32px] pt-[86px] pb-[110px] text-[#031F68] '>
+    <section
+      id='mint_section'
+      className='bg-white rounded-[32px] pt-[86px] pb-[110px] text-[#031F68] '
+    >
       <div className='layout-container flex flex-col items-center'>
         <h2 className='text-[48px] font-[500] font-glancyr max-sm:text-center'>
-          ERC-6551 Token-bound Account
+          Mint your first Token-bound account and play game!
         </h2>
         <div className=' w-full mt-[63px]'>
           <div className='flex justify-center items-center gap-[56px] max-sm:flex-col'>
@@ -138,7 +141,7 @@ export default function Mint() {
                 alt='err'
               />
               <h1 className='text-[30px] font-[400] font-glancyr my-[21px]'>
-                Mint your first Token-bound account and play game!
+                ERC-6551 Token-bound Account
               </h1>
               <div className='flex items-center font-glancyr text-[16px] font-[300] text-[#546678] mb-[2px] justify-between'>
                 <p>Minted Item</p>

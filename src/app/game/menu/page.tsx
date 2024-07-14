@@ -38,8 +38,8 @@ const Menu = () => {
       try {
         const collectionResponse: any = await collectionData();
 
-        const collectionResponseData = collectionResponse?.data?.data;
-        setCollection(collectionResponseData[0]);
+        const collectionResponseData = collectionResponse?.data;
+        setCollection(collectionResponseData);
       } catch (err) {
         toastError('Get Collection Data failed');
         console.log(err);

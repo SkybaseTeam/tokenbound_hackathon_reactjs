@@ -21,20 +21,8 @@ const Profile = () => {
   const [openModalTbaDetail, setOpenModalTbaDetail] = useState(false);
   const [openModalCancelListNFT, setOpenModalCancelListNFT] = useState(false);
   const { address } = useAccount();
-  const [profileData, setProfileData] = useState<any>();
   const [selectedNFT, setSelectedNFT] = useState<any>(null);
-  const { dcoin } = useStore();
-
-  const getProfile = async () => {
-    try {
-      const profileResponse: any = await profile(address?.toLocaleLowerCase());
-      const data = profileResponse?.data;
-      setProfileData(data);
-    } catch (err) {
-      toastError('Get profile failed');
-      console.log(err);
-    }
-  };
+  const { dcoin, getProfile, profileData } = useStore();
 
   useEffect(() => {
     if (!address) return;

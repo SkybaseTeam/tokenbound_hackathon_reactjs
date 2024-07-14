@@ -9,6 +9,7 @@ import { Contract } from 'starknet';
 import { useStarknetkitConnectModal } from 'starknetkit';
 import erc20abi from '@/abi/erc20.json';
 import useMounted from '@/hook/useMounted';
+import { profile } from '@/fetching/client/profile';
 
 const storeContext = createContext<any>(null);
 
@@ -24,6 +25,7 @@ const StoreProvider = ({ children }: any) => {
     connectors: connectors as any,
   });
   const { address } = useAccount();
+  const [profileData, setProfileData] = useState<any>();
 
   const connectWallet = async () => {
     const { connector }: any = await starknetkitConnectModal();
@@ -65,6 +67,17 @@ const StoreProvider = ({ children }: any) => {
     }
   }, [isMounted, address]);
 
+  const getProfile = async () => {
+    try {
+      const profileResponse: any = await profile(address?.toLocaleLowerCase());
+      const data = profileResponse?.data;
+      setProfileData(data);
+    } catch (err) {
+      toastError('Get profile failed');
+      console.log(err);
+    }
+  };
+
   return (
     <storeContext.Provider
       value={{
@@ -73,6 +86,8 @@ const StoreProvider = ({ children }: any) => {
         connectWallet,
         getDcoin,
         dcoin,
+        profileData,
+        getProfile,
       }}
     >
       {children}
