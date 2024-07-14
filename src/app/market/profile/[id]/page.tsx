@@ -25,21 +25,19 @@ const Profile = () => {
   const [selectedNFT, setSelectedNFT] = useState<any>(null);
   const { dcoin } = useStore();
 
+  const getProfile = async () => {
+    try {
+      const profileResponse: any = await profile(address?.toLocaleLowerCase());
+      const data = profileResponse?.data;
+      setProfileData(data);
+    } catch (err) {
+      toastError('Get profile failed');
+      console.log(err);
+    }
+  };
+
   useEffect(() => {
     if (!address) return;
-
-    const getProfile = async () => {
-      try {
-        const profileResponse: any = await profile(
-          address?.toLocaleLowerCase()
-        );
-        const data = profileResponse?.data;
-        setProfileData(data);
-      } catch (err) {
-        toastError('Get profile failed');
-        console.log(err);
-      }
-    };
 
     getProfile();
   }, [address]);
@@ -57,6 +55,7 @@ const Profile = () => {
           setOpenModalListNFT(false);
         }}
         data={selectedNFT}
+        getProfile={getProfile}
       />
       <ModalCancelListNFT
         open={openModalCancelListNFT}

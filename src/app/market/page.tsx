@@ -31,9 +31,9 @@ const MarketContainer = () => {
         const [collectionResponse, listedNFTResponse]: any =
           await Promise.allSettled([collectionData(), listedNFT()]);
 
-        const collectionResponseData = collectionResponse?.value?.data?.data;
+        const collectionResponseData = collectionResponse?.value?.data;
         setCollection(collectionResponseData);
-        const listedNFTResponseData = listedNFTResponse?.value?.data?.data;
+        const listedNFTResponseData = listedNFTResponse?.value?.data;
         setListedNFTData(listedNFTResponseData);
       } catch (err) {
         toastError('Get Collection Data failed');
@@ -86,16 +86,14 @@ const MarketContainer = () => {
         </div>
 
         <div className='grid extra-sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 mt-[40px] gap-[16px]'>
-          {collection?.length !== undefined ? (
-            collection?.map((item: any) => (
-              <div key={item?._id}>
-                <CardMint data={item} />
-              </div>
-            ))
+          {collection !== undefined ? (
+            <div key={collection?.id}>
+              <CardMint data={collection} />
+            </div>
           ) : (
             <NftSkeleton />
           )}
-          {listedNFTData?.length !== undefined
+          {listedNFTData !== undefined
             ? listedNFTData?.map((item: any) => (
                 <div key={item?._id}>
                   <CardMarketplace
@@ -106,7 +104,7 @@ const MarketContainer = () => {
                   />
                 </div>
               ))
-            : [...new Array(5)].map((_, index) => <NftSkeleton key={index} />)}
+            : [...new Array(3)].map((_, index) => <NftSkeleton key={index} />)}
         </div>
       </div>
     </div>

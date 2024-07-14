@@ -7,8 +7,9 @@ import { useAccount, useProvider } from '@starknet-react/core';
 import { useStore } from '@/context/store';
 import { toastError, toastSuccess } from '@/utils/toast';
 import { CallData, Contract, cairo } from 'starknet';
+import { refreshListing, refreshPrice } from '@/fetching/client/home';
 
-const ModalListNFT = ({ open, onCancel, data }: any) => {
+const ModalListNFT = ({ open, onCancel, data, getProfile }: any) => {
   const [price, setPrice] = useState('');
 
   const { isConnected, account, address } = useAccount();
@@ -72,6 +73,9 @@ const ModalListNFT = ({ open, onCancel, data }: any) => {
       ]);
 
       await provider.waitForTransaction(tx?.transaction_hash as any);
+      // await refreshListing({ token_id: TOKEN_ID });
+      // await refreshPrice({ token_id: TOKEN_ID });
+      // await getProfile();
       toastSuccess('List for sale success');
       onCancel();
     } catch (err) {
