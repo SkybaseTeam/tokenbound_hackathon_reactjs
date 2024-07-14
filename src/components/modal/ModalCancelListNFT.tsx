@@ -42,7 +42,7 @@ const ModalCancelListNFT = ({ open, onCancel, data, getProfile }: any) => {
       );
       await provider.waitForTransaction(tx?.transaction_hash as any);
       await refreshListing({ tokenId: TOKEN_ID });
-      /*  path.includes('/profile') && */ await getProfile();
+      /*  path.includes('/profile') && */ await getProfile(address);
       // if (path === '/') {
       //   const newListedNfts = await listedNFT();
       //   setListedNFTData(newListedNfts?.data?.data);

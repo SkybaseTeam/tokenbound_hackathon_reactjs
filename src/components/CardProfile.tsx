@@ -26,7 +26,7 @@ const CardProfile = ({
       >
         <div className='aspect-square w-full relative overflow-hidden rounded-2xl'>
           <CustomImage
-            src={data?.image}
+            src={data?.tba_image}
             fill
             alt='Nft'
             className='object-cover w-full rounded-2xl group-hover:scale-110 transition-all duration-500 ease-in-out'
@@ -34,7 +34,7 @@ const CardProfile = ({
         </div>
         <div className='my-[16px]'>
           <p className='text-[18px] uppercase font-[400] truncate'>
-            {data?.name || 'NFT Name'}
+            {data?.tba_name || 'NFT Name'}
           </p>
 
           <div

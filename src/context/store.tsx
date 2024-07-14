@@ -27,6 +27,7 @@ const StoreProvider = ({ children }: any) => {
   const [point, setPoint] = useState(0);
   const [tbaLoginData, setTbaLoginData] = useState<any>();
   const [accessToken, setAccessToken] = useState<any>();
+  const [listedNFTData, setListedNFTData] = useState<any>([]);
 
   const { starknetkitConnectModal } = useStarknetkitConnectModal({
     connectors: connectors as any,
@@ -56,7 +57,7 @@ const StoreProvider = ({ children }: any) => {
   const getProfile = async () => {
     try {
       const profileResponse: any = await profile(address?.toLocaleLowerCase());
-      const data = profileResponse?.data;
+      const data = profileResponse?.data?.data;
       setProfileData(data);
     } catch (err) {
       toastError('Get profile failed');
@@ -94,6 +95,8 @@ const StoreProvider = ({ children }: any) => {
         setTbaLoginData,
         accessToken,
         setAccessToken,
+        listedNFTData,
+        setListedNFTData,
       }}
     >
       {children}

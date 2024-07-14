@@ -24,7 +24,7 @@ const Play = () => {
   useEffect(() => {
     if (!address) return;
 
-    getProfile();
+    getProfile(address);
   }, [address]);
 
   const onLoginGame = async (item: any) => {

@@ -24,7 +24,7 @@ const TbaProfile = () => {
       <div className='inline-block'>
         <div className='flex items-center rounded-2xl gap-[12px] px-[12px] py-[10px] text-[16px] font-[400] border border-[#EFFEA3] bg-[#FBFDEB] mt-[1rem]'>
           <CustomImage
-            src={tbaLoginData?.image}
+            src={tbaLoginData?.tba_image}
             width={70}
             height={70}
             alt='err'

@@ -75,7 +75,7 @@ const ModalListNFT = ({ open, onCancel, data, getProfile }: any) => {
       await provider.waitForTransaction(tx?.transaction_hash as any);
       await refreshListing({ tokenId: TOKEN_ID });
       await refreshPrice({ tokenId: TOKEN_ID });
-      await getProfile();
+      await getProfile(address);
       toastSuccess('List for sale success');
       onCancel();
     } catch (err) {

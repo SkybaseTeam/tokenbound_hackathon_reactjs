@@ -10,6 +10,7 @@ import { useAccount, useContract, useProvider } from '@starknet-react/core';
 import { useEffect, useState } from 'react';
 import { CallData } from 'starknet';
 import erc721ABI from '@/abi/erc721.json';
+import { refreshMintStatus } from '@/fetching/client/mint';
 
 export default function Mint() {
   const { isConnected, account, address } = useAccount();
@@ -61,13 +62,21 @@ export default function Mint() {
         },
       ]);
 
-      const data = await provider.waitForTransaction(
+      const data: any = await provider.waitForTransaction(
         tx?.transaction_hash as any
       );
-      console.log(data);
+      const tokenId = parseInt(data?.events[3]?.data[2], 16);
+      console.log('TokenId', tokenId);
+      await Promise.allSettled([
+        refreshMintStatus({
+          token_id: tokenId,
+          owner_address: address,
+          collection_address: process.env.NEXT_PUBLIC_ERC721_CONTRACT_ADDRESS,
+        }),
+        getDcoin(),
+        getRemainingPool(),
+      ]);
       toastSuccess('Mint success');
-      getDcoin();
-      getRemainingPool();
     } catch (err) {
       console.log(err);
       toastError('Mint failed');

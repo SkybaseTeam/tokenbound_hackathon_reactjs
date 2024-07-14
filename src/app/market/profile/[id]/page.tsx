@@ -27,7 +27,7 @@ const Profile = () => {
   useEffect(() => {
     if (!address) return;
 
-    getProfile();
+    getProfile(address);
   }, [address]);
 
   const ethBalance = useBalance({
