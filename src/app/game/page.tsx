@@ -5,9 +5,12 @@ import CustomImage from '@/components/custom/CustomImage';
 import NftSkeleton from '@/components/custom/CustomSkeleton/NftSkeleton';
 import ModalTbaDetail from '@/components/modal/ModalTbaDetail';
 import { useStore } from '@/context/store';
-import { useAccount } from '@starknet-react/core';
+import { login } from '@/fetching/client/auth';
+import { toastError } from '@/utils/toast';
+import { useAccount, useSignTypedData } from '@starknet-react/core';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
+import { ArraySignatureType, typedData, TypedData } from 'starknet';
 
 const Play = () => {
   const [openModalTbaDetail, setOpenModalTbaDetail] = useState(false);
@@ -15,12 +18,73 @@ const Play = () => {
   const router = useRouter();
   const { profileData, getProfile } = useStore();
   const { address } = useAccount();
+  const { signTypedDataAsync } = useSignTypedData({ primaryType: 'Validate' });
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (!address) return;
 
     getProfile();
   }, [address]);
+
+  const onJoinGame = async (item: any) => {
+    setLoading(true);
+    try {
+      // Sign argentX Address
+      const signature = await handleSign();
+      // Login
+      // const loginData = await login({
+      //   walletAddress: address,
+      //   tokenboundAddress: item?.tokenboundAddress,
+      //   tokenContractAddress: process.env.NEXT_PUBLIC_ERC721_CONTRACT_ADDRESS,
+      //   tokenId: item?.tokenId,
+      //   signature: signature[0],
+      //   signData,
+      // });
+      // console.log(loginData);
+      // Join Game
+      router.push(`/game/menu`);
+    } catch (error) {
+      toastError('Join Game failed');
+      console.log('error', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleSign = async () => {
+    const typedDataValidate: TypedData = signData;
+    const msgHash = typedData.getMessageHash(typedDataValidate, address as any);
+    const arraySignature = (await signTypedDataAsync(
+      typedDataValidate
+    )) as ArraySignatureType;
+    let signatureS = '';
+    return [arraySignature, signatureS, msgHash];
+  };
+
+  const signData = {
+    types: {
+      StarkNetDomain: [
+        { name: 'name', type: 'felt' },
+        { name: 'version', type: 'felt' },
+        { name: 'chainId', type: 'felt' },
+      ],
+      Validate: [
+        { name: 'signer', type: 'felt' },
+        { name: 'expire', type: 'string' },
+      ],
+    },
+    primaryType: 'Validate',
+    domain: {
+      name: 'BlingBling',
+      version: '1',
+      chainId: '0x534e5f5345504f4c4941',
+    },
+    message: {
+      signer: address,
+      expire: Date.now() + 1000 * 60 * 5,
+    },
+  };
 
   return (
     <div className=''>
@@ -65,9 +129,11 @@ const Play = () => {
 
                     <CustomButton
                       onClick={() => {
-                        router.push(`/game/menu`);
+                        setSelectedNFT(item);
+                        onJoinGame(item);
                       }}
                       className='btn-primary w-full'
+                      loading={selectedNFT?.id === item?.id && loading}
                     >
                       Join Game
                     </CustomButton>

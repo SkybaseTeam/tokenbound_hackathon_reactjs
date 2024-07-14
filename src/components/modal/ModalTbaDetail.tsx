@@ -36,7 +36,7 @@ const ModalTbaDetail = ({
               <div className='text-[18px] font-[300] text-[#546678]'>
                 Token-Bound Address
                 <p className='mt-[8px] font-[400] text-[24px] text-[#031F68]'>
-                  {selectedNFT?.tokenboundAddress}
+                  {formatWallet(selectedNFT?.tokenboundAddress)}
                 </p>
               </div>
               <div className='text-[18px] font-[300] text-[#546678]'>
@@ -69,12 +69,12 @@ const ModalTbaDetail = ({
             <div className='mt-[40px]'>
               <p className='text-[24px] text-[#546678]'>Items</p>
               <div className='grid sm:grid-cols-2 gap-[16px] mt-[16px]'>
-                {[...Array(4)].map((_, index) => (
+                {selectedNFT?.nfts?.map((item: any) => (
                   <a
                     href='https://starkscan.co/'
                     target='_blank'
                     className='bg-[#F4FEC1] p-[16px] rounded-2xl flex items-center gap-[12px] cursor-pointer hover:translate-y-[-0.5rem] transition-all'
-                    key={index}
+                    key={item?.id}
                   >
                     <CustomImage
                       src='/images/default.webp'
@@ -85,10 +85,10 @@ const ModalTbaDetail = ({
                     />
                     <div>
                       <p className='text-[18px] font-[300] text-[#546678]'>
-                        Body
+                        NFT
                       </p>
                       <p className='mt-[8px] text-[24px] font-[400] text-[#0538BD]'>
-                        Muscular
+                        {item?.name}
                       </p>
                     </div>
                   </a>
