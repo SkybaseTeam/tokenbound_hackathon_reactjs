@@ -58,8 +58,6 @@ const Header = () => {
     },
   ];
 
-  console.log(path);
-
   const ethBalance = useBalance({
     address,
     watch: false,

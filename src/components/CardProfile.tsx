@@ -36,9 +36,14 @@ const CardProfile = ({
           <p className='text-[18px] uppercase font-[400] truncate'>
             {data?.name || 'NFT Name'}
           </p>
-          <div className='flex items-center gap-[12px] mt-[12px]  font-[300] text-[16px]'>
+
+          <div
+            className={` flex items-center gap-[12px] mt-[12px]  font-[300] text-[16px]`}
+          >
             <p className='text-[#546678]'>Price</p>
-            <p className='text-[18px] font-[400]'>{data?.price || ''} BLING</p>
+            <p className='text-[18px] font-[400]'>
+              {data?.listing ? data?.price + ' BLING' : 'Unlisted'}
+            </p>
           </div>
         </div>
       </div>

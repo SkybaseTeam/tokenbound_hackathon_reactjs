@@ -5,6 +5,7 @@ import CardProfile from '@/components/CardProfile';
 import CustomButton from '@/components/custom/CustomButton';
 import CustomImage from '@/components/custom/CustomImage';
 import CustomInput from '@/components/custom/CustomInput';
+import NftSkeleton from '@/components/custom/CustomSkeleton/NftSkeleton';
 import ModalCancelListNFT from '@/components/modal/ModalCancelListNFT';
 import ModalListNFT from '@/components/modal/ModalListNFT';
 import ModalTbaDetail from '@/components/modal/ModalTbaDetail';
@@ -20,13 +21,9 @@ const Profile = () => {
   const [openModalTbaDetail, setOpenModalTbaDetail] = useState(false);
   const [openModalCancelListNFT, setOpenModalCancelListNFT] = useState(false);
   const { address } = useAccount();
-  const [profileData, setProfileData] = useState<any>(null);
+  const [profileData, setProfileData] = useState<any>();
   const [selectedNFT, setSelectedNFT] = useState<any>(null);
   const { dcoin } = useStore();
-
-  useEffect(() => {
-    console.log('address', address);
-  }, [address]);
 
   useEffect(() => {
     if (!address) return;
@@ -36,8 +33,7 @@ const Profile = () => {
         const profileResponse: any = await profile(
           address?.toLocaleLowerCase()
         );
-        const data = profileResponse?.data?.data;
-        console.log(profileResponse);
+        const data = profileResponse?.data;
         setProfileData(data);
       } catch (err) {
         toastError('Get profile failed');
@@ -146,17 +142,19 @@ const Profile = () => {
         </div>
 
         <div className='grid extra-sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 mt-[40px] gap-[16px]'>
-          {[...Array(5)]?.map((item: any, index: any) => (
-            <div key={item?._id || index}>
-              <CardProfile
-                data={item}
-                setOpenModalListNFT={setOpenModalListNFT}
-                setOpenModalCancelListNFT={setOpenModalCancelListNFT}
-                setOpenModalTbaDetail={setOpenModalTbaDetail}
-                setSelectedNFT={setSelectedNFT}
-              />
-            </div>
-          ))}
+          {profileData?.length !== undefined
+            ? profileData?.map((item: any, index: any) => (
+                <div key={item?._id || index}>
+                  <CardProfile
+                    data={item}
+                    setOpenModalListNFT={setOpenModalListNFT}
+                    setOpenModalCancelListNFT={setOpenModalCancelListNFT}
+                    setOpenModalTbaDetail={setOpenModalTbaDetail}
+                    setSelectedNFT={setSelectedNFT}
+                  />
+                </div>
+              ))
+            : [...new Array(4)].map((_, index) => <NftSkeleton key={index} />)}
         </div>
       </div>
     </div>

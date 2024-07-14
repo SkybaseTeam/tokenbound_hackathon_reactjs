@@ -4,7 +4,6 @@ import CustomImage from '../custom/CustomImage';
 import IconVerified from '@/assets/icons/IconVerified';
 import CustomButton from '../custom/CustomButton';
 import { useAccount, useProvider } from '@starknet-react/core';
-import useCopyToClipboard from '@/hook/useCopyToClipboard';
 import { formatWallet } from '@/utils';
 
 const ModalTbaDetail = ({
@@ -14,7 +13,6 @@ const ModalTbaDetail = ({
   setOpenModalBuyNTF,
   showBuy = true,
 }: any) => {
-  const [text, copy] = useCopyToClipboard();
   const { isConnected, account, address } = useAccount();
 
   return (
@@ -38,13 +36,13 @@ const ModalTbaDetail = ({
               <div className='text-[18px] font-[300] text-[#546678]'>
                 Token-Bound Address
                 <p className='mt-[8px] font-[400] text-[24px] text-[#031F68]'>
-                  TBA Address
+                  {selectedNFT?.tokenboundAddress}
                 </p>
               </div>
               <div className='text-[18px] font-[300] text-[#546678]'>
                 Owner
                 <p className='mt-[8px] font-[400] text-[24px] text-[#031F68]'>
-                  {formatWallet(address)}
+                  {formatWallet(selectedNFT?.walletAddress)}
                 </p>
               </div>
             </div>

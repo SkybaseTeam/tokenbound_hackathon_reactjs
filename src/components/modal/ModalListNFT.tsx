@@ -20,7 +20,7 @@ const ModalListNFT = ({ open, onCancel, data }: any) => {
     setPrice('');
   }, [open]);
 
-  const TOKEN_ID = data?.token_id;
+  const TOKEN_ID = data?.tokenId;
 
   const onList = async () => {
     if (!isConnected) {
@@ -63,6 +63,8 @@ const ModalListNFT = ({ open, onCancel, data }: any) => {
             .NEXT_PUBLIC_MARKET_CONTRACT_ADDRESS as string,
           entrypoint: 'listing_nft',
           calldata: CallData.compile({
+            token_address: process.env
+              .NEXT_PUBLIC_ERC721_CONTRACT_ADDRESS as string,
             token_id: cairo.uint256(TOKEN_ID),
             price: cairo.uint256(Number(price) * 10 ** 18),
           }),
