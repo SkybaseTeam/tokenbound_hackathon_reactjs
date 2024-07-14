@@ -5,7 +5,7 @@ import CustomImage from '@/components/custom/CustomImage';
 import NftSkeleton from '@/components/custom/CustomSkeleton/NftSkeleton';
 import ModalTbaDetail from '@/components/modal/ModalTbaDetail';
 import { useStore } from '@/context/store';
-import { login } from '@/fetching/client/auth';
+import { login } from '@/fetching/client/game';
 import { toastError } from '@/utils/toast';
 import { useAccount, useSignTypedData } from '@starknet-react/core';
 import { useRouter } from 'next/navigation';
@@ -32,17 +32,16 @@ const Play = () => {
     try {
       // Sign argentX Address
       const signature = await handleSign();
+      console.log(signature);
 
       // Login
-      // const loginData = await login({
-      //   walletAddress: address,
-      //   tokenboundAddress: item?.tokenboundAddress,
-      //   tokenContractAddress: process.env.NEXT_PUBLIC_ERC721_CONTRACT_ADDRESS,
-      //   tokenId: item?.tokenId,
-      //   signature: signature[0],
-      //   signData,
-      // });
-      // console.log(loginData);
+      const loginData = await login({
+        address: address,
+        tba_address: item?.tba_address,
+        signature: signature[0],
+        sign_data: signData,
+      });
+      console.log(loginData);
 
       // Set Tba Login Data
       setTbaLoginData(item);
@@ -118,7 +117,7 @@ const Play = () => {
                     >
                       <div className='aspect-square w-full relative overflow-hidden rounded-2xl'>
                         <CustomImage
-                          src={item?.image}
+                          src={item?.tba_image}
                           fill
                           alt='Nft'
                           className='object-cover w-full rounded-2xl group-hover:scale-110 transition-all duration-500 ease-in-out'
@@ -126,7 +125,7 @@ const Play = () => {
                       </div>
                       <div className='my-[16px]'>
                         <p className='text-[18px] uppercase font-[400] truncate'>
-                          {item?.name || 'NFT Name'}
+                          {item?.tba_name || 'NFT Name'}
                         </p>
                       </div>
                     </div>
@@ -137,7 +136,7 @@ const Play = () => {
                         onLoginGame(item);
                       }}
                       className='btn-primary w-full'
-                      loading={selectedNFT?.id === item?.id && loading}
+                      loading={selectedNFT?._id === item?._id && loading}
                     >
                       Login Game
                     </CustomButton>

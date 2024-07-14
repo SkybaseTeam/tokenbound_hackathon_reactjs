@@ -9,7 +9,7 @@ export const refreshOwner = async (data: any) => {
 };
 
 export const refreshListing = async (data: any) => {
-  return await axiosClient.post('/tokenbound/refresh-listing-status', data);
+  return await axiosClient.post('/market/refresh-listing', data);
 };
 
 export const refreshPrice = async (data: any) => {

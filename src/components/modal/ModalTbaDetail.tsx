@@ -19,12 +19,12 @@ const ModalTbaDetail = ({
     <CustomModal width={1205} open={open} onCancel={onCancel}>
       <div className='sm:p-[24px] p-[12px] font-glancyr text-[#031F68] max-lg:max-h-[80vh] overflow-auto max-sm:py-[2rem]'>
         <h2 className='text-[48px] font-[500] text-[#031F68]'>
-          {selectedNFT?.name}
+          {selectedNFT?.tba_name}
         </h2>
         <div className='mt-[20px] flex items-start gap-[40px] max-lg:flex-col'>
           <div className='lg:basis-1/2 w-full relative aspect-square'>
             <CustomImage
-              src={selectedNFT?.image}
+              src={selectedNFT?.tba_image}
               fill
               alt='err'
               className='rounded-2xl'
@@ -36,13 +36,13 @@ const ModalTbaDetail = ({
               <div className='text-[18px] font-[300] text-[#546678]'>
                 Token-Bound Address
                 <p className='mt-[8px] font-[400] text-[24px] text-[#031F68]'>
-                  {formatWallet(selectedNFT?.tokenboundAddress)}
+                  {formatWallet(selectedNFT?.tba_address)}
                 </p>
               </div>
               <div className='text-[18px] font-[300] text-[#546678]'>
                 Owner
                 <p className='mt-[8px] font-[400] text-[24px] text-[#031F68]'>
-                  {formatWallet(selectedNFT?.walletAddress)}
+                  {formatWallet(selectedNFT?.owner_address)}
                 </p>
               </div>
             </div>
@@ -52,7 +52,7 @@ const ModalTbaDetail = ({
                 <div className=''>
                   <p className='text-[18px] font-[300] text-white'>Price</p>
                   <p className='mt-[8px] text-[32px] font-[400] text-[#DCFC36]'>
-                    20 BLING
+                    {selectedNFT?.price} BLING
                   </p>
                 </div>
                 <CustomButton

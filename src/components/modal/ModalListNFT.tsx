@@ -21,7 +21,7 @@ const ModalListNFT = ({ open, onCancel, data, getProfile }: any) => {
     setPrice('');
   }, [open]);
 
-  const TOKEN_ID = data?.tokenId;
+  const TOKEN_ID = data?.token_id;
 
   const onList = async () => {
     if (!isConnected) {
@@ -73,8 +73,10 @@ const ModalListNFT = ({ open, onCancel, data, getProfile }: any) => {
       ]);
 
       await provider.waitForTransaction(tx?.transaction_hash as any);
-      await refreshListing({ tokenId: TOKEN_ID });
-      await refreshPrice({ tokenId: TOKEN_ID });
+      await refreshListing({
+        token_id: TOKEN_ID,
+        collection_address: process.env.NEXT_PUBLIC_ERC721_CONTRACT_ADDRESS,
+      });
       await getProfile(address);
       toastSuccess('List for sale success');
       onCancel();
