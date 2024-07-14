@@ -4,8 +4,7 @@ import React, { useEffect, useState } from 'react';
 import CardMarketplace from '@/components/CardMarketplace';
 import CardMint from '@/components/CardMint';
 import ModalBuyNFT from '@/components/modal/ModalBuyNFT';
-import { collectionData } from '@/fetching/client/mint';
-import { toastError, toastSuccess } from '@/utils/toast';
+import { toastError } from '@/utils/toast';
 import useMounted from '@/hook/useMounted';
 import { listedNFT } from '@/fetching/client/home';
 import NftSkeleton from '@/components/custom/CustomSkeleton/NftSkeleton';
@@ -18,7 +17,7 @@ import ModalTbaDetail from '@/components/modal/ModalTbaDetail';
 const MarketContainer = () => {
   const [openModalBuyNTF, setOpenModalBuyNTF] = useState(false);
   const [openModalTbaDetail, setOpenModalTbaDetail] = useState(false);
-  const [collection, setCollection] = useState<any>();
+
   const [listedNFTData, setListedNFTData] = useState<any>();
   const { isMounted } = useMounted();
   const [selectedNFT, setSelectedNFT] = useState<any>(null);
@@ -28,11 +27,10 @@ const MarketContainer = () => {
 
     const getHomeData = async () => {
       try {
-        const [collectionResponse, listedNFTResponse]: any =
-          await Promise.allSettled([collectionData(), listedNFT()]);
+        const [listedNFTResponse]: any = await Promise.allSettled([
+          listedNFT(),
+        ]);
 
-        const collectionResponseData = collectionResponse?.value?.data;
-        setCollection(collectionResponseData);
         const listedNFTResponseData = listedNFTResponse?.value?.data;
         setListedNFTData(listedNFTResponseData);
       } catch (err) {
@@ -86,13 +84,8 @@ const MarketContainer = () => {
         </div>
 
         <div className='grid extra-sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 mt-[40px] gap-[16px]'>
-          {collection !== undefined ? (
-            <div key={collection?.id}>
-              <CardMint data={collection} />
-            </div>
-          ) : (
-            <NftSkeleton />
-          )}
+          <CardMint />
+
           {listedNFTData !== undefined
             ? listedNFTData?.map((item: any) => (
                 <div key={item?._id}>

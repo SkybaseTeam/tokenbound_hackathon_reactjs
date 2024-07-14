@@ -1,9 +1,6 @@
 'use client';
 
-import IconLogout from '@/assets/icons/IconLogout';
 import Achievement from '@/components/Achievement';
-import CustomImage from '@/components/custom/CustomImage';
-import CustomTooltip from '@/components/custom/CustomTooltip';
 import TbaProfile from '@/components/TbaProfile';
 import { useStore } from '@/context/store';
 import { increasePoint } from '@/fetching/client/game';

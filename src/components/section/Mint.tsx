@@ -4,53 +4,21 @@ import CustomButton from '@/components/custom/CustomButton';
 import CustomImage from '@/components/custom/CustomImage';
 import CustomProgress from '@/components/custom/CustomProgress';
 import { useStore } from '@/context/store';
-import { collectionData } from '@/fetching/client/mint';
 import useMounted from '@/hook/useMounted';
 import { toastError, toastSuccess } from '@/utils/toast';
 import { useAccount, useContract, useProvider } from '@starknet-react/core';
-import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import { cairo, CallData } from 'starknet';
+import { CallData } from 'starknet';
 import erc721ABI from '@/abi/erc721.json';
-import erc20ABI from '@/abi/erc20.json';
-import ImageSkeleton from '../custom/CustomSkeleton/ImageSkeleton';
 
 export default function Mint() {
-  const router = useRouter();
   const { isConnected, account, address } = useAccount();
   const { connectWallet, getDcoin } = useStore();
   const { provider } = useProvider();
   const [loading, setLoading] = useState(false);
-  const [collection, setCollection] = useState<any>([]);
   const { isMounted } = useMounted();
   const [remainingPool, setRemainingPool] = useState<any>(0);
-
-  useEffect(() => {
-    if (!isMounted) return;
-
-    const getHomeData = async () => {
-      try {
-        const collectionResponse: any = await collectionData();
-
-        const collectionResponseData = collectionResponse?.data;
-        setCollection(collectionResponseData);
-      } catch (err) {
-        toastError('Get Collection Data failed');
-        console.log(err);
-      }
-    };
-
-    getHomeData();
-  }, [isMounted]);
-
-  const MINT_PRICE = collection?.mint_price;
-
-  const TOTAL_POOL_MINT = 100;
-
-  const { contract: erc20Contract } = useContract({
-    abi: erc20ABI,
-    address: process.env.NEXT_PUBLIC_ERC20_CONTRACT_ADDRESS,
-  });
+  const TOTAL_POOL_MINT = 1000;
 
   const { contract: erc721Contract } = useContract({
     abi: erc721ABI,
@@ -59,7 +27,6 @@ export default function Mint() {
 
   const getRemainingPool = async () => {
     const remainingPool = await erc721Contract?.get_remaining_mint(1);
-    // console.log('here', Number(remainingPool));
     setRemainingPool(remainingPool);
   };
 
@@ -83,23 +50,24 @@ export default function Mint() {
       const tx = await account?.execute([
         {
           contractAddress: process.env
-            .NEXT_PUBLIC_REGISTRY_CONTRACT_ADDRESS as string,
-          entrypoint: 'create_account',
+            .NEXT_PUBLIC_ERC721_CONTRACT_ADDRESS as string,
+          entrypoint: 'mint_nft',
           calldata: CallData.compile({
+            registry_contract: process.env
+              .NEXT_PUBLIC_REGISTRY_CONTRACT_ADDRESS as string,
             implementation_hash: process.env
               .NEXT_PUBLIC_ACCOUNT_CLASSHASH as string,
-            token_contract: process.env
-              .NEXT_PUBLIC_ERC721_CONTRACT_ADDRESS as string,
-            salt: 123,
           }),
         },
       ]);
 
-      await provider.waitForTransaction(tx?.transaction_hash as any);
+      const data = await provider.waitForTransaction(
+        tx?.transaction_hash as any
+      );
+      console.log(data);
       toastSuccess('Mint success');
       getDcoin();
       getRemainingPool();
-      console.log('tx hash', tx);
     } catch (err) {
       console.log(err);
       toastError('Mint failed');
@@ -121,16 +89,12 @@ export default function Mint() {
           <div className='flex justify-center items-center gap-[56px] max-sm:flex-col'>
             <div className='p-[16px] rounded-2xl bg-[#E6EBF8] w-[484px] max-sm:w-full '>
               <div className='aspect-square relative rounded-2xl'>
-                {collection?.image ? (
-                  <CustomImage
-                    src={collection?.image}
-                    className='rounded-2xl'
-                    alt='err'
-                    fill
-                  />
-                ) : (
-                  <ImageSkeleton />
-                )}
+                <CustomImage
+                  src='https://i.seadn.io/s/raw/files/af7296d9d79348b19bfdb151f5698cb7.gif?auto=format&dpr=1&w=1000'
+                  className='rounded-2xl'
+                  alt='err'
+                  fill
+                />
               </div>
             </div>
             <div className='w-[566px] max-sm:w-full flex flex-col'>

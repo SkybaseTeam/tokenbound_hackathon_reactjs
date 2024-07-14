@@ -97,23 +97,24 @@ const Profile = () => {
           </div>
         </div>
 
-        <div className='grid grid-cols-3 gap-[3rem]'>
-          <div className='md:text-right'>
+        <div className='grid grid-cols-2 gap-[3rem]'>
+          {/* <div className='md:text-right'>
             <p className='text-[18px] font-[400]'>Rank</p>
             <p className='text-[24px] md:text-[48px] font-[500] text-[#DCFC36]'>
               #100
             </p>
-          </div>
+          </div> */}
           <div className='md:text-right'>
             <p className='text-[18px] font-[400]'>Owned Tokens</p>
             <p className='text-[24px] md:text-[48px] font-[500] text-[#DCFC36]'>
-              5
+              {profileData?.length || 0}
             </p>
           </div>
           <div className='md:text-right'>
             <p className='text-[18px] font-[400]'>Listed Tokens</p>
             <p className='text-[24px] md:text-[48px] font-[500] text-[#DCFC36]'>
-              4
+              {profileData?.filter((item: any) => item?.listing === true)
+                ?.length || 0}
             </p>
           </div>
         </div>
