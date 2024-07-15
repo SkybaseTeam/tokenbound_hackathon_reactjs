@@ -125,7 +125,7 @@ const Menu = () => {
   };
 
   return (
-    <div className='layout-container py-[8rem] flex flex-col items-center'>
+    <div className='layout-container py-[5rem] sm:py-[8rem] flex flex-col items-center'>
       <TbaProfile />
 
       <CustomButton

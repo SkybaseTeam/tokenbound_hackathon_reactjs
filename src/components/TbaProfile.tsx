@@ -87,6 +87,18 @@ const TbaProfile = () => {
               </div>
             </div>
           </div>
+
+          <div className='flex items-center gap-[12px] mt-[0.3rem] sm:hidden'>
+            <div className='text-[16px] border border-[#DCFC36] font-[400] text-[#DCFC36] px-[12px] py-[6px] rounded-[16px] mt-[8px]'>
+              <p className='border-b border-[#DCFC36]'>
+                Points: {formatDecimal(Number(point))}
+              </p>
+              <p>Amount: {bling || 0} BLING</p>
+            </div>
+            <CustomButton className='btn-primary max-sm:!text-[14px] max-sm:px-[10px] max-sm:!h-[45px] max-sm:!rounded-xl'>
+              WithDraw
+            </CustomButton>
+          </div>
         </div>
 
         <IconLogout
@@ -96,13 +108,6 @@ const TbaProfile = () => {
             window.location.reload();
           }}
         />
-      </div>
-      <div className='flex items-center gap-[12px] mt-[1rem] sm:hidden'>
-        <div className='text-[16px] font-[400] text-[#DCFC36] px-[12px] rounded-[32px] mt-[8px]'>
-          <p>Points: {formatDecimal(Number(point))}</p>
-          <p>Amount: {bling || 0} BLING</p>
-        </div>
-        <CustomButton className='btn-primary'>WithDraw</CustomButton>
       </div>
     </div>
   );
