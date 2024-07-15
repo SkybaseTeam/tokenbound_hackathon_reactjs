@@ -15,7 +15,6 @@ import erc20ABI from '@/abi/erc20.json';
 import CustomProgress from '@/components/custom/CustomProgress';
 import { cairo, CallData, selector } from 'starknet';
 import TbaProfile from '@/components/TbaProfile';
-import { TokenboundClient } from 'starknet-tokenbound-sdk';
 
 const Menu = () => {
   const router = useRouter();
@@ -28,7 +27,7 @@ const Menu = () => {
 
   const MINT_PRICE = 100;
 
-  const TOTAL_POOL_MINT = 1000;
+  const TOTAL_POOL_MINT = 1000000000000000000000;
 
   const { contract: erc20Contract } = useContract({
     abi: erc20ABI,
@@ -37,7 +36,7 @@ const Menu = () => {
 
   const { contract: erc721Contract } = useContract({
     abi: erc721ABI,
-    address: process.env.NEXT_PUBLIC_ERC721_CONTRACT_ADDRESS,
+    address: process.env.NEXT_PUBLIC_ERC721_ITEM,
   });
 
   const getRemainingPool = async () => {
@@ -66,18 +65,6 @@ const Menu = () => {
     setLoading(true);
 
     try {
-      // Init TBA Instance
-      let tokenboundInstance;
-      const options = {
-        account,
-        registryAddress: process.env.NEXT_PUBLIC_REGISTRY_CONTRACT_ADDRESS,
-        implementationAddress: process.env.NEXT_PUBLIC_ACCOUNT_CLASSHASH,
-        jsonRPC: process.env.NEXT_PUBLIC_RPC_URL,
-      };
-      if (account) {
-        tokenboundInstance = new TokenboundClient(options as any);
-      }
-
       // Approve Bling from 6551 to ERC721
       const allowance = await erc20Contract?.allowance(
         tbaLoginData?.tba_address,
@@ -86,32 +73,49 @@ const Menu = () => {
       const isNeedToApprove = Number(allowance) < MINT_PRICE; /*  * 10 ** 18 */
 
       // Execute Mint: Wallet -> 6551 -> ERC721
-      const tx = await tokenboundInstance?.execute(
-        tbaLoginData?.tba_address as any,
-        [
-          ...(!isNeedToApprove
-            ? []
-            : [
-                {
-                  to: process.env.NEXT_PUBLIC_ERC20_CONTRACT_ADDRESS as string,
-                  selector: 'approve',
-                  calldata: CallData.compile({
-                    spender: process.env.NEXT_PUBLIC_ERC721_ITEM as string,
-                    amount: cairo.uint256(MINT_PRICE /*  * 10 ** 18 */),
-                  }),
-                },
-              ]),
-          {
-            to: process.env.NEXT_PUBLIC_ERC721_CONTRACT_ADDRESS as string,
-            selector: 'mint_nft',
-            calldata: CallData.compile({}),
-          },
-        ]
-      );
+      const tx: any = await account?.execute({
+        contractAddress: tbaLoginData?.tba_address,
+        entrypoint: '__execute__',
+        calldata: CallData.compile({
+          calls: [
+            {
+              to: process.env.NEXT_PUBLIC_ERC20_CONTRACT_ADDRESS as string,
+              selector: 'approve',
+              calldata: [
+                process.env.NEXT_PUBLIC_ERC721_ITEM as string,
+                cairo.uint256(MINT_PRICE /*  * 10 ** 18 */),
+              ],
+            },
+            // {},
+          ],
+        }),
+      });
+      await provider.waitForTransaction(tx.transaction_hash);
+      // const tx = await account?.execute([
+      //   ...(!isNeedToApprove
+      //     ? []
+      //     : [
+      //         {
+      //           contractAddress: process.env
+      //             .NEXT_PUBLIC_ERC20_CONTRACT_ADDRESS as string,
+      //           entrypoint: 'approve',
+      //           calldata: CallData.compile({
+      //             spender: process.env.NEXT_PUBLIC_ERC721_ITEM as string,
+      //             amount: cairo.uint256(MINT_PRICE /*  * 10 ** 18 */),
+      //           }),
+      //         },
+      //       ]),
+      //   {
+      //     contractAddress: process.env
+      //       .NEXT_PUBLIC_ERC721_CONTRACT_ADDRESS as string,
+      //     entrypoint: 'mint_nft',
+      //     calldata: CallData.compile({}),
+      //   },
+      // ]);
 
-      toastSuccess('Mint success');
-      getDcoin();
-      getRemainingPool();
+      // toastSuccess('Mint success');
+      // getDcoin();
+      // getRemainingPool();
     } catch (err) {
       console.log(err);
       toastError('Mint failed');

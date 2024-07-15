@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import CustomImage from './custom/CustomImage';
 import CustomTooltip from './custom/CustomTooltip';
 import useCopyToClipboard from '@/hook/useCopyToClipboard';
@@ -7,15 +7,37 @@ import IconLogout from '@/assets/icons/IconLogout';
 import { useRouter } from 'next/navigation';
 import { useStore } from '@/context/store';
 import useMounted from '@/hook/useMounted';
+import erc20abi from '@/abi/erc20.json';
+import { Contract } from 'starknet';
+import { useProvider } from '@starknet-react/core';
 
 const TbaProfile = () => {
   const [text, copy] = useCopyToClipboard();
   const router = useRouter();
   const { point, tbaLoginData, setPoint } = useStore();
+  const { provider } = useProvider();
+  const [bling, setBling] = useState(0);
+  const { isMounted } = useMounted();
 
   useEffect(() => {
     setPoint(tbaLoginData?.point);
   }, []);
+
+  const getBlingOfTba = async () => {
+    const erc20Contract = new Contract(
+      erc20abi,
+      process.env.NEXT_PUBLIC_ERC20_CONTRACT_ADDRESS as string,
+      provider
+    );
+    const bling = await erc20Contract.balanceOf(tbaLoginData?.tba_address);
+    setBling(Number(bling) / 10 ** 18);
+  };
+
+  useEffect(() => {
+    if (isMounted && tbaLoginData?.tba_address) {
+      getBlingOfTba();
+    }
+  }, [isMounted, tbaLoginData?.tba_address]);
 
   return (
     <div className=''>
@@ -54,7 +76,10 @@ const TbaProfile = () => {
               />
             </div>
             <div className='text-[16px] font-[400] text-[#031F68]  flex items-center mt-[8px]'>
-              <p>Points: {formatDecimal(Number(point))}</p>
+              <p>
+                Points: {formatDecimal(Number(point))}{' '}
+                <span className='px-[0.5rem]'>|</span> Total: {bling || 0} Bling
+              </p>
             </div>
           </div>
         </div>

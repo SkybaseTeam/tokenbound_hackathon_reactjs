@@ -54,9 +54,8 @@ const Play = () => {
       router.push(`/game/menu`);
     } catch (error) {
       toastError('Login Game failed');
+      setLoading(false);
       console.log('error', error);
-      // } finally {
-      //   setLoading(false);
     }
   };
 
