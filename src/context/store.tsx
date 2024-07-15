@@ -9,6 +9,7 @@ import erc20abi from '@/abi/erc20.json';
 import useMounted from '@/hook/useMounted';
 import { profile } from '@/fetching/client/profile';
 import { getPoint } from '@/fetching/client/game';
+import { TokenboundClient, WalletClient, Call } from 'starknet-tokenbound-sdk';
 
 const storeContext = createContext<any>(null);
 
@@ -20,7 +21,7 @@ const StoreProvider = ({ children }: any) => {
   const { connect, connectors } = useConnect();
   const [dcoin, setDcoin] = useState(0);
   const { isMounted } = useMounted();
-  const { address } = useAccount();
+  const { address, account } = useAccount();
   const [profileData, setProfileData] = useState<any>();
   const [point, setPoint] = useState(0);
   const [tbaLoginData, setTbaLoginData] = useState<any>();

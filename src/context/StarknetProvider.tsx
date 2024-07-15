@@ -29,7 +29,7 @@ export function StarknetProvider({ children }: { children: React.ReactNode }) {
       chains={[sepolia]}
       provider={jsonRpcProvider({
         rpc: () => ({
-          nodeUrl: 'https://starknet-sepolia.public.blastapi.io/rpc/v0_7',
+          nodeUrl: process.env.NEXT_PUBLIC_RPC_URL as string,
         }),
       })}
       connectors={connectors}

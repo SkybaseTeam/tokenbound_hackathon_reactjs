@@ -13,19 +13,20 @@ import React, { useEffect, useState } from 'react';
 import erc721ABI from '@/abi/erc721.json';
 import erc20ABI from '@/abi/erc20.json';
 import CustomProgress from '@/components/custom/CustomProgress';
-import { CallData } from 'starknet';
+import { cairo, CallData, selector } from 'starknet';
 import TbaProfile from '@/components/TbaProfile';
+import { TokenboundClient } from 'starknet-tokenbound-sdk';
 
 const Menu = () => {
   const router = useRouter();
   const { isConnected, account, address } = useAccount();
-  const { connectWallet, getDcoin, accessToken } = useStore();
+  const { connectWallet, getDcoin, accessToken, tbaLoginData } = useStore();
   const { provider } = useProvider();
   const [loading, setLoading] = useState(false);
   const { isMounted } = useMounted();
   const [remainingPool, setRemainingPool] = useState<any>(0);
 
-  const MINT_PRICE = 10;
+  const MINT_PRICE = 100;
 
   const TOTAL_POOL_MINT = 1000;
 
@@ -62,30 +63,55 @@ const Menu = () => {
       connectWallet();
       return;
     }
-
     setLoading(true);
 
     try {
-      const tx = await account?.execute([
-        {
-          contractAddress: process.env
-            .NEXT_PUBLIC_REGISTRY_CONTRACT_ADDRESS as string,
-          entrypoint: 'create_account',
-          calldata: CallData.compile({
-            implementation_hash: process.env
-              .NEXT_PUBLIC_ACCOUNT_CLASSHASH as string,
-            token_contract: process.env
-              .NEXT_PUBLIC_ERC721_CONTRACT_ADDRESS as string,
-            salt: 123,
-          }),
-        },
-      ]);
+      // Init TBA Instance
+      let tokenboundInstance;
+      const options = {
+        account,
+        registryAddress: process.env.NEXT_PUBLIC_REGISTRY_CONTRACT_ADDRESS,
+        implementationAddress: process.env.NEXT_PUBLIC_ACCOUNT_CLASSHASH,
+        jsonRPC: process.env.NEXT_PUBLIC_RPC_URL,
+      };
+      if (account) {
+        tokenboundInstance = new TokenboundClient(options as any);
+      }
 
-      await provider.waitForTransaction(tx?.transaction_hash as any);
+      // Approve Bling from 6551 to ERC721
+      const allowance = await erc20Contract?.allowance(
+        tbaLoginData?.tba_address,
+        process.env.NEXT_PUBLIC_ERC721_ITEM as string
+      );
+      const isNeedToApprove = Number(allowance) < MINT_PRICE; /*  * 10 ** 18 */
+
+      // Execute Mint: Wallet -> 6551 -> ERC721
+      const tx = await tokenboundInstance?.execute(
+        tbaLoginData?.tba_address as any,
+        [
+          ...(!isNeedToApprove
+            ? []
+            : [
+                {
+                  to: process.env.NEXT_PUBLIC_ERC20_CONTRACT_ADDRESS as string,
+                  selector: 'approve',
+                  calldata: CallData.compile({
+                    spender: process.env.NEXT_PUBLIC_ERC721_ITEM as string,
+                    amount: cairo.uint256(MINT_PRICE /*  * 10 ** 18 */),
+                  }),
+                },
+              ]),
+          {
+            to: process.env.NEXT_PUBLIC_ERC721_CONTRACT_ADDRESS as string,
+            selector: 'mint_nft',
+            calldata: CallData.compile({}),
+          },
+        ]
+      );
+
       toastSuccess('Mint success');
       getDcoin();
       getRemainingPool();
-      console.log('tx hash', tx);
     } catch (err) {
       console.log(err);
       toastError('Mint failed');
@@ -120,7 +146,7 @@ const Menu = () => {
               <div className='p-[16px] rounded-2xl bg-[#E6EBF8] w-[484px] max-sm:w-full '>
                 <div className='aspect-square relative rounded-2xl'>
                   <CustomImage
-                    src='/images/default.webp'
+                    src='https://cryptowalkers.mypinata.cloud/ipfs/QmdXKK6JJgX1bw1J974coE6i9GFDpMUZ7jyNiUvxqa31sN/smg_custom.png'
                     className='rounded-2xl'
                     alt='err'
                     fill
