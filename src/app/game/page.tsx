@@ -16,7 +16,8 @@ const Play = () => {
   const [openModalTbaDetail, setOpenModalTbaDetail] = useState(false);
   const [selectedNFT, setSelectedNFT] = useState<any>(null);
   const router = useRouter();
-  const { profileData, getProfile, setTbaLoginData } = useStore();
+  const { profileData, getProfile, setTbaLoginData, setAccessToken } =
+    useStore();
   const { address } = useAccount();
   const { signTypedDataAsync } = useSignTypedData({ primaryType: 'Validate' });
   const [loading, setLoading] = useState(false);
@@ -40,11 +41,15 @@ const Play = () => {
         tba_address: item?.tba_address,
         signature: signature[0],
         sign_data: signData,
+        token_id: item?.token_id,
       });
       console.log(loginData);
 
+      setAccessToken(loginData?.data?.data?.token);
+
       // Set Tba Login Data
       setTbaLoginData(item);
+
       // Join Game
       router.push(`/game/menu`);
     } catch (error) {

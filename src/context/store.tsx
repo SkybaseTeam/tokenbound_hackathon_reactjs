@@ -1,7 +1,5 @@
 'use client';
 
-import { login } from '@/fetching/client/auth';
-import { setItemLocalStorage } from '@/utils/localStorage';
 import { toastError, toastSuccess } from '@/utils/toast';
 import { useAccount, useConnect, useProvider } from '@starknet-react/core';
 import { createContext, useContext, useEffect, useState } from 'react';

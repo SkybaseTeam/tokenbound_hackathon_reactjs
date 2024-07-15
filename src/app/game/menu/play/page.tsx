@@ -3,38 +3,47 @@
 import Achievement from '@/components/Achievement';
 import TbaProfile from '@/components/TbaProfile';
 import { useStore } from '@/context/store';
-import { increasePoint } from '@/fetching/client/game';
+import { updatePoint } from '@/fetching/client/game';
 import useCopyToClipboard from '@/hook/useCopyToClipboard';
 import useMounted from '@/hook/useMounted';
 import { formatDecimal, formatWallet } from '@/utils';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 
+let isPostedPoint = true;
+
 const Game = () => {
   const [text, copy] = useCopyToClipboard();
   const [blings, setBlings] = useState<any>([]);
-  const [point, setPoint] = useState(0);
   const router = useRouter();
-  const { point: dbPoint, setPoint: setDbPoint, tbaLoginData } = useStore();
+  const { point, setPoint, tbaLoginData, accessToken } = useStore();
   const { isMounted } = useMounted();
 
   useEffect(() => {
     const interval = setInterval(() => {
-      increasePoint({
-        tokenboundAddress: tbaLoginData?.tokenboundAddress,
-        point,
-      });
-    }, 5000);
+      if (isPostedPoint) return;
+
+      updatePoint(
+        {
+          tba_address: tbaLoginData?.tba_address,
+          point,
+        },
+        accessToken
+      );
+      isPostedPoint = true;
+    }, 1000);
     return () => clearInterval(interval);
-  }, [point]);
+  }, [accessToken, tbaLoginData?.tba_address, point]);
 
   useEffect(() => {
-    setPoint(dbPoint);
+    if (!accessToken) {
+      router.push('/game');
+    }
   }, []);
 
   const handleClick = async (e: any) => {
-    setPoint((prevPoint) => prevPoint + 0.1);
-    setDbPoint((prevPoint: any) => prevPoint + 0.1);
+    setPoint((prevPoint: any) => prevPoint + 0.1);
+    isPostedPoint = false;
 
     const newBling = {
       id: Date.now(),

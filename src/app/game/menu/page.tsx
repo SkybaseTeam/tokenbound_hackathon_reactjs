@@ -19,34 +19,15 @@ import TbaProfile from '@/components/TbaProfile';
 const Menu = () => {
   const router = useRouter();
   const { isConnected, account, address } = useAccount();
-  const { connectWallet, getDcoin } = useStore();
+  const { connectWallet, getDcoin, accessToken } = useStore();
   const { provider } = useProvider();
   const [loading, setLoading] = useState(false);
-  const [collection, setCollection] = useState<any>([]);
   const { isMounted } = useMounted();
   const [remainingPool, setRemainingPool] = useState<any>(0);
 
-  useEffect(() => {
-    if (!isMounted) return;
+  const MINT_PRICE = 10;
 
-    const getHomeData = async () => {
-      try {
-        const collectionResponse: any = await collectionData();
-
-        const collectionResponseData = collectionResponse?.data;
-        setCollection(collectionResponseData);
-      } catch (err) {
-        toastError('Get Collection Data failed');
-        console.log(err);
-      }
-    };
-
-    getHomeData();
-  }, [isMounted]);
-
-  const MINT_PRICE = collection?.mint_price;
-
-  const TOTAL_POOL_MINT = 100;
+  const TOTAL_POOL_MINT = 1000;
 
   const { contract: erc20Contract } = useContract({
     abi: erc20ABI,
@@ -65,6 +46,10 @@ const Menu = () => {
   };
 
   useEffect(() => {
+    if (!accessToken) {
+      router.push('/game');
+    }
+
     getRemainingPool();
     const interval = setInterval(() => {
       getRemainingPool();
@@ -134,16 +119,12 @@ const Menu = () => {
             <div className='flex justify-center items-center gap-[56px] max-sm:flex-col'>
               <div className='p-[16px] rounded-2xl bg-[#E6EBF8] w-[484px] max-sm:w-full '>
                 <div className='aspect-square relative rounded-2xl'>
-                  {collection?.image ? (
-                    <CustomImage
-                      src={collection?.image}
-                      className='rounded-2xl'
-                      alt='err'
-                      fill
-                    />
-                  ) : (
-                    <ImageSkeleton />
-                  )}
+                  <CustomImage
+                    src='/images/default.webp'
+                    className='rounded-2xl'
+                    alt='err'
+                    fill
+                  />
                 </div>
               </div>
               <div className='w-[566px] max-sm:w-full flex flex-col'>

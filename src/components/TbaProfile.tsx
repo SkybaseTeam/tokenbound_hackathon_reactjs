@@ -11,12 +11,11 @@ import useMounted from '@/hook/useMounted';
 const TbaProfile = () => {
   const [text, copy] = useCopyToClipboard();
   const router = useRouter();
-  const { point, fetchPoint, tbaLoginData } = useStore();
-  const { isMounted } = useMounted();
+  const { point, tbaLoginData, setPoint } = useStore();
 
   useEffect(() => {
-    isMounted && fetchPoint(tbaLoginData?.tokenboundAddress);
-  }, [isMounted]);
+    setPoint(tbaLoginData?.point);
+  }, []);
 
   return (
     <div className=''>
@@ -33,18 +32,16 @@ const TbaProfile = () => {
           <div>
             <div className='flex items-center gap-[8px]'>
               <CustomTooltip
-                title='Copied'
+                title='Copied Address'
                 placement='right'
                 trigger={['click']}
               >
                 <div className='cursor-pointer text-[#031F68]'>
                   <p
-                    onClick={() =>
-                      copy(tbaLoginData?.tokenboundAddress as string)
-                    }
+                    onClick={() => copy(tbaLoginData?.tba_address as string)}
                     // className='mt-[0.3rem]'
                   >
-                    {formatWallet(tbaLoginData?.tokenboundAddress)}
+                    {tbaLoginData?.tba_name}
                   </p>
                 </div>
               </CustomTooltip>
@@ -52,12 +49,12 @@ const TbaProfile = () => {
                 className='cursor-pointer'
                 fill='#ef4444'
                 onClick={() => {
-                  router.push('/game');
+                  window.location.reload();
                 }}
               />
             </div>
             <div className='text-[16px] font-[400] text-[#031F68]  flex items-center mt-[8px]'>
-              <p>Points: {formatDecimal(point)}</p>
+              <p>Points: {formatDecimal(Number(point))}</p>
             </div>
           </div>
         </div>

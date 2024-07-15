@@ -17,7 +17,7 @@ export const formatDecimal = (value: number) => {
   if (Number.isInteger(value)) {
     return value.toString();
   } else {
-    return parseFloat(value.toFixed(3)).toString();
+    return parseFloat(value?.toFixed(3)).toString();
   }
 };
 
