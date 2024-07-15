@@ -11,15 +11,19 @@ import { useEffect, useState } from 'react';
 import { CallData } from 'starknet';
 import erc721ABI from '@/abi/erc721.json';
 import { refreshMintStatus } from '@/fetching/client/mint';
+import ModalMintTbaSuccess from '../modal/ModalMintTbaSuccess';
+import { profile } from '@/fetching/client/profile';
 
 export default function Mint() {
   const { isConnected, account, address } = useAccount();
-  const { connectWallet, getDcoin } = useStore();
+  const { connectWallet, getProfile, getDcoin } = useStore();
   const { provider } = useProvider();
   const [loading, setLoading] = useState(false);
   const { isMounted } = useMounted();
   const [remainingPool, setRemainingPool] = useState<any>(0);
   const TOTAL_POOL_MINT = 1000;
+  const [showModalMintTbaSuccess, setShowModalMintTbaSuccess] = useState(false);
+  const [mintedNft, setMintedNft] = useState<any>();
 
   const { contract: erc721Contract } = useContract({
     abi: erc721ABI,
@@ -76,7 +80,12 @@ export default function Mint() {
         getDcoin(),
         getRemainingPool(),
       ]);
-      toastSuccess('Mint success');
+
+      const res: any = await profile(address?.toLocaleLowerCase());
+      setMintedNft(
+        res?.data?.data?.find((item: any) => item?.token_id === tokenId)
+      );
+      setShowModalMintTbaSuccess(true);
     } catch (err) {
       console.log(err);
       toastError('Mint failed');
@@ -90,6 +99,13 @@ export default function Mint() {
       id='mint_section'
       className='bg-white rounded-[32px] pt-[86px] pb-[110px] text-[#031F68] '
     >
+      <ModalMintTbaSuccess
+        open={showModalMintTbaSuccess}
+        onCancel={() => {
+          setShowModalMintTbaSuccess(false);
+        }}
+        mintedNft={mintedNft}
+      />
       <div className='layout-container flex flex-col items-center'>
         <h2 className='text-[48px] font-[500] font-glancyr max-sm:text-center'>
           Mint your first Token-bound account and play game!

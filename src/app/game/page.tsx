@@ -6,6 +6,7 @@ import NftSkeleton from '@/components/custom/CustomSkeleton/NftSkeleton';
 import ModalTbaDetail from '@/components/modal/ModalTbaDetail';
 import { useStore } from '@/context/store';
 import { login } from '@/fetching/client/game';
+import { formatDecimal } from '@/utils';
 import { toastError } from '@/utils/toast';
 import { useAccount, useSignTypedData } from '@starknet-react/core';
 import { useRouter } from 'next/navigation';
@@ -16,7 +17,7 @@ const Play = () => {
   const [openModalTbaDetail, setOpenModalTbaDetail] = useState(false);
   const [selectedNFT, setSelectedNFT] = useState<any>(null);
   const router = useRouter();
-  const { profileData, getProfile, setTbaLoginData, setAccessToken } =
+  const { profileData, getProfile, setTbaLoginData, setAccessToken, bling } =
     useStore();
   const { address } = useAccount();
   const { signTypedDataAsync } = useSignTypedData({ primaryType: 'Validate' });
@@ -140,6 +141,12 @@ const Play = () => {
                         <div className='my-[16px]'>
                           <p className='text-[18px] uppercase font-[400] truncate'>
                             {item?.tba_name || 'NFT Name'}
+                          </p>
+                          <p className='text-[16px] font-[300] text-[#546678] mt-[0.5rem]'>
+                            Total Points:
+                            <span className='text-[#031F68] text-[18px] font-[400] ml-[0.5rem]'>
+                              {formatDecimal(Number(item?.point))}
+                            </span>
                           </p>
                         </div>
                       </div>

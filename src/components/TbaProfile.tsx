@@ -105,7 +105,10 @@ const TbaProfile = () => {
           className='cursor-pointer'
           fill='#ef4444'
           onClick={() => {
-            window.location.reload();
+            router.push('/game');
+            // setTimeout(() => {
+            //   window.location.reload();
+            // }, 500);
           }}
         />
       </div>
