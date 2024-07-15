@@ -36,7 +36,7 @@ const MarketContainer = () => {
         const listedNFTResponseData = listedNFTResponse?.value?.data?.data;
         setListedNFTData(listedNFTResponseData);
       } catch (err) {
-        toastError('Get Collection Data failed');
+        toastError('Get Listed Data failed');
         console.log(err);
       }
     };

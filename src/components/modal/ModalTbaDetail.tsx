@@ -5,6 +5,8 @@ import IconVerified from '@/assets/icons/IconVerified';
 import CustomButton from '../custom/CustomButton';
 import { useAccount, useProvider } from '@starknet-react/core';
 import { formatWallet } from '@/utils';
+import CustomTooltip from '../custom/CustomTooltip';
+import useCopyToClipboard from '@/hook/useCopyToClipboard';
 
 const ModalTbaDetail = ({
   open,
@@ -13,7 +15,7 @@ const ModalTbaDetail = ({
   setOpenModalBuyNTF,
   showBuy = true,
 }: any) => {
-  const { isConnected, account, address } = useAccount();
+  const [text, copy] = useCopyToClipboard();
 
   return (
     <CustomModal width={1205} open={open} onCancel={onCancel}>
@@ -35,15 +37,33 @@ const ModalTbaDetail = ({
             <div className='grid grid-cols-2 gap-[5rem]'>
               <div className='text-[18px] font-[300] text-[#546678]'>
                 Token-Bound Address
-                <p className='mt-[8px] font-[400] text-[24px] text-[#031F68]'>
-                  {formatWallet(selectedNFT?.tba_address)}
-                </p>
+                <CustomTooltip
+                  title='Copied Address'
+                  placement='right'
+                  trigger={['click']}
+                >
+                  <p
+                    onClick={() => copy(selectedNFT?.tba_address as string)}
+                    className='mt-[8px] font-[400] text-[24px] text-[#031F68] cursor-pointer'
+                  >
+                    {formatWallet(selectedNFT?.tba_address)}
+                  </p>
+                </CustomTooltip>
               </div>
               <div className='text-[18px] font-[300] text-[#546678]'>
                 Owner
-                <p className='mt-[8px] font-[400] text-[24px] text-[#031F68]'>
-                  {formatWallet(selectedNFT?.owner_address)}
-                </p>
+                <CustomTooltip
+                  title='Copied Address'
+                  placement='right'
+                  trigger={['click']}
+                >
+                  <p
+                    onClick={() => copy(selectedNFT?.owner_address as string)}
+                    className='mt-[8px] font-[400] text-[24px] text-[#031F68] cursor-pointer'
+                  >
+                    {formatWallet(selectedNFT?.owner_address)}
+                  </p>{' '}
+                </CustomTooltip>
               </div>
             </div>
 

@@ -9,7 +9,6 @@ import erc20abi from '@/abi/erc20.json';
 import useMounted from '@/hook/useMounted';
 import { profile } from '@/fetching/client/profile';
 import { getPoint } from '@/fetching/client/game';
-import { TokenboundClient, WalletClient, Call } from 'starknet-tokenbound-sdk';
 
 const storeContext = createContext<any>(null);
 

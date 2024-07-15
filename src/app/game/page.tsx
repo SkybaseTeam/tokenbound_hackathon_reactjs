@@ -108,46 +108,56 @@ const Play = () => {
           Select your Token-Bound Account to Play game!
         </h1>
         <div className='grid extra-sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 mt-[40px] gap-[16px] w-full'>
-          {profileData?.length !== undefined
-            ? profileData?.map((item: any, index: any) => (
-                <div key={item?._id || index}>
-                  <div className='p-[12px] rounded-2xl border border-[#EFFEA3] bg-[#FBFDEB] text-[#031F68]'>
-                    <div
-                      className=' group cursor-pointer'
-                      onClick={() => {
-                        setSelectedNFT(item);
-                        setOpenModalTbaDetail(true);
-                      }}
-                    >
-                      <div className='aspect-square w-full relative overflow-hidden rounded-2xl'>
-                        <CustomImage
-                          src={item?.tba_image}
-                          fill
-                          alt='Nft'
-                          className='object-cover w-full rounded-2xl group-hover:scale-110 transition-all duration-500 ease-in-out'
-                        />
+          {address ? (
+            profileData !== undefined ? (
+              profileData?.length > 0 ? (
+                profileData?.map((item: any, index: any) => (
+                  <div key={item?._id || index}>
+                    <div className='p-[12px] rounded-2xl border border-[#EFFEA3] bg-[#FBFDEB] text-[#031F68]'>
+                      <div
+                        className=' group cursor-pointer'
+                        onClick={() => {
+                          setSelectedNFT(item);
+                          setOpenModalTbaDetail(true);
+                        }}
+                      >
+                        <div className='aspect-square w-full relative overflow-hidden rounded-2xl'>
+                          <CustomImage
+                            src={item?.tba_image}
+                            fill
+                            alt='Nft'
+                            className='object-cover w-full rounded-2xl group-hover:scale-110 transition-all duration-500 ease-in-out'
+                          />
+                        </div>
+                        <div className='my-[16px]'>
+                          <p className='text-[18px] uppercase font-[400] truncate'>
+                            {item?.tba_name || 'NFT Name'}
+                          </p>
+                        </div>
                       </div>
-                      <div className='my-[16px]'>
-                        <p className='text-[18px] uppercase font-[400] truncate'>
-                          {item?.tba_name || 'NFT Name'}
-                        </p>
-                      </div>
-                    </div>
 
-                    <CustomButton
-                      onClick={() => {
-                        setSelectedNFT(item);
-                        onLoginGame(item);
-                      }}
-                      className='btn-primary w-full'
-                      loading={selectedNFT?._id === item?._id && loading}
-                    >
-                      Login Game
-                    </CustomButton>
+                      <CustomButton
+                        onClick={() => {
+                          setSelectedNFT(item);
+                          onLoginGame(item);
+                        }}
+                        className='btn-primary w-full'
+                        loading={selectedNFT?._id === item?._id && loading}
+                      >
+                        Login Game
+                      </CustomButton>
+                    </div>
                   </div>
-                </div>
-              ))
-            : [...new Array(4)].map((_, index) => <NftSkeleton key={index} />)}
+                ))
+              ) : (
+                <div className='text-[#031F68]'>No Data!</div>
+              )
+            ) : (
+              [...new Array(4)].map((_, index) => <NftSkeleton key={index} />)
+            )
+          ) : (
+            <div className='text-[#031F68]'>Please Connect your wallet!</div>
+          )}
         </div>
       </div>
     </div>

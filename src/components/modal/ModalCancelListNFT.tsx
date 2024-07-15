@@ -8,6 +8,9 @@ import { toastError, toastSuccess } from '@/utils/toast';
 import { cairo, Contract } from 'starknet';
 import { listedNFT, refreshListing } from '@/fetching/client/home';
 import { usePathname } from 'next/navigation';
+import { formatWallet } from '@/utils';
+import CustomTooltip from '../custom/CustomTooltip';
+import useCopyToClipboard from '@/hook/useCopyToClipboard';
 
 const ModalCancelListNFT = ({ open, onCancel, data }: any) => {
   const { isConnected, account, address } = useAccount();
@@ -15,6 +18,7 @@ const ModalCancelListNFT = ({ open, onCancel, data }: any) => {
   const { provider } = useProvider();
   const [loading, setLoading] = useState(false);
   const path = usePathname();
+  const [text, copy] = useCopyToClipboard();
 
   const TOKEN_ID = data?.token_id;
 
@@ -27,20 +31,20 @@ const ModalCancelListNFT = ({ open, onCancel, data }: any) => {
     setLoading(true);
 
     try {
-      // const { abi } = await provider.getClassAt(
-      //   process.env.NEXT_PUBLIC_MARKET_CONTRACT_ADDRESS as string
-      // );
-      // const marketContract = new Contract(
-      //   abi,
-      //   process.env.NEXT_PUBLIC_MARKET_CONTRACT_ADDRESS as string,
-      //   provider
-      // );
-      // marketContract.connect(account as any);
-      // const tx = await marketContract.cancel_nft(
-      //   process.env.NEXT_PUBLIC_ERC721_CONTRACT_ADDRESS as string,
-      //   TOKEN_ID
-      // );
-      // await provider.waitForTransaction(tx?.transaction_hash as any);
+      const { abi } = await provider.getClassAt(
+        process.env.NEXT_PUBLIC_MARKET_CONTRACT_ADDRESS as string
+      );
+      const marketContract = new Contract(
+        abi,
+        process.env.NEXT_PUBLIC_MARKET_CONTRACT_ADDRESS as string,
+        provider
+      );
+      marketContract.connect(account as any);
+      const tx = await marketContract.cancel_nft(
+        process.env.NEXT_PUBLIC_ERC721_CONTRACT_ADDRESS as string,
+        TOKEN_ID
+      );
+      await provider.waitForTransaction(tx?.transaction_hash as any);
       await refreshListing({
         token_id: TOKEN_ID,
         collection_address: data?.collection_address,
@@ -80,6 +84,21 @@ const ModalCancelListNFT = ({ open, onCancel, data }: any) => {
               <span className='truncate text-[24px] text-[#031F68] font-[400]'>
                 {data?.tba_name}
               </span>
+              <p className='text-[16px] font-[300] text-[#546678]'>
+                Address
+                <CustomTooltip
+                  title='Copied'
+                  placement='right'
+                  trigger={['click']}
+                >
+                  <span
+                    onClick={() => copy(data?.owner_address as string)}
+                    className='text-[#031F68] text-[18px] font-[400] ml-[0.5rem] cursor-pointer'
+                  >
+                    {formatWallet(data?.tba_address)}
+                  </span>
+                </CustomTooltip>
+              </p>
             </div>
           </div>
         </div>

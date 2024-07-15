@@ -36,7 +36,7 @@ const Profile = () => {
   });
 
   return (
-    <div className='bg-[url("/images/bg.webp")] pt-[6rem] md:pt-[8rem] pb-[8rem] bg-center bg-cover bg-no-repeat bg-fixed md:px-[32px]'>
+    <div className='pt-[6rem] md:pt-[8rem] pb-[8rem] md:px-[32px]'>
       <ModalListNFT
         open={openModalListNFT}
         onCancel={() => {
@@ -106,14 +106,16 @@ const Profile = () => {
           <div className='md:text-right'>
             <p className='text-[18px] font-[400]'>Owned Tokens</p>
             <p className='text-[24px] md:text-[48px] font-[500] text-[#DCFC36]'>
-              {profileData?.length || 0}
+              {(address && profileData?.length) || 0}
             </p>
           </div>
           <div className='md:text-right'>
             <p className='text-[18px] font-[400]'>Listed Tokens</p>
             <p className='text-[24px] md:text-[48px] font-[500] text-[#DCFC36]'>
-              {profileData?.filter((item: any) => item?.listing === true)
-                ?.length || 0}
+              {(address &&
+                profileData?.filter((item: any) => item?.listing === true)
+                  ?.length) ||
+                0}
             </p>
           </div>
         </div>
@@ -130,19 +132,29 @@ const Profile = () => {
         </div>
 
         <div className='grid extra-sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 mt-[40px] gap-[16px]'>
-          {profileData?.length !== undefined
-            ? profileData?.map((item: any, index: any) => (
-                <div key={item?._id || index}>
-                  <CardProfile
-                    data={item}
-                    setOpenModalListNFT={setOpenModalListNFT}
-                    setOpenModalCancelListNFT={setOpenModalCancelListNFT}
-                    setOpenModalTbaDetail={setOpenModalTbaDetail}
-                    setSelectedNFT={setSelectedNFT}
-                  />
-                </div>
-              ))
-            : [...new Array(4)].map((_, index) => <NftSkeleton key={index} />)}
+          {address ? (
+            profileData !== undefined ? (
+              profileData?.length > 0 ? (
+                profileData?.map((item: any, index: any) => (
+                  <div key={item?._id || index}>
+                    <CardProfile
+                      data={item}
+                      setOpenModalListNFT={setOpenModalListNFT}
+                      setOpenModalCancelListNFT={setOpenModalCancelListNFT}
+                      setOpenModalTbaDetail={setOpenModalTbaDetail}
+                      setSelectedNFT={setSelectedNFT}
+                    />
+                  </div>
+                ))
+              ) : (
+                <div className='text-[#031F68]'>No Data!</div>
+              )
+            ) : (
+              [...new Array(4)].map((_, index) => <NftSkeleton key={index} />)
+            )
+          ) : (
+            <div className='text-[#031F68]'>Please Connect your wallet!</div>
+          )}
         </div>
       </div>
     </div>
