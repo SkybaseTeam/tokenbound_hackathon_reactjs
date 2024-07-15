@@ -5,18 +5,18 @@ import CustomButton from '../custom/CustomButton';
 import { useAccount, useProvider } from '@starknet-react/core';
 import { useStore } from '@/context/store';
 import { toastError, toastSuccess } from '@/utils/toast';
-import { Contract } from 'starknet';
-import { refreshListing } from '@/fetching/client/home';
+import { cairo, Contract } from 'starknet';
+import { listedNFT, refreshListing } from '@/fetching/client/home';
 import { usePathname } from 'next/navigation';
 
-const ModalCancelListNFT = ({ open, onCancel, data, getProfile }: any) => {
+const ModalCancelListNFT = ({ open, onCancel, data }: any) => {
   const { isConnected, account, address } = useAccount();
-  const { connectWallet } = useStore();
+  const { connectWallet, getProfile, setListedNFTData } = useStore();
   const { provider } = useProvider();
   const [loading, setLoading] = useState(false);
   const path = usePathname();
 
-  const TOKEN_ID = data?.tokenId;
+  const TOKEN_ID = data?.token_id;
 
   const onUnList = async () => {
     if (!isConnected) {
@@ -27,26 +27,29 @@ const ModalCancelListNFT = ({ open, onCancel, data, getProfile }: any) => {
     setLoading(true);
 
     try {
-      const { abi } = await provider.getClassAt(
-        process.env.NEXT_PUBLIC_MARKET_CONTRACT_ADDRESS as string
-      );
-      const marketContract = new Contract(
-        abi,
-        process.env.NEXT_PUBLIC_MARKET_CONTRACT_ADDRESS as string,
-        provider
-      );
-      marketContract.connect(account as any);
-      const tx = await marketContract.cancel_nft(
-        process.env.NEXT_PUBLIC_ERC721_CONTRACT_ADDRESS as string,
-        TOKEN_ID
-      );
-      await provider.waitForTransaction(tx?.transaction_hash as any);
-      await refreshListing({ tokenId: TOKEN_ID });
-      /*  path.includes('/profile') && */ await getProfile(address);
-      // if (path === '/') {
-      //   const newListedNfts = await listedNFT();
-      //   setListedNFTData(newListedNfts?.data?.data);
-      // }
+      // const { abi } = await provider.getClassAt(
+      //   process.env.NEXT_PUBLIC_MARKET_CONTRACT_ADDRESS as string
+      // );
+      // const marketContract = new Contract(
+      //   abi,
+      //   process.env.NEXT_PUBLIC_MARKET_CONTRACT_ADDRESS as string,
+      //   provider
+      // );
+      // marketContract.connect(account as any);
+      // const tx = await marketContract.cancel_nft(
+      //   process.env.NEXT_PUBLIC_ERC721_CONTRACT_ADDRESS as string,
+      //   TOKEN_ID
+      // );
+      // await provider.waitForTransaction(tx?.transaction_hash as any);
+      await refreshListing({
+        token_id: TOKEN_ID,
+        collection_address: data?.collection_address,
+      });
+      path.includes('/profile') && (await getProfile(address));
+      if (path === '/market') {
+        const newListedNfts = await listedNFT();
+        setListedNFTData(newListedNfts?.data?.data);
+      }
       toastSuccess('Cancel List success');
       onCancel();
     } catch (err) {
@@ -67,7 +70,7 @@ const ModalCancelListNFT = ({ open, onCancel, data, getProfile }: any) => {
         <div className='overflow-y-auto scrollbar-custom mt-[30px]'>
           <div className='text-white flex justify-between items-center gap-[24px]'>
             <CustomImage
-              src={data?.image}
+              src={data?.tba_image}
               alt='nft'
               width={100}
               height={100}
@@ -75,7 +78,7 @@ const ModalCancelListNFT = ({ open, onCancel, data, getProfile }: any) => {
             />
             <div className='flex-1 flex flex-col justify-between truncate '>
               <span className='truncate text-[24px] text-[#031F68] font-[400]'>
-                {data?.name}
+                {data?.tba_name}
               </span>
             </div>
           </div>

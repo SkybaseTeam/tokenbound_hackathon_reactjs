@@ -51,7 +51,6 @@ const Profile = () => {
           setOpenModalCancelListNFT(false);
         }}
         data={selectedNFT}
-        getProfile={getProfile}
       />
       <ModalTbaDetail
         open={openModalTbaDetail}

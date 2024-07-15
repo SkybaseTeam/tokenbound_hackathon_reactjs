@@ -55,8 +55,8 @@ const Play = () => {
     } catch (error) {
       toastError('Login Game failed');
       console.log('error', error);
-    } finally {
-      setLoading(false);
+      // } finally {
+      //   setLoading(false);
     }
   };
 

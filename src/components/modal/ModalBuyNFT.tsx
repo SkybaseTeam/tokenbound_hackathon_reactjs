@@ -71,15 +71,26 @@ const ModalBuyNFT = ({ open, onCancel, selectedNFT }: any) => {
             .NEXT_PUBLIC_MARKET_CONTRACT_ADDRESS as string,
           entrypoint: 'buy_nft',
           calldata: CallData.compile({
+            token_address: selectedNFT?.collection_address,
             token_id: cairo.uint256(TOKEN_ID),
           }),
         },
       ]);
 
       await provider.waitForTransaction(tx?.transaction_hash as any);
-      getDcoin();
-      await refreshOwner({ token_id: TOKEN_ID }); // to get newest profile
-      await refreshListing({ token_id: TOKEN_ID }); // to get newest listed nft
+
+      await Promise.allSettled([
+        getDcoin(),
+        refreshOwner({
+          token_id: TOKEN_ID,
+          collection_address: selectedNFT?.collection_address,
+        }), // to get newest profile
+        refreshListing({
+          token_id: TOKEN_ID,
+          collection_address: selectedNFT?.collection_address,
+        }), // to get newest listed nft
+      ]);
+
       const newListedNfts = await listedNFT();
       setListedNFTData(newListedNfts?.data?.data);
       toastSuccess('Buy success!');
@@ -102,7 +113,7 @@ const ModalBuyNFT = ({ open, onCancel, selectedNFT }: any) => {
         <div className='overflow-y-auto scrollbar-custom mt-[30px]'>
           <div className='text-white flex justify-between items-center gap-[24px]'>
             <CustomImage
-              src={selectedNFT?.image}
+              src={selectedNFT?.tba_image}
               alt='nft'
               width={100}
               height={100}
@@ -110,7 +121,7 @@ const ModalBuyNFT = ({ open, onCancel, selectedNFT }: any) => {
             />
             <div className='flex-1 flex flex-col justify-between truncate '>
               <span className='truncate text-[24px] text-[#031F68] font-[400]'>
-                {selectedNFT?.name}
+                {selectedNFT?.tba_name}
               </span>
               <p className='text-[16px] font-[300] text-[#546678]'>
                 Price

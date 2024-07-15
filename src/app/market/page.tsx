@@ -13,14 +13,16 @@ import CustomButton from '@/components/custom/CustomButton';
 import CustomInput from '@/components/custom/CustomInput';
 import IconSearch from '@/assets/icons/IconSearch';
 import ModalTbaDetail from '@/components/modal/ModalTbaDetail';
+import ModalCancelListNFT from '@/components/modal/ModalCancelListNFT';
+import { useStore } from '@/context/store';
 
 const MarketContainer = () => {
   const [openModalBuyNTF, setOpenModalBuyNTF] = useState(false);
   const [openModalTbaDetail, setOpenModalTbaDetail] = useState(false);
-
-  const [listedNFTData, setListedNFTData] = useState<any>();
+  const [openModalCancelListNFT, setOpenModalCancelListNFT] = useState(false);
   const { isMounted } = useMounted();
   const [selectedNFT, setSelectedNFT] = useState<any>(null);
+  const { listedNFTData, setListedNFTData } = useStore();
 
   useEffect(() => {
     if (!isMounted) return;
@@ -59,6 +61,13 @@ const MarketContainer = () => {
         }}
         selectedNFT={selectedNFT}
       />
+      <ModalCancelListNFT
+        open={openModalCancelListNFT}
+        onCancel={() => {
+          setOpenModalCancelListNFT(false);
+        }}
+        data={selectedNFT}
+      />
 
       <div className='mb-[64px] sm:mb-[97px] flex flex-col items-center px-[16px] md:px-[32px]'>
         <CustomImage
@@ -93,6 +102,7 @@ const MarketContainer = () => {
                     data={item}
                     setOpenModalTbaDetail={setOpenModalTbaDetail}
                     setOpenModalBuyNTF={setOpenModalBuyNTF}
+                    setOpenModalCancelListNFT={setOpenModalCancelListNFT}
                     setSelectedNFT={setSelectedNFT}
                   />
                 </div>
