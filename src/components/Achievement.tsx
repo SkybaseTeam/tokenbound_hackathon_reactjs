@@ -23,7 +23,7 @@ const Achievement = ({ userPoints }: any) => {
     <div className='flex flex-col items-center gap-[0.5rem]'>
       <p className='font-[500] text-[28px] sm:text-[48px]'>
         <span className='text-white'>5 Point</span>{' '}
-        <span className='text-[18px] sm:text-[30px] text-[#B2C1EB]'>
+        <span className='text-[18px] sm:text-[30px] text-[#B2C1EB] sm:px-[30px]'>
           to get
         </span>{' '}
         <span className='text-[#DCFC36]'>10 BLING</span>
