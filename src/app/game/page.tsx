@@ -21,6 +21,14 @@ const Play = () => {
   const { address } = useAccount();
   const { signTypedDataAsync } = useSignTypedData({ primaryType: 'Validate' });
   const [loading, setLoading] = useState(false);
+  const [filteredData, setFilteredData] = useState<any>([]);
+
+  useEffect(() => {
+    const newProfile = profileData?.filter(
+      (item: any) => item?.listing === false
+    );
+    setFilteredData(newProfile);
+  }, [profileData]);
 
   useEffect(() => {
     if (!address) return;
@@ -103,15 +111,15 @@ const Play = () => {
         showBuy={false}
         selectedNFT={selectedNFT}
       />
-      <div className='py-[8rem] layout-container font-glancyr flex flex-col items-center'>
+      <div className='py-[5rem] sm:py-[8rem] layout-container font-glancyr flex flex-col items-center'>
         <h1 className='text-[32px] sm:text-[48px]'>
           Select your Token-Bound Account to Play game!
         </h1>
         <div className='grid extra-sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 mt-[40px] gap-[16px] w-full'>
           {address ? (
-            profileData !== undefined ? (
-              profileData?.length > 0 ? (
-                profileData?.map((item: any, index: any) => (
+            filteredData !== undefined ? (
+              filteredData?.length > 0 ? (
+                filteredData?.map((item: any, index: any) => (
                   <div key={item?._id || index}>
                     <div className='p-[12px] rounded-2xl border border-[#EFFEA3] bg-[#FBFDEB] text-[#031F68]'>
                       <div
@@ -156,7 +164,7 @@ const Play = () => {
               [...new Array(4)].map((_, index) => <NftSkeleton key={index} />)
             )
           ) : (
-            <div className='text-[#031F68]'>Please Connect your wallet!</div>
+            <div className='text-[#DCFC36]'>Please Connect your wallet!</div>
           )}
         </div>
       </div>

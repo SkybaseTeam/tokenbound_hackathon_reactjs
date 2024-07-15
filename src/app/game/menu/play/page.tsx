@@ -42,7 +42,7 @@ const Game = () => {
   }, []);
 
   const handleClick = async (e: any) => {
-    setPoint((prevPoint: any) => prevPoint + 0.1);
+    setPoint((prevPoint: any) => prevPoint + 0.01);
     isPostedPoint = false;
 
     const newBling = {
@@ -60,33 +60,35 @@ const Game = () => {
   };
 
   return (
-    <div className='layout-container py-[6rem] sm:py-[8rem]'>
+    <div className='layout-container py-[4rem] sm:py-[6rem]'>
       <div className='flex justify-center'>
+        <TbaProfile />
+      </div>
+
+      <div className='flex justify-center my-[3rem]'>
         <Achievement userPoints={point} />
       </div>
 
-      <div className='flex items-center justify-between max-sm:flex-col max-sm:gap-[3rem] max-sm:mt-[1rem]'>
-        <TbaProfile />
-
-        <div className='text-[32px]'>Points: {formatDecimal(point)}</div>
-
-        {blings.map((bling: any) => (
-          <div
-            key={bling.id}
-            className='bling z-[100]'
-            style={{ left: `${bling.x}px`, top: `${bling.y}px` }}
-          >
-            bling
-          </div>
-        ))}
-      </div>
+      {blings.map((bling: any) => (
+        <div
+          key={bling.id}
+          className='bling z-[100]'
+          style={{ left: `${bling.x}px`, top: `${bling.y}px` }}
+        >
+          bling
+        </div>
+      ))}
 
       <div className='flex items-center justify-center flex-col max-sm:mt-[3rem]'>
-        <p>Tappp me!</p>
+        <p className='relative z-[99] mb-[-2rem] sm:mb-[-3rem] mt-[1rem] animate-bounce'>Tappp me!</p>
         <div
           onClick={handleClick}
-          className='bg-[url("/images/game/touch.webp")] mt-[1rem] bg-contain bg-no-repeat w-[200px] h-[300px]  sm:w-[400px] sm:h-[600px] cursor-pointer active:scale-[98%]'
+          className='bg-[url("/images/game/pepe.webp")] mt-[1rem] bg-contain bg-no-repeat w-[320px] h-[266px] sm:w-[560px] sm:h-[506px] cursor-pointer active:scale-[98%]'
         ></div>
+        {/* <div
+          onClick={handleClick}
+          className='bg-[url("/images/game/touch.webp")] mt-[1rem] bg-contain bg-no-repeat w-[200px] h-[300px]  sm:w-[400px] sm:h-[600px] cursor-pointer active:scale-[98%]'
+        ></div> */}
       </div>
     </div>
   );

@@ -10,6 +10,7 @@ import useMounted from '@/hook/useMounted';
 import erc20abi from '@/abi/erc20.json';
 import { Contract } from 'starknet';
 import { useProvider } from '@starknet-react/core';
+import CustomButton from './custom/CustomButton';
 
 const TbaProfile = () => {
   const [text, copy] = useCopyToClipboard();
@@ -18,7 +19,6 @@ const TbaProfile = () => {
   const { provider } = useProvider();
   const [bling, setBling] = useState(0);
   const { isMounted } = useMounted();
-
   useEffect(() => {
     setPoint(tbaLoginData?.point);
   }, []);
@@ -41,48 +41,68 @@ const TbaProfile = () => {
 
   return (
     <div className=''>
-      <p className='text-[18px]'>Your Token-Bound Account</p>
-      <div className='inline-block'>
-        <div className='flex items-center rounded-2xl gap-[12px] px-[12px] py-[10px] text-[16px] font-[400] border border-[#EFFEA3] bg-[#FBFDEB] mt-[1rem]'>
-          <CustomImage
-            src={tbaLoginData?.tba_image}
-            width={70}
-            height={70}
-            alt='err'
-            className='rounded-2xl'
-          />
-          <div>
-            <div className='flex items-center gap-[8px]'>
-              <CustomTooltip
-                title='Copied Address'
-                placement='right'
-                trigger={['click']}
-              >
-                <div className='cursor-pointer text-[#031F68]'>
-                  <p
-                    onClick={() => copy(tbaLoginData?.tba_address as string)}
-                    // className='mt-[0.3rem]'
-                  >
-                    {tbaLoginData?.tba_name}
-                  </p>
+      <div className='flex items-start rounded-2xl justify-between p-[12px] text-[16px] font-[400] bg-[#3760CA] mt-[1rem]'>
+        <div>
+          <div className='flex items-start sm:items-center gap-[12px]'>
+            <CustomImage
+              src={tbaLoginData?.tba_image}
+              width={110}
+              height={110}
+              alt='err'
+              className='rounded-2xl max-sm:w-[60px]'
+            />
+            <div>
+              <p className='text-[18px] max-sm:hidden'>My Tokenbound Account</p>
+              <p className='text-[18px] sm:hidden'>My TBA</p>
+              <div className='flex items-center gap-[8px] mt-[4px]'>
+                <CustomTooltip
+                  title='Copied Address'
+                  placement='right'
+                  trigger={['click']}
+                >
+                  <div className='cursor-pointer text-white'>
+                    <p
+                      onClick={() => copy(tbaLoginData?.tba_address as string)}
+                      // className='mt-[0.3rem]'
+                    >
+                      {tbaLoginData?.tba_name}
+                    </p>
+                  </div>
+                </CustomTooltip>
+              </div>
+
+              <div className='flex items-center gap-[12px] max-sm:hidden'>
+                <div className='border border-[#DCFC36] text-[16px] font-[400] text-[#DCFC36] px-[12px] h-[36px] rounded-[32px] mt-[8px] inline-block'>
+                  <div className=' mt-[0.3rem]'>
+                    <p>
+                      Points: {formatDecimal(Number(point))}{' '}
+                      <span className='px-[0.5rem]'>|</span> Amount:{' '}
+                      {bling || 0} BLING
+                    </p>
+                  </div>
                 </div>
-              </CustomTooltip>
-              <IconLogout
-                className='cursor-pointer'
-                fill='#ef4444'
-                onClick={() => {
-                  window.location.reload();
-                }}
-              />
-            </div>
-            <div className='text-[16px] font-[400] text-[#031F68]  flex items-center mt-[8px]'>
-              <p>
-                Points: {formatDecimal(Number(point))}{' '}
-                <span className='px-[0.5rem]'>|</span> Total: {bling || 0} Bling
-              </p>
+                <CustomButton className='btn-primary max-sm:hidden'>
+                  WithDraw
+                </CustomButton>
+              </div>
             </div>
           </div>
         </div>
+
+        <IconLogout
+          className='cursor-pointer'
+          fill='#ef4444'
+          onClick={() => {
+            window.location.reload();
+          }}
+        />
+      </div>
+      <div className='flex items-center gap-[12px] mt-[1rem] sm:hidden'>
+        <div className='text-[16px] font-[400] text-[#DCFC36] px-[12px] rounded-[32px] mt-[8px]'>
+          <p>Points: {formatDecimal(Number(point))}</p>
+          <p>Amount: {bling || 0} BLING</p>
+        </div>
+        <CustomButton className='btn-primary'>WithDraw</CustomButton>
       </div>
     </div>
   );

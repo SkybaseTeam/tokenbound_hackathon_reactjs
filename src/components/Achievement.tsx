@@ -21,8 +21,16 @@ const Achievement = ({ userPoints }: any) => {
 
   return (
     <div className='flex flex-col items-center gap-[0.5rem]'>
-      <p className='animate-pulse text-red-300 text-[24px]'>5 Point to get 10 BLING</p>
-      <CustomButton className='btn-primary' disabled>Claim</CustomButton>
+      <p className='font-[500] text-[28px] sm:text-[48px]'>
+        <span className='text-white'>5 Point</span>{' '}
+        <span className='text-[18px] sm:text-[30px] text-[#B2C1EB]'>
+          to get
+        </span>{' '}
+        <span className='text-[#DCFC36]'>10 BLING</span>
+      </p>
+      <CustomButton className='btn-primary w-[136px]' disabled>
+        Claim
+      </CustomButton>
     </div>
   );
 };
