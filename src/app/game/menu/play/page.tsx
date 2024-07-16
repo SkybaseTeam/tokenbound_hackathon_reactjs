@@ -3,7 +3,7 @@
 import Achievement from '@/components/Achievement';
 import TbaProfile from '@/components/TbaProfile';
 import { useStore } from '@/context/store';
-import { updatePoint } from '@/fetching/client/game';
+import { getRewardProcess, updatePoint } from '@/fetching/client/game';
 import useCopyToClipboard from '@/hook/useCopyToClipboard';
 import useMounted from '@/hook/useMounted';
 import { formatDecimal, formatWallet } from '@/utils';
@@ -17,7 +17,6 @@ const Game = () => {
   const [blings, setBlings] = useState<any>([]);
   const router = useRouter();
   const { point, setPoint, tbaLoginData, accessToken } = useStore();
-  const { isMounted } = useMounted();
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -42,7 +41,7 @@ const Game = () => {
   }, []);
 
   const handleClick = async (e: any) => {
-    setPoint((prevPoint: any) => prevPoint + 0.01);
+    setPoint((prevPoint: any) => prevPoint + 1);
     isPostedPoint = false;
 
     const newBling = {
@@ -66,7 +65,11 @@ const Game = () => {
       </div>
 
       <div className='flex justify-center my-[3rem]'>
-        <Achievement userPoints={point} />
+        <Achievement
+          tbaLoginData={tbaLoginData}
+          userPoints={point}
+          accessToken={accessToken}
+        />
       </div>
 
       {blings.map((bling: any) => (
@@ -80,7 +83,9 @@ const Game = () => {
       ))}
 
       <div className='flex items-center justify-center flex-col max-sm:mt-[3rem]'>
-        <p className='relative z-[99] mb-[-2rem] sm:mb-[-3rem] mt-[1rem] animate-bounce'>Tappp me!</p>
+        <p className='relative z-[99] mb-[-2rem] sm:mb-[-3rem] mt-[1rem] animate-bounce'>
+          Tappp me!
+        </p>
         <div
           onClick={handleClick}
           className='bg-[url("/images/game/pepe.webp")] mt-[1rem] bg-contain bg-no-repeat w-[320px] h-[266px] sm:w-[560px] sm:h-[506px] cursor-pointer active:scale-[98%]'

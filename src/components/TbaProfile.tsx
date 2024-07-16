@@ -15,23 +15,13 @@ import CustomButton from './custom/CustomButton';
 const TbaProfile = () => {
   const [text, copy] = useCopyToClipboard();
   const router = useRouter();
-  const { point, tbaLoginData, setPoint } = useStore();
+  const { point, tbaLoginData, setPoint, getBlingOfTba, blingTba } = useStore();
   const { provider } = useProvider();
-  const [bling, setBling] = useState(0);
+
   const { isMounted } = useMounted();
   useEffect(() => {
     setPoint(tbaLoginData?.point);
   }, []);
-
-  const getBlingOfTba = async () => {
-    const erc20Contract = new Contract(
-      erc20abi,
-      process.env.NEXT_PUBLIC_ERC20_CONTRACT_ADDRESS as string,
-      provider
-    );
-    const bling = await erc20Contract.balanceOf(tbaLoginData?.tba_address);
-    setBling(Number(bling) / 10 ** 18);
-  };
 
   useEffect(() => {
     if (isMounted && tbaLoginData?.tba_address) {
@@ -77,7 +67,7 @@ const TbaProfile = () => {
                     <p>
                       Points: {formatDecimal(Number(point))}{' '}
                       <span className='px-[0.5rem]'>|</span> Amount:{' '}
-                      {bling || 0} BLING
+                      {blingTba || 0} BLING
                     </p>
                   </div>
                 </div>
@@ -93,7 +83,7 @@ const TbaProfile = () => {
               <p className='border-b border-[#DCFC36]'>
                 Points: {formatDecimal(Number(point))}
               </p>
-              <p>Amount: {bling || 0} BLING</p>
+              <p>Amount: {blingTba || 0} BLING</p>
             </div>
             <CustomButton className='btn-primary max-sm:!text-[14px] max-sm:px-[10px] max-sm:!h-[45px] max-sm:!rounded-xl'>
               WithDraw

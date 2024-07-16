@@ -26,6 +26,7 @@ const StoreProvider = ({ children }: any) => {
   const [tbaLoginData, setTbaLoginData] = useState<any>();
   const [accessToken, setAccessToken] = useState<any>();
   const [listedNFTData, setListedNFTData] = useState<any>([]);
+  const [blingTba, setBlingTba] = useState(0);
 
   const { starknetkitConnectModal } = useStarknetkitConnectModal({
     connectors: connectors as any,
@@ -76,6 +77,16 @@ const StoreProvider = ({ children }: any) => {
     }
   };
 
+  const getBlingOfTba = async () => {
+    const erc20Contract = new Contract(
+      erc20abi,
+      process.env.NEXT_PUBLIC_ERC20_CONTRACT_ADDRESS as string,
+      provider
+    );
+    const bling = await erc20Contract.balanceOf(tbaLoginData?.tba_address);
+    setBlingTba(Number(bling));
+  };
+
   return (
     <storeContext.Provider
       value={{
@@ -95,6 +106,8 @@ const StoreProvider = ({ children }: any) => {
         setAccessToken,
         listedNFTData,
         setListedNFTData,
+        blingTba,
+        getBlingOfTba,
       }}
     >
       {children}

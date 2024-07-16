@@ -16,7 +16,6 @@ const CardMint = ({ data }: any) => {
       <div className='aspect-square w-full relative overflow-hidden rounded-2xl'>
         <CustomImage
           src={
-            data?.image ||
             'https://i.seadn.io/s/raw/files/af7296d9d79348b19bfdb151f5698cb7.gif?auto=format&dpr=1&w=1000'
           }
           fill
@@ -26,11 +25,11 @@ const CardMint = ({ data }: any) => {
       </div>
       <div className='my-[16px]'>
         <p className='text-[18px] uppercase font-[400] truncate'>
-          {data?.name || 'NFT Name'}
+          {'ERC-6551 Token-bound Account'}
         </p>
         <div className='flex items-center gap-[12px] mt-[12px]  font-[300] text-[16px]'>
-          <p className='text-[#587AD3]'>Price</p>
-          <p className='text-[18px] font-[400]'>{data?.price || 'FREE'}</p>
+          <p className='text-[#587AD3] truncate'>Price</p>
+          <p className='text-[18px] font-[400]'>{'FREE'}</p>
         </div>
       </div>
       <CustomButton className='btn-secondary w-full'>Mint</CustomButton>
