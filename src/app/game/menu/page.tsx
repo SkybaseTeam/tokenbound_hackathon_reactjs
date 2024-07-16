@@ -4,17 +4,23 @@ import CustomButton from '@/components/custom/CustomButton';
 import CustomImage from '@/components/custom/CustomImage';
 import ImageSkeleton from '@/components/custom/CustomSkeleton/ImageSkeleton';
 import { useStore } from '@/context/store';
-import { collectionData } from '@/fetching/client/mint';
+import {
+  collectionData,
+  fetchNft,
+  refreshNftMintStatus,
+} from '@/fetching/client/mint';
 import useMounted from '@/hook/useMounted';
 import { toastError, toastSuccess } from '@/utils/toast';
 import { useAccount, useContract, useProvider } from '@starknet-react/core';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
-import erc721ABI from '@/abi/erc721.json';
+import erc721ItemABI from '@/abi/erc721Item.json';
 import erc20ABI from '@/abi/erc20.json';
 import CustomProgress from '@/components/custom/CustomProgress';
 import { cairo, CallData, selector } from 'starknet';
 import TbaProfile from '@/components/TbaProfile';
+import { profile } from '@/fetching/client/profile';
+import ModalMintTbaSuccess from '@/components/modal/ModalMintTbaSuccess';
 
 const Menu = () => {
   const router = useRouter();
@@ -24,6 +30,8 @@ const Menu = () => {
   const [loading, setLoading] = useState(false);
   const { isMounted } = useMounted();
   const [remainingPool, setRemainingPool] = useState<any>(0);
+  const [showModalMintTbaSuccess, setShowModalMintTbaSuccess] = useState(false);
+  const [mintedNft, setMintedNft] = useState<any>();
 
   const MINT_PRICE = 100;
 
@@ -35,7 +43,7 @@ const Menu = () => {
   });
 
   const { contract: erc721Contract } = useContract({
-    abi: erc721ABI,
+    abi: erc721ItemABI,
     address: process.env.NEXT_PUBLIC_ERC721_ITEM,
   });
 
@@ -50,11 +58,11 @@ const Menu = () => {
       router.push('/game');
     }
 
-    getRemainingPool();
-    const interval = setInterval(() => {
-      getRemainingPool();
-    }, 180000);
-    return () => clearInterval(interval);
+    // getRemainingPool();
+    // const interval = setInterval(() => {
+    //   getRemainingPool();
+    // }, 180000);
+    // return () => clearInterval(interval);
   }, []);
 
   const onMint = async () => {
@@ -65,57 +73,50 @@ const Menu = () => {
     setLoading(true);
 
     try {
-      // Approve Bling from 6551 to ERC721
-      const allowance = await erc20Contract?.allowance(
-        tbaLoginData?.tba_address,
-        process.env.NEXT_PUBLIC_ERC721_ITEM as string
-      );
-      const isNeedToApprove = Number(allowance) < MINT_PRICE; /*  * 10 ** 18 */
+      setLoading(true);
+      try {
+        // // mint Item
+        const tx = await account?.execute([
+          {
+            contractAddress: tbaLoginData?.tba_address,
+            entrypoint: 'mint_nft',
+            calldata: CallData.compile({
+              nft_contract: process.env.NEXT_PUBLIC_ERC721_ITEM as string,
+              token_contract: process.env
+                .NEXT_PUBLIC_ERC20_CONTRACT_ADDRESS as string,
+            }),
+          },
+        ]);
 
-      // Execute Mint: Wallet -> 6551 -> ERC721
-      const tx: any = await account?.execute({
-        contractAddress: tbaLoginData?.tba_address,
-        entrypoint: '__execute__',
-        calldata: CallData.compile({
-          calls: [
-            {
-              to: process.env.NEXT_PUBLIC_ERC20_CONTRACT_ADDRESS as string,
-              selector: 'approve',
-              calldata: [
-                process.env.NEXT_PUBLIC_ERC721_ITEM as string,
-                cairo.uint256(MINT_PRICE /*  * 10 ** 18 */),
-              ],
-            },
-            // {},
-          ],
-        }),
-      });
-      await provider.waitForTransaction(tx.transaction_hash);
-      // const tx = await account?.execute([
-      //   ...(!isNeedToApprove
-      //     ? []
-      //     : [
-      //         {
-      //           contractAddress: process.env
-      //             .NEXT_PUBLIC_ERC20_CONTRACT_ADDRESS as string,
-      //           entrypoint: 'approve',
-      //           calldata: CallData.compile({
-      //             spender: process.env.NEXT_PUBLIC_ERC721_ITEM as string,
-      //             amount: cairo.uint256(MINT_PRICE /*  * 10 ** 18 */),
-      //           }),
-      //         },
-      //       ]),
-      //   {
-      //     contractAddress: process.env
-      //       .NEXT_PUBLIC_ERC721_CONTRACT_ADDRESS as string,
-      //     entrypoint: 'mint_nft',
-      //     calldata: CallData.compile({}),
-      //   },
-      // ]);
-
-      // toastSuccess('Mint success');
-      // getDcoin();
-      // getRemainingPool();
+        const data: any = await provider.waitForTransaction(
+          tx?.transaction_hash as any
+        );
+        console.log(data);
+        const tokenId = parseInt(data?.events[4]?.data[2], 16);
+        console.log('TokenId', tokenId);
+        await Promise.allSettled([
+          refreshNftMintStatus({
+            token_id: tokenId,
+            collection_address: process.env.NEXT_PUBLIC_ERC721_ITEM,
+          }),
+          // getDcoin(),
+          // getRemainingPool(),
+        ]);
+        const res: any = await fetchNft(
+          tbaLoginData?.tba_address?.toLocaleLowerCase()
+        );
+        setMintedNft(
+          res?.data?.data?.find(
+            (item: any) => item?.token_id === tokenId.toString()
+          )
+        );
+        setShowModalMintTbaSuccess(true);
+      } catch (error) {
+        toastError('Mint failed');
+        console.log(error);
+      } finally {
+        setLoading(false);
+      }
     } catch (err) {
       console.log(err);
       toastError('Mint failed');
@@ -127,6 +128,14 @@ const Menu = () => {
   return (
     <div className='layout-container py-[5rem] sm:py-[8rem] flex flex-col items-center'>
       <TbaProfile />
+
+      <ModalMintTbaSuccess
+        open={showModalMintTbaSuccess}
+        onCancel={() => {
+          setShowModalMintTbaSuccess(false);
+        }}
+        mintedNft={mintedNft}
+      />
 
       <CustomButton
         onClick={() => {
@@ -167,13 +176,13 @@ const Menu = () => {
                 <h1 className='text-[30px] font-[400] font-glancyr my-[21px]'>
                   Bling Token-Bound Item
                 </h1>
-                <div className='flex items-center font-glancyr text-[16px] font-[300] text-[#546678] mb-[2px] justify-between'>
+                {/* <div className='flex items-center font-glancyr text-[16px] font-[300] text-[#546678] mb-[2px] justify-between'>
                   <p>Minted Item</p>
                   <p>
                     {remainingPool
                       ? TOTAL_POOL_MINT - Number(remainingPool)
                       : 0}
-                    /{TOTAL_POOL_MINT}
+                    /{'Infinity'}
                   </p>
                 </div>
                 <CustomProgress
@@ -185,14 +194,14 @@ const Menu = () => {
                         100
                       : 0
                   }
-                />
+                /> */}
                 <div className='flex items-center gap-[20px] my-[20px] font-glancyr'>
                   <p className='text-[16px] font-[300] text-[#546678]'>Price</p>
                   <p className='text-[30px] font-[400] text-[#031F68]'>
-                    100 BLING
+                    {MINT_PRICE} BLING
                   </p>
                 </div>
-                <div className='flex justify-end'>
+                <div className='flex justify-start'>
                   {' '}
                   <CustomButton
                     loading={loading}

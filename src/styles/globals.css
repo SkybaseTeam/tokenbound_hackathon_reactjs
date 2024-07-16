@@ -58,7 +58,7 @@
 
   button.btn-primary[disabled],
   button.btn-secondary[disabled] {
-    @apply bg-[#EFFEA3] text-[#0538BD] bg-none hover:!text-[#0538BD] hover:!bg-[#EFFEA3];
+    @apply bg-[#f6fcd7] text-[#0538BD] bg-none hover:!text-[#0538BD] hover:!bg-[#f6fcd7];
   }
 
   .layout-container {

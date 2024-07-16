@@ -73,6 +73,8 @@ const ModalBuyNFT = ({ open, onCancel, selectedNFT }: any) => {
           calldata: CallData.compile({
             token_address: selectedNFT?.collection_address,
             token_id: cairo.uint256(TOKEN_ID),
+            eth_address: process.env
+              .NEXT_PUBLIC_ERC20_CONTRACT_ADDRESS as string,
           }),
         },
       ]);

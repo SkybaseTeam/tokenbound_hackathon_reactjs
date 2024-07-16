@@ -41,7 +41,7 @@ const Game = () => {
   }, []);
 
   const handleClick = async (e: any) => {
-    setPoint((prevPoint: any) => prevPoint + 1);
+    setPoint((prevPoint: any) => prevPoint + 0.05);
     isPostedPoint = false;
 
     const newBling = {
@@ -83,17 +83,17 @@ const Game = () => {
       ))}
 
       <div className='flex items-center justify-center flex-col max-sm:mt-[3rem]'>
-        <p className='relative z-[99] mb-[-2rem] sm:mb-[-3rem] mt-[1rem] animate-bounce'>
+        <p className='relative z-[99] mt-[1rem] animate-bounce'>
           Tappp me!
         </p>
-        <div
-          onClick={handleClick}
-          className='bg-[url("/images/game/pepe.webp")] mt-[1rem] bg-contain bg-no-repeat w-[320px] h-[266px] sm:w-[560px] sm:h-[506px] cursor-pointer active:scale-[98%]'
-        ></div>
         {/* <div
           onClick={handleClick}
-          className='bg-[url("/images/game/touch.webp")] mt-[1rem] bg-contain bg-no-repeat w-[200px] h-[300px]  sm:w-[400px] sm:h-[600px] cursor-pointer active:scale-[98%]'
+          className='bg-[url("/images/game/pepe.webp")] mt-[1rem] bg-contain bg-no-repeat w-[320px] h-[266px] sm:w-[560px] sm:h-[506px] cursor-pointer active:scale-[98%]'
         ></div> */}
+        <div
+          onClick={handleClick}
+          className='bg-[url("/images/game/touch.webp")] mt-[1rem] bg-contain bg-no-repeat w-[200px] h-[300px]  sm:w-[400px] sm:h-[600px] cursor-pointer active:scale-[98%]'
+        ></div>
       </div>
     </div>
   );

@@ -165,7 +165,7 @@ const Play = () => {
                   </div>
                 ))
               ) : (
-                <div className='text-[#031F68]'>No Data!</div>
+                <div className='text-[#DCFC36]'>No Data!</div>
               )
             ) : (
               [...new Array(4)].map((_, index) => <NftSkeleton key={index} />)

@@ -29,11 +29,10 @@ const ModalMintTbaSuccess = ({ open, onCancel, mintedNft }: any) => {
           </p>
           <div className='relative w-full aspect-square'>
             {mintedNft ? (
-              <CustomImage
-                src={mintedNft?.tba_image}
+              <img
+                src={mintedNft?.tba_image || mintedNft?.nft_image}
                 alt='nft'
-                fill
-                className='rounded-2xl'
+                className='rounded-2xl w-full'
               />
             ) : (
               <ImageSkeleton />
@@ -52,7 +51,9 @@ const ModalMintTbaSuccess = ({ open, onCancel, mintedNft }: any) => {
                   onClick={() => copy(mintedNft?.tba_name as string)}
                   className='text-[#031F68] text-[24px] font-[400] ml-[0.5rem] cursor-pointer'
                 >
-                  {mintedNft ? mintedNft?.tba_name : '...'}
+                  {mintedNft
+                    ? mintedNft?.tba_name || mintedNft?.nft_name
+                    : '...'}
                 </span>
               </CustomTooltip>
             </p>
@@ -67,7 +68,11 @@ const ModalMintTbaSuccess = ({ open, onCancel, mintedNft }: any) => {
                   onClick={() => copy(mintedNft?.owner_address as string)}
                   className='text-[#031F68] text-[24px] font-[400] ml-[0.5rem] cursor-pointer'
                 >
-                  {mintedNft ? formatWallet(mintedNft?.tba_address) : '...'}
+                  {mintedNft
+                    ? formatWallet(
+                        mintedNft?.tba_address || mintedNft?.collection_address
+                      )
+                    : '...'}
                 </span>
               </CustomTooltip>
             </p>

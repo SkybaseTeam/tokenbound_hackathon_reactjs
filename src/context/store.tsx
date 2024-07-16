@@ -84,7 +84,7 @@ const StoreProvider = ({ children }: any) => {
       provider
     );
     const bling = await erc20Contract.balanceOf(tbaLoginData?.tba_address);
-    setBlingTba(Number(bling));
+    setBlingTba(Number(bling) / 10 ** 18);
   };
 
   return (

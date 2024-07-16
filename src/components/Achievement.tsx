@@ -7,21 +7,14 @@ import { useAccount, useProvider } from '@starknet-react/core';
 import { CallData } from 'starknet';
 import { useStore } from '@/context/store';
 
-const steps = [
-  { id: 1, label: '2 Points', points: 2, claimed: false },
-  { id: 2, label: '5 Points', points: 5, claimed: false },
-  { id: 3, label: '8 Points', points: 8, claimed: false },
-  { id: 4, label: '9 Points', points: 9, claimed: false },
-];
-
 const Achievement = ({ userPoints, tbaLoginData, accessToken }: any) => {
-  const [stepsState, setStepsState] = useState(steps);
   const { isMounted } = useMounted();
   const [currentRewardPoint, setCurrentRewardPoint] = useState(0);
   const { account } = useAccount();
   const { provider } = useProvider();
   const { getBlingOfTba } = useStore();
   const [loadingClaim, setLoadingClaim] = useState(false);
+  const { address } = useAccount();
 
   const fetchRewardProcess = async () => {
     const res: any = await getRewardProcess(
@@ -32,8 +25,9 @@ const Achievement = ({ userPoints, tbaLoginData, accessToken }: any) => {
   };
 
   useEffect(() => {
-    isMounted && fetchRewardProcess();
-  }, [isMounted]);
+    if (!isMounted || !address) return;
+    fetchRewardProcess();
+  }, [isMounted, address]);
 
   const handleClaim = async () => {
     setLoadingClaim(true);
@@ -66,18 +60,6 @@ const Achievement = ({ userPoints, tbaLoginData, accessToken }: any) => {
       setLoadingClaim(false);
     }
   };
-
-  useEffect(() => {
-    if (userPoints >= (currentRewardPoint + 1) * 5) {
-      document
-        .getElementById('claim_bling_btn')
-        ?.classList.add('animate-bounce');
-    } else {
-      document
-        .getElementById('claim_bling_btn')
-        ?.classList.remove('animate-bounce');
-    }
-  }, [userPoints, currentRewardPoint]);
 
   return (
     <div className='flex flex-col items-center gap-[0.5rem]'>

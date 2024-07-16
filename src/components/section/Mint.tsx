@@ -77,7 +77,7 @@ export default function Mint() {
           owner_address: address,
           collection_address: process.env.NEXT_PUBLIC_ERC721_CONTRACT_ADDRESS,
         }),
-        getDcoin(),
+        // getDcoin(),
         getRemainingPool(),
       ]);
 
