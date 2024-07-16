@@ -33,7 +33,7 @@ const Menu = () => {
   const [showModalMintTbaSuccess, setShowModalMintTbaSuccess] = useState(false);
   const [mintedNft, setMintedNft] = useState<any>();
 
-  const MINT_PRICE = 100;
+  const MINT_PRICE = 10;
 
   const TOTAL_POOL_MINT = 1000000000000000000000;
 
