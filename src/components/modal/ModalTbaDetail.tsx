@@ -13,6 +13,8 @@ import ImageSkeleton from '../custom/CustomSkeleton/ImageSkeleton';
 import useResponsive from '@/hook/useResponsive';
 import IconCopy from '@/assets/icons/IconCopy';
 import IconCopyTba from '@/assets/icons/IconCopyTba';
+import NftSkeleton from '../custom/CustomSkeleton/NftSkeleton';
+import { Skeleton } from 'antd';
 
 const ModalTbaDetail = ({
   open,
@@ -22,10 +24,11 @@ const ModalTbaDetail = ({
   showBuy = true,
 }: any) => {
   const [text, copy] = useCopyToClipboard();
-  const [nftItemList, setNftItemList] = useState<any>([]);
+  const [nftItemList, setNftItemList] = useState<any>();
   const { isMounted } = useMounted();
   const [height, setHeight] = useState('auto');
   const windowSize = useResponsive();
+  const { address } = useAccount();
 
   useEffect(() => {
     const getNftItemList = async () => {
@@ -36,6 +39,12 @@ const ModalTbaDetail = ({
       getNftItemList();
     }
   }, [isMounted, selectedNFT, open]);
+
+  useEffect(() => {
+    if (!open) {
+      setNftItemList(undefined);
+    }
+  }, [open]);
 
   useEffect(() => {
     if (nftItemList) {
@@ -145,36 +154,66 @@ const ModalTbaDetail = ({
 
               <div className='mt-[40px]'>
                 <p className='text-[24px] text-[#546678]'>Items</p>
-                <div className='grid gap-[16px] sm:grid-cols-2 mt-[16px] overflow-y-auto'>
-                  {nftItemList?.map((item: any) => (
-                    <a
-                      href={`${process.env.NEXT_PUBLIC_STARKSCAN_URL + '/nft/' + item?.collection_address + '/' + item?.token_id}`}
-                      target='_blank'
-                      className='bg-[#F4FEC1] p-[16px]  rounded-2xl flex items-center gap-[12px] cursor-pointer hover:translate-y-[-0.5rem] transition-all'
-                      key={item?._id}
-                    >
-                      {item?.nft_image ? (
-                        <CustomImage
-                          src={item?.nft_image}
-                          width={68}
-                          height={68}
-                          className='rounded-2xl'
-                          alt='err'
-                        />
-                      ) : (
-                        <ImageSkeleton />
-                      )}
+                <div className='grid gap-[16px] mt-[16px] '>
+                  {nftItemList !== undefined ? (
+                    nftItemList?.length > 0 ? (
+                      nftItemList?.map((item: any, index: any) => (
+                        <a
+                          href={`${process.env.NEXT_PUBLIC_STARKSCAN_URL + '/nft/' + item?.collection_address + '/' + item?.token_id}`}
+                          target='_blank'
+                          className='bg-[#F4FEC1] p-[8px] hover:bg-[#e9fc8c] transition-all rounded-2xl flex items-center gap-[12px] cursor-pointer '
+                          key={item?._id}
+                        >
+                          {item?.nft_image ? (
+                            <CustomImage
+                              src={item?.nft_image}
+                              width={80}
+                              height={80}
+                              className='rounded-xl'
+                              alt='err'
+                            />
+                          ) : (
+                            <ImageSkeleton />
+                          )}
 
-                      <div className='overflow-hidden'>
-                        <p className='text-[18px] font-[300] text-[#546678]'>
-                          NFT
-                        </p>
-                        <p className='mt-[8px] text-[24px] font-[400] text-[#0538BD] truncate '>
-                          {item?.nft_name}
-                        </p>
-                      </div>
-                    </a>
-                  ))}
+                          <div className='overflow-hidden'>
+                            <p className='text-[18px] font-[300] text-[#546678]'>
+                              NFT
+                            </p>
+                            <p className='mt-[8px] text-[24px] font-[400] text-[#0538BD] truncate '>
+                              {item?.nft_name}
+                            </p>
+                          </div>
+                        </a>
+                      ))
+                    ) : (
+                      <div className='text-[#031F68]'>No Data!</div>
+                    )
+                  ) : (
+                    <div className='grid gap-[20px]'>
+                      {[...new Array(4)].map((_, index) => (
+                        <div
+                          key={index}
+                          className='w-full rounded-lg flex items-center gap-[1rem]'
+                        >
+                          <Skeleton.Button
+                            shape='square'
+                            active
+                            className='aspect-square !w-[5rem] rounded-lg skeleton-image'
+                            block
+                          />
+                          <div className='mt-2 space-y-2 w-full'>
+                            <div className='w-full'>
+                              <Skeleton.Button size='small' active block />
+                            </div>
+                            <div className='w-4/6'>
+                              <Skeleton.Button size='small' active block />
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
                 </div>
               </div>
             </div>

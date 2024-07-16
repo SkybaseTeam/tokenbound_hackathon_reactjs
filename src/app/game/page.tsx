@@ -17,12 +17,24 @@ const Play = () => {
   const [openModalTbaDetail, setOpenModalTbaDetail] = useState(false);
   const [selectedNFT, setSelectedNFT] = useState<any>(null);
   const router = useRouter();
-  const { profileData, getProfile, setTbaLoginData, setAccessToken, bling } =
-    useStore();
+  const {
+    profileData,
+    getProfile,
+    setTbaLoginData,
+    setAccessToken,
+    accessToken,
+    tbaLoginData,
+  } = useStore();
   const { address } = useAccount();
   const { signTypedDataAsync } = useSignTypedData({ primaryType: 'Validate' });
   const [loading, setLoading] = useState(false);
   const [filteredData, setFilteredData] = useState<any>([]);
+
+  useEffect(() => {
+    if (accessToken && tbaLoginData) {
+      router.push(`/game/menu`);
+    }
+  }, [accessToken, tbaLoginData]);
 
   useEffect(() => {
     const newProfile = profileData?.filter(

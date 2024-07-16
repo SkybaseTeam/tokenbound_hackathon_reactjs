@@ -95,8 +95,9 @@ const MarketContainer = () => {
         <div className='grid extra-sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 mt-[40px] gap-[16px]'>
           <CardMint />
 
-          {listedNFTData !== undefined
-            ? listedNFTData?.map((item: any) => (
+          {listedNFTData !== undefined ? (
+            listedNFTData?.length > 0 ? (
+              listedNFTData?.map((item: any, index: any) => (
                 <div key={item?._id}>
                   <CardMarketplace
                     data={item}
@@ -107,7 +108,12 @@ const MarketContainer = () => {
                   />
                 </div>
               ))
-            : [...new Array(3)].map((_, index) => <NftSkeleton key={index} />)}
+            ) : (
+              <div className='text-[#031F68]'>No Data!</div>
+            )
+          ) : (
+            [...new Array(7)].map((_, index) => <NftSkeleton key={index} />)
+          )}
         </div>
       </div>
     </div>

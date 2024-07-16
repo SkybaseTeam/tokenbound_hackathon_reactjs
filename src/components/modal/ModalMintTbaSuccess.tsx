@@ -80,7 +80,7 @@ const ModalMintTbaSuccess = ({ open, onCancel, mintedNft }: any) => {
           Go to My Profile to check your item
           <CustomButton
             onClick={() => {
-              router.push('market/profile/' + address);
+              router.push('/market/profile/' + address);
             }}
             className='btn-primary w-full mt-[16px]'
           >

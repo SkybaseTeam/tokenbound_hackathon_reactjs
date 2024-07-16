@@ -22,7 +22,7 @@ const TbaProfile = () => {
   const { provider } = useProvider();
   const [loadingWithDraw, setLoadingWithDraw] = useState(false);
   const { account } = useAccount();
-  const { setShowModalWaitTransaction } = useStore();
+  const { setShowModalWaitTransaction, setAccessToken } = useStore();
   const { isMounted } = useMounted();
   useEffect(() => {
     setPoint(tbaLoginData?.point);
@@ -123,11 +123,13 @@ const TbaProfile = () => {
           </div>
 
           <div className='flex items-center gap-[12px] mt-[0.3rem] sm:hidden'>
-            <div className='text-[16px] border border-[#DCFC36] font-[400] text-[#DCFC36] px-[12px] py-[6px] rounded-[16px] mt-[8px]'>
-              <p className='border-b border-[#DCFC36]'>
+            <div className='text-[16px]  border border-[#DCFC36] font-[400] text-[#DCFC36] px-[12px] py-[6px] rounded-[16px] mt-[8px]'>
+              <p className='border-b max-sm:pb-[0.2rem] border-[#DCFC36]'>
                 Points: {formatDecimal(Number(point))}
               </p>
-              <p>Amount: {blingTba || 0} BLING</p>
+              <p className='max-sm:mt-[0.2rem]'>
+                Amount: {blingTba || 0} BLING
+              </p>
             </div>
             <CustomButton
               loading={loadingWithDraw}
@@ -145,6 +147,7 @@ const TbaProfile = () => {
           fill='#ef4444'
           onClick={() => {
             router.push('/game');
+            setAccessToken(undefined);
             // setTimeout(() => {
             //   window.location.reload();
             // }, 500);

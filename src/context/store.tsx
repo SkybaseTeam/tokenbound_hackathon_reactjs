@@ -25,7 +25,7 @@ const StoreProvider = ({ children }: any) => {
   const [point, setPoint] = useState(0);
   const [tbaLoginData, setTbaLoginData] = useState<any>();
   const [accessToken, setAccessToken] = useState<any>();
-  const [listedNFTData, setListedNFTData] = useState<any>([]);
+  const [listedNFTData, setListedNFTData] = useState<any>();
   const [blingTba, setBlingTba] = useState(0);
   const [showModalWaitTransaction, setShowModalWaitTransaction] =
     useState(false);
