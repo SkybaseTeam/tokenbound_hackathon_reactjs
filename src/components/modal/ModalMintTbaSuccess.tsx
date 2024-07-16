@@ -27,10 +27,13 @@ const ModalMintTbaSuccess = ({ open, onCancel, mintedNft }: any) => {
           </p>
           <div className='relative w-full aspect-square'>
             {mintedNft ? (
-              <img
+              <CustomImage
+                placeholder='blur'
+                blurDataURL='/images/default.webp'
                 src={mintedNft?.tba_image || mintedNft?.nft_image}
                 alt='nft'
                 className='rounded-2xl w-full'
+                fill
               />
             ) : (
               <ImageSkeleton />

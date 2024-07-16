@@ -26,6 +26,8 @@ const CardProfile = ({
       >
         <div className='aspect-square w-full relative overflow-hidden rounded-2xl'>
           <CustomImage
+            placeholder='blur'
+            blurDataURL='/images/default.webp'
             src={data?.tba_image}
             fill
             alt='Nft'

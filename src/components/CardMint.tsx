@@ -15,6 +15,8 @@ const CardMint = ({ data }: any) => {
     >
       <div className='aspect-square w-full relative overflow-hidden rounded-2xl'>
         <CustomImage
+          placeholder='blur'
+          blurDataURL='/images/default.webp'
           src={
             'https://i.seadn.io/s/raw/files/af7296d9d79348b19bfdb151f5698cb7.gif?auto=format&dpr=1&w=1000'
           }

@@ -64,7 +64,7 @@ const Profile = () => {
       <div className='flex items-center justify-between max-lg:flex-col max-lg:items-start max-lg:gap-[2rem] max-w-[1260px] mx-auto max-md:px-[16px] max-lg:px-[32px]'>
         <div className='flex items-center gap-[24px]'>
           <CustomImage
-            src='/images/default.webp'
+            src='/images/profile/avt.webp'
             width={163}
             height={163}
             alt='err'

@@ -26,7 +26,7 @@ const CustomImage = ({
       }}
       alt={alt}
       quality={100}
-      sizes='(max-width: 1024px) 70vw, (max-width: 640px) 50vw, 100vw' // disable warning
+      sizes='(max-width: 1024px) 70vw, (max-width: 640px) 50vw, 100vw'
       {...props}
     />
   );

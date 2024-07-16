@@ -75,7 +75,7 @@ const Menu = () => {
     try {
       setLoading(true);
       try {
-        // // mint Item
+        // mint Item
         const tx = await account?.execute([
           {
             contractAddress: tbaLoginData?.tba_address,
