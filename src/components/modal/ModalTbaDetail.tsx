@@ -11,6 +11,8 @@ import { fetchNft } from '@/fetching/client/mint';
 import useMounted from '@/hook/useMounted';
 import ImageSkeleton from '../custom/CustomSkeleton/ImageSkeleton';
 import useResponsive from '@/hook/useResponsive';
+import IconCopy from '@/assets/icons/IconCopy';
+import IconCopyTba from '@/assets/icons/IconCopyTba';
 
 const ModalTbaDetail = ({
   open,
@@ -22,10 +24,8 @@ const ModalTbaDetail = ({
   const [text, copy] = useCopyToClipboard();
   const [nftItemList, setNftItemList] = useState<any>([]);
   const { isMounted } = useMounted();
-  const [height, setHeight] = useState(0);
+  const [height, setHeight] = useState('auto');
   const windowSize = useResponsive();
-
-  console.log(windowSize);
 
   useEffect(() => {
     const getNftItemList = async () => {
@@ -38,16 +38,20 @@ const ModalTbaDetail = ({
   }, [isMounted, selectedNFT, open]);
 
   useEffect(() => {
-    const handleResize = () => {
-      const element = document.getElementById('tba_info_img');
-      const h = element ? element.offsetHeight : 0;
-      setHeight(h);
-    };
+    if (nftItemList) {
+      const handleResize = () => {
+        const element = document.getElementById('tba_info_img');
+        const h: any = element?.offsetHeight;
+        setHeight(h);
+      };
 
-    window.addEventListener('resize', handleResize);
+      handleResize();
 
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
+      window.addEventListener('resize', handleResize);
+
+      return () => window.removeEventListener('resize', handleResize);
+    }
+  }, [nftItemList]);
 
   return (
     <CustomModal width={1205} open={open} onCancel={onCancel}>
@@ -77,33 +81,43 @@ const ModalTbaDetail = ({
             <div className='grid grid-cols-2 gap-[5rem]'>
               <div className='text-[18px] font-[300] text-[#546678]'>
                 Token-Bound Address
-                <CustomTooltip
-                  title='Copied Address'
-                  placement='right'
-                  trigger={['click']}
-                >
-                  <p
-                    onClick={() => copy(selectedNFT?.tba_address as string)}
-                    className='mt-[8px] font-[400] text-[24px] text-[#031F68] cursor-pointer'
-                  >
+                <div className='flex items-center gap-[0.5rem]'>
+                  <p className='mt-[8px] font-[400] text-[24px] text-[#031F68]'>
                     {formatWallet(selectedNFT?.tba_address)}
                   </p>
-                </CustomTooltip>
+                  <CustomTooltip
+                    title='Copied Address'
+                    placement='right'
+                    trigger={['click']}
+                  >
+                    <div
+                      className='cursor-pointer'
+                      onClick={() => copy(selectedNFT?.tba_address as string)}
+                    >
+                      <IconCopyTba />
+                    </div>
+                  </CustomTooltip>
+                </div>
               </div>
               <div className='text-[18px] font-[300] text-[#546678]'>
                 Owner
-                <CustomTooltip
-                  title='Copied Address'
-                  placement='right'
-                  trigger={['click']}
-                >
-                  <p
-                    onClick={() => copy(selectedNFT?.owner_address as string)}
-                    className='mt-[8px] font-[400] text-[24px] text-[#031F68] cursor-pointer'
-                  >
+                <div className='flex items-center gap-[0.5rem]'>
+                  <p className='mt-[8px] font-[400] text-[24px] text-[#031F68]'>
                     {formatWallet(selectedNFT?.owner_address)}
-                  </p>{' '}
-                </CustomTooltip>
+                  </p>
+                  <CustomTooltip
+                    title='Copied Address'
+                    placement='right'
+                    trigger={['click']}
+                  >
+                    <div
+                      className='cursor-pointer'
+                      onClick={() => copy(selectedNFT?.owner_address as string)}
+                    >
+                      <IconCopyTba />
+                    </div>
+                  </CustomTooltip>
+                </div>
               </div>
             </div>
 
@@ -129,35 +143,6 @@ const ModalTbaDetail = ({
             <div className='mt-[40px]'>
               <p className='text-[24px] text-[#546678]'>Items</p>
               <div className='grid gap-[16px] sm:grid-cols-2 mt-[16px] overflow-y-auto'>
-                {nftItemList?.map((item: any) => (
-                  <a
-                    href={`${process.env.NEXT_PUBLIC_STARKSCAN_URL + '/nft/' + item?.collection_address + '/' + item?.token_id}`}
-                    target='_blank'
-                    className='bg-[#F4FEC1] p-[16px]  rounded-2xl flex items-center gap-[12px] cursor-pointer hover:translate-y-[-0.5rem] transition-all'
-                    key={item?._id}
-                  >
-                    {item?.nft_image ? (
-                      <CustomImage
-                        src={item?.nft_image}
-                        width={68}
-                        height={68}
-                        className='rounded-2xl'
-                        alt='err'
-                      />
-                    ) : (
-                      <ImageSkeleton />
-                    )}
-
-                    <div className='overflow-hidden'>
-                      <p className='text-[18px] font-[300] text-[#546678]'>
-                        NFT
-                      </p>
-                      <p className='mt-[8px] text-[24px] font-[400] text-[#0538BD] truncate '>
-                        {item?.nft_name}
-                      </p>
-                    </div>
-                  </a>
-                ))}
                 {nftItemList?.map((item: any) => (
                   <a
                     href={`${process.env.NEXT_PUBLIC_STARKSCAN_URL + '/nft/' + item?.collection_address + '/' + item?.token_id}`}
