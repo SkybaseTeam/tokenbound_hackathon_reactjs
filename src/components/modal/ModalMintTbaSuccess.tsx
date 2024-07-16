@@ -7,8 +7,6 @@ import CustomTooltip from '../custom/CustomTooltip';
 import { useRouter } from 'next/navigation';
 import { useAccount } from '@starknet-react/core';
 import useCopyToClipboard from '@/hook/useCopyToClipboard';
-import useMounted from '@/hook/useMounted';
-import { profile } from '@/fetching/client/profile';
 import ImageSkeleton from '../custom/CustomSkeleton/ImageSkeleton';
 
 const ModalMintTbaSuccess = ({ open, onCancel, mintedNft }: any) => {

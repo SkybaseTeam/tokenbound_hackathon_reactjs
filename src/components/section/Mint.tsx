@@ -16,7 +16,7 @@ import { profile } from '@/fetching/client/profile';
 
 export default function Mint() {
   const { isConnected, account, address } = useAccount();
-  const { connectWallet, getProfile, getDcoin } = useStore();
+  const { connectWallet, setShowModalWaitTransaction } = useStore();
   const { provider } = useProvider();
   const [loading, setLoading] = useState(false);
   const { isMounted } = useMounted();
@@ -66,6 +66,7 @@ export default function Mint() {
         },
       ]);
 
+      setShowModalWaitTransaction(true);
       const data: any = await provider.waitForTransaction(
         tx?.transaction_hash as any
       );
@@ -91,6 +92,7 @@ export default function Mint() {
       toastError('Mint failed');
     } finally {
       setLoading(false);
+      setShowModalWaitTransaction(false);
     }
   };
 

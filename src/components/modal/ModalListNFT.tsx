@@ -13,7 +13,7 @@ const ModalListNFT = ({ open, onCancel, data, getProfile }: any) => {
   const [price, setPrice] = useState('');
 
   const { isConnected, account, address } = useAccount();
-  const { connectWallet } = useStore();
+  const { connectWallet, setShowModalWaitTransaction } = useStore();
   const { provider } = useProvider();
   const [loading, setLoading] = useState(false);
 
@@ -71,7 +71,7 @@ const ModalListNFT = ({ open, onCancel, data, getProfile }: any) => {
           }),
         },
       ]);
-
+      setShowModalWaitTransaction(true);
       await provider.waitForTransaction(tx?.transaction_hash as any);
       await refreshListing({
         token_id: TOKEN_ID,
@@ -85,6 +85,7 @@ const ModalListNFT = ({ open, onCancel, data, getProfile }: any) => {
       toastError('List for sale failed');
     } finally {
       setLoading(false);
+      setShowModalWaitTransaction(false);
     }
   };
 

@@ -14,7 +14,12 @@ import useCopyToClipboard from '@/hook/useCopyToClipboard';
 
 const ModalCancelListNFT = ({ open, onCancel, data }: any) => {
   const { isConnected, account, address } = useAccount();
-  const { connectWallet, getProfile, setListedNFTData } = useStore();
+  const {
+    connectWallet,
+    getProfile,
+    setListedNFTData,
+    setShowModalWaitTransaction,
+  } = useStore();
   const { provider } = useProvider();
   const [loading, setLoading] = useState(false);
   const path = usePathname();
@@ -44,6 +49,7 @@ const ModalCancelListNFT = ({ open, onCancel, data }: any) => {
         process.env.NEXT_PUBLIC_ERC721_CONTRACT_ADDRESS as string,
         TOKEN_ID
       );
+      setShowModalWaitTransaction(true);
       await provider.waitForTransaction(tx?.transaction_hash as any);
       await refreshListing({
         token_id: TOKEN_ID,
@@ -61,6 +67,7 @@ const ModalCancelListNFT = ({ open, onCancel, data }: any) => {
       toastError('Cancel List failed');
     } finally {
       setLoading(false);
+      setShowModalWaitTransaction(false);
     }
   };
 

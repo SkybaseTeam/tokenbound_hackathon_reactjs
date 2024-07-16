@@ -22,7 +22,7 @@ const TbaProfile = () => {
   const { provider } = useProvider();
   const [loadingWithDraw, setLoadingWithDraw] = useState(false);
   const { account } = useAccount();
-
+  const { setShowModalWaitTransaction } = useStore();
   const { isMounted } = useMounted();
   useEffect(() => {
     setPoint(tbaLoginData?.point);
@@ -48,7 +48,7 @@ const TbaProfile = () => {
           }),
         },
       ]);
-
+      setShowModalWaitTransaction(true);
       await provider.waitForTransaction(tx?.transaction_hash as any);
       await Promise.allSettled([getDcoin(), getBlingOfTba()]);
       toastSuccess('WithDraw success');
@@ -57,6 +57,7 @@ const TbaProfile = () => {
       console.log(error);
     } finally {
       setLoadingWithDraw(false);
+      setShowModalWaitTransaction(false);
     }
   };
 

@@ -27,6 +27,8 @@ const StoreProvider = ({ children }: any) => {
   const [accessToken, setAccessToken] = useState<any>();
   const [listedNFTData, setListedNFTData] = useState<any>([]);
   const [blingTba, setBlingTba] = useState(0);
+  const [showModalWaitTransaction, setShowModalWaitTransaction] =
+    useState(false);
 
   const { starknetkitConnectModal } = useStarknetkitConnectModal({
     connectors: connectors as any,
@@ -46,12 +48,6 @@ const StoreProvider = ({ children }: any) => {
     const dcoin = await erc20Contract.balanceOf(address);
     setDcoin(dcoin);
   };
-
-  useEffect(() => {
-    if (isMounted && address) {
-      getDcoin();
-    }
-  }, [isMounted, address]);
 
   const getProfile = async () => {
     try {
@@ -108,6 +104,8 @@ const StoreProvider = ({ children }: any) => {
         setListedNFTData,
         blingTba,
         getBlingOfTba,
+        showModalWaitTransaction,
+        setShowModalWaitTransaction,
       }}
     >
       {children}

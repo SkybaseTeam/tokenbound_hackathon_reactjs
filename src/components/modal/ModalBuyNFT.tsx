@@ -17,7 +17,7 @@ const ModalBuyNFT = ({ open, onCancel, selectedNFT }: any) => {
   const [text, copy] = useCopyToClipboard();
 
   const { isConnected, account, address } = useAccount();
-  const { connectWallet, getDcoin } = useStore();
+  const { connectWallet, getDcoin, setShowModalWaitTransaction } = useStore();
   const { provider } = useProvider();
   const [loading, setLoading] = useState(false);
   const { setListedNFTData } = useStore();
@@ -78,7 +78,7 @@ const ModalBuyNFT = ({ open, onCancel, selectedNFT }: any) => {
           }),
         },
       ]);
-
+      setShowModalWaitTransaction(true);
       await provider.waitForTransaction(tx?.transaction_hash as any);
 
       await Promise.allSettled([
@@ -102,6 +102,7 @@ const ModalBuyNFT = ({ open, onCancel, selectedNFT }: any) => {
       toastError('Buy failed');
     } finally {
       setLoading(false);
+      setShowModalWaitTransaction(false);
     }
   };
 

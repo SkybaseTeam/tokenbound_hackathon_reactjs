@@ -12,7 +12,7 @@ const Achievement = ({ userPoints, tbaLoginData, accessToken }: any) => {
   const [currentRewardPoint, setCurrentRewardPoint] = useState(0);
   const { account } = useAccount();
   const { provider } = useProvider();
-  const { getBlingOfTba } = useStore();
+  const { getBlingOfTba, setShowModalWaitTransaction } = useStore();
   const [loadingClaim, setLoadingClaim] = useState(false);
   const { address } = useAccount();
 
@@ -49,7 +49,7 @@ const Achievement = ({ userPoints, tbaLoginData, accessToken }: any) => {
           }),
         },
       ]);
-
+      setShowModalWaitTransaction(true);
       await provider.waitForTransaction(tx?.transaction_hash as any);
       await Promise.allSettled([fetchRewardProcess(), getBlingOfTba()]);
       toastSuccess('Claim success');
@@ -58,6 +58,7 @@ const Achievement = ({ userPoints, tbaLoginData, accessToken }: any) => {
       console.log(error);
     } finally {
       setLoadingClaim(false);
+      setShowModalWaitTransaction(false);
     }
   };
 

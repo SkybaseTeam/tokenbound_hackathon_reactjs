@@ -25,7 +25,7 @@ import ModalMintTbaSuccess from '@/components/modal/ModalMintTbaSuccess';
 const Menu = () => {
   const router = useRouter();
   const { isConnected, account, address } = useAccount();
-  const { connectWallet, getDcoin, accessToken, tbaLoginData } = useStore();
+  const { connectWallet, getDcoin, accessToken, tbaLoginData, setShowModalWaitTransaction } = useStore();
   const { provider } = useProvider();
   const [loading, setLoading] = useState(false);
   const { isMounted } = useMounted();
@@ -88,6 +88,7 @@ const Menu = () => {
           },
         ]);
 
+        setShowModalWaitTransaction(true);
         const data: any = await provider.waitForTransaction(
           tx?.transaction_hash as any
         );
@@ -116,6 +117,7 @@ const Menu = () => {
         console.log(error);
       } finally {
         setLoading(false);
+        setShowModalWaitTransaction(false);
       }
     } catch (err) {
       console.log(err);

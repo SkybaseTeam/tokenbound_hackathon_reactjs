@@ -4,6 +4,7 @@ import CustomButton from './custom/CustomButton';
 import { useAccount } from '@starknet-react/core';
 import { useStore } from '@/context/store';
 import { formatToken } from '@/utils';
+import { usePathname } from 'next/navigation';
 
 const CardMarketplace = ({
   setOpenModalBuyNTF,
@@ -15,6 +16,7 @@ const CardMarketplace = ({
 }: any) => {
   const { isConnected, address } = useAccount();
   const { connectWallet } = useStore();
+  const path = usePathname();
   return (
     <div
       {...props}
@@ -45,35 +47,39 @@ const CardMarketplace = ({
           </div>
         </div>
       </div>
-      {data?.owner_address !== address ? (
-        <CustomButton
-          onClick={() => {
-            if (!isConnected) {
-              connectWallet();
-              return;
-            }
-            setSelectedNFT(data);
-            setOpenModalBuyNTF(true);
-          }}
-          className='btn-primary w-full'
-        >
-          Buy
-        </CustomButton>
-      ) : (
-        <CustomButton
-          onClick={() => {
-            if (!isConnected) {
-              connectWallet();
-              return;
-            }
-            setSelectedNFT(data);
-            setOpenModalCancelListNFT(true);
-          }}
-          className='btn-primary w-full'
-        >
-          Cancel List
-        </CustomButton>
+      {path === '/' && (
+        <CustomButton className='btn-primary w-full'>Go to Market</CustomButton>
       )}
+      {path !== '/' &&
+        (data?.owner_address !== address ? (
+          <CustomButton
+            onClick={() => {
+              if (!isConnected) {
+                connectWallet();
+                return;
+              }
+              setSelectedNFT(data);
+              setOpenModalBuyNTF(true);
+            }}
+            className='btn-primary w-full'
+          >
+            Buy
+          </CustomButton>
+        ) : (
+          <CustomButton
+            onClick={() => {
+              if (!isConnected) {
+                connectWallet();
+                return;
+              }
+              setSelectedNFT(data);
+              setOpenModalCancelListNFT(true);
+            }}
+            className='btn-primary w-full'
+          >
+            Cancel List
+          </CustomButton>
+        ))}
     </div>
   );
 };

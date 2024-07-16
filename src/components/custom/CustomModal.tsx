@@ -11,17 +11,17 @@ const CustomModal = ({
   destroyOnClose = true,
   className = '',
   getContainer = false,
+  closeIcon = <IconClose />,
   ...props
 }: ICustomModal) => {
   return (
     <Modal
       footer={null}
       centered={centered}
-      
       destroyOnClose={destroyOnClose}
       className={`custom-modal ${className}`}
       getContainer={getContainer}
-      closeIcon={<IconClose />}
+      closeIcon={closeIcon}
       {...props}
     >
       {children}
