@@ -16,7 +16,9 @@ const Game = () => {
   const [text, copy] = useCopyToClipboard();
   const [blings, setBlings] = useState<any>([]);
   const router = useRouter();
-  const { point, setPoint, tbaLoginData, accessToken } = useStore();
+  const { point, setPoint, tbaLoginData, accessToken, getGameProfile } =
+    useStore();
+  const { isMounted } = useMounted();
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -83,9 +85,7 @@ const Game = () => {
       ))}
 
       <div className='flex items-center justify-center flex-col max-sm:mt-[3rem]'>
-        <p className='relative z-[99] mt-[1rem] animate-bounce'>
-          Tappp me!
-        </p>
+        <p className='relative z-[99] mt-[1rem] animate-bounce'>Tappp me!</p>
         {/* <div
           onClick={handleClick}
           className='bg-[url("/images/game/pepe.webp")] mt-[1rem] bg-contain bg-no-repeat w-[320px] h-[266px] sm:w-[560px] sm:h-[506px] cursor-pointer active:scale-[98%]'

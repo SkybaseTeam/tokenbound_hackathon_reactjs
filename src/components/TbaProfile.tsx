@@ -17,16 +17,28 @@ import IconCopy from '@/assets/icons/IconCopy';
 const TbaProfile = () => {
   const [text, copy] = useCopyToClipboard();
   const router = useRouter();
-  const { point, tbaLoginData, setPoint, getBlingOfTba, blingTba, getDcoin } =
-    useStore();
+  const {
+    point,
+    tbaLoginData,
+    setPoint,
+    getBlingOfTba,
+    blingTba,
+    getDcoin,
+    getGameProfile,
+  } = useStore();
   const { provider } = useProvider();
   const [loadingWithDraw, setLoadingWithDraw] = useState(false);
   const { account } = useAccount();
-  const { setShowModalWaitTransaction, setAccessToken } = useStore();
+  const { setShowModalWaitTransaction, setAccessToken, accessToken } =
+    useStore();
   const { isMounted } = useMounted();
   useEffect(() => {
     setPoint(tbaLoginData?.point);
   }, []);
+
+  useEffect(() => {
+    isMounted && accessToken && getGameProfile();
+  }, [isMounted, accessToken]);
 
   useEffect(() => {
     if (isMounted && tbaLoginData?.tba_address) {

@@ -44,10 +44,10 @@ const Play = () => {
   }, [profileData]);
 
   useEffect(() => {
-    if (!address) return;
+    if (!address || accessToken) return;
 
     getProfile(address);
-  }, [address]);
+  }, [address, accessToken]);
 
   const onLoginGame = async (item: any) => {
     setLoading(true);
@@ -64,11 +64,8 @@ const Play = () => {
         sign_data: signData,
         token_id: item?.token_id,
       });
-      console.log(loginData);
 
       setAccessToken(loginData?.data?.data?.token);
-
-      // Set Tba Login Data
       setTbaLoginData(item);
 
       // Join Game

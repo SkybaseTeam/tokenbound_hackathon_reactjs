@@ -4,8 +4,12 @@ export const login = async (data: any) => {
   return await axiosClient.post(`/game/login`, data);
 };
 
-export const getPoint = async (address: any) => {
-  return await axiosClient.get(`/game/get-point/${address}`);
+export const fetchGameProfile = async (address: any, accessToken: any) => {
+  return await axiosClient.get(`/game/profile/${address}`, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
 };
 
 export const updatePoint = async (data: any, accessToken: any) => {

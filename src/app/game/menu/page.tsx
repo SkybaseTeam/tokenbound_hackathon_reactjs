@@ -25,7 +25,14 @@ import ModalMintTbaSuccess from '@/components/modal/ModalMintTbaSuccess';
 const Menu = () => {
   const router = useRouter();
   const { isConnected, account, address } = useAccount();
-  const { connectWallet, getDcoin, accessToken, tbaLoginData, setShowModalWaitTransaction } = useStore();
+  const {
+    connectWallet,
+    getDcoin,
+    accessToken,
+    tbaLoginData,
+    setShowModalWaitTransaction,
+    getGameProfile,
+  } = useStore();
   const { provider } = useProvider();
   const [loading, setLoading] = useState(false);
   const { isMounted } = useMounted();

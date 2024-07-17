@@ -8,7 +8,7 @@ import { useStarknetkitConnectModal } from 'starknetkit';
 import erc20abi from '@/abi/erc20.json';
 import useMounted from '@/hook/useMounted';
 import { profile } from '@/fetching/client/profile';
-import { getPoint } from '@/fetching/client/game';
+import { fetchGameProfile } from '@/fetching/client/game';
 
 const storeContext = createContext<any>(null);
 
@@ -20,9 +20,9 @@ const StoreProvider = ({ children }: any) => {
   const { connect, connectors } = useConnect();
   const [dcoin, setDcoin] = useState(0);
   const { isMounted } = useMounted();
+  const [point, setPoint] = useState(0);
   const { address, account } = useAccount();
   const [profileData, setProfileData] = useState<any>();
-  const [point, setPoint] = useState(0);
   const [tbaLoginData, setTbaLoginData] = useState<any>();
   const [accessToken, setAccessToken] = useState<any>();
   const [listedNFTData, setListedNFTData] = useState<any>();
@@ -60,13 +60,15 @@ const StoreProvider = ({ children }: any) => {
     }
   };
 
-  const fetchPoint = async (tbaAddress: string) => {
+  const getGameProfile = async () => {
     try {
-      const profileResponse: any = await getPoint(
-        tbaAddress?.toLocaleLowerCase()
+      const profileResponse: any = await fetchGameProfile(
+        tbaLoginData?.tba_address?.toLocaleLowerCase(),
+        accessToken
       );
-      const data = profileResponse?.data;
-      setPoint(data);
+      const data = profileResponse?.data?.data;
+      setTbaLoginData(data);
+      setPoint(data?.point);
     } catch (err) {
       toastError('Get profile failed');
       console.log(err);
@@ -93,9 +95,7 @@ const StoreProvider = ({ children }: any) => {
         dcoin,
         profileData,
         getProfile,
-        point,
-        setPoint,
-        fetchPoint,
+        getGameProfile,
         tbaLoginData,
         setTbaLoginData,
         accessToken,
@@ -106,6 +106,8 @@ const StoreProvider = ({ children }: any) => {
         getBlingOfTba,
         showModalWaitTransaction,
         setShowModalWaitTransaction,
+        point,
+        setPoint,
       }}
     >
       {children}
