@@ -74,8 +74,8 @@ const TbaProfile = () => {
   };
 
   return (
-    <div className=''>
-      <div className='flex items-start rounded-2xl justify-between p-[12px] text-[16px] font-[400] bg-[#3760CA] mt-[1rem]'>
+    <div className='mt-[5rem]'>
+      <div className='flex items-start rounded-2xl justify-between p-[12px] text-[16px] font-[400] bg-[#3760CA] '>
         <div>
           <div className='flex items-start sm:items-center gap-[12px]'>
             <CustomImage

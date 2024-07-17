@@ -136,54 +136,44 @@ const Menu = () => {
 
   return (
     <div className='layout-container py-[5rem] sm:py-[8rem] flex flex-col items-center'>
-      <TbaProfile />
-
-      <ModalMintTbaSuccess
-        open={showModalMintTbaSuccess}
-        onCancel={() => {
-          setShowModalMintTbaSuccess(false);
-        }}
-        mintedNft={mintedNft}
-      />
-
       <CustomButton
         onClick={() => {
           router.push('/game/menu/play');
         }}
-        className='btn-primary w-[183px] animate-bounce mt-[5rem] sm:mt-[10rem]'
+        className='btn-primary w-[183px] animate-bounce mt-[3rem]'
       >
-        Play Now
+        PLAY NOW
       </CustomButton>
 
-      <div className='bg-white rounded-[32px] pt-[86px] pb-[110px] text-[#031F68] w-full mt-[10rem]'>
-        <div className='layout-container flex flex-col items-center'>
-          <h2 className='text-[48px] font-[500] font-glancyr max-lg:text-center '>
-            Mint the Item for your Token-Bound Account
+      <TbaProfile />
+
+      <div className='bg-white rounded-[32px] text-[#031F68] mt-[5rem] px-[48px] py-[32px]'>
+        <div className='layout-container flex flex-col items-center px-0'>
+          <h2 className='text-[38px] font-[500] font-glancyr max-lg:text-center '>
+            Increase your Power
           </h2>
-          <p className='max-sm:text-center'>
-            (This will increase your Token-Bound Account Power)
-          </p>
-          <div className=' w-full mt-[63px]'>
-            <div className='flex justify-center items-center gap-[56px] max-sm:flex-col'>
-              <div className='p-[16px] rounded-2xl bg-[#E6EBF8] w-[484px] max-sm:w-full '>
+
+          <div className=' w-full mt-[30px]'>
+            <div className='flex justify-center items-center gap-[38px] max-sm:flex-col'>
+              <div className='p-[16px] rounded-2xl bg-[#E6EBF8] w-[300px] max-sm:w-full '>
                 <div className='aspect-square relative rounded-2xl'>
                   <CustomImage
-                    src='https://cryptowalkers.mypinata.cloud/ipfs/QmdXKK6JJgX1bw1J974coE6i9GFDpMUZ7jyNiUvxqa31sN/smg_custom.png'
+                    src='https://cryptowalkers.mypinata.cloud/ipfs/QmdXKK6JJgX1bw1J974coE6i9GFDpMUZ7jyNiUvxqa31sN/supducks.png'
                     className='rounded-2xl'
                     alt='err'
                     fill
                   />
                 </div>
               </div>
-              <div className='w-[566px] max-sm:w-full flex flex-col'>
-                <CustomImage
+              <div className='max-sm:w-full flex flex-col'>
+                {/* <CustomImage
                   src='/images/mint/like.webp'
                   width={133}
                   height={44}
                   alt='err'
-                />
-                <h1 className='text-[30px] font-[400] font-glancyr my-[21px]'>
-                  Bling Token-Bound Item
+                /> */}
+                <h1 className='text-[30px] font-[400] font-glancyr my-[10px]'>
+                  Bling Gun
                 </h1>
                 {/* <div className='flex items-center font-glancyr text-[16px] font-[300] text-[#546678] mb-[2px] justify-between'>
                   <p>Minted Item</p>
@@ -225,6 +215,14 @@ const Menu = () => {
           </div>
         </div>
       </div>
+
+      <ModalMintTbaSuccess
+        open={showModalMintTbaSuccess}
+        onCancel={() => {
+          setShowModalMintTbaSuccess(false);
+        }}
+        mintedNft={mintedNft}
+      />
     </div>
   );
 };
