@@ -60,7 +60,7 @@ const Marketplace = () => {
             </CustomButton>
           </Link>
 
-          <div className='grid extra-sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-[1rem] mt-[52px]  w-full'>
+          <div className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-[1rem] mt-[52px]  w-full'>
             {listedNFTData?.length !== undefined
               ? listedNFTData?.slice(0, 4)?.map((item: any, index: any) => (
                   <Link href={'/market'} key={index}>

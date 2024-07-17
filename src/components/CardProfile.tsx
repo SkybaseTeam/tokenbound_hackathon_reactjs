@@ -44,7 +44,19 @@ const CardProfile = ({
           >
             <p className='text-[#546678]'>Price</p>
             <p className='text-[18px] font-[400]'>
-              {data?.listing ? data?.price + ' BLING' : 'Unlisted'}
+              {data?.listing ? (
+                <div className='flex items-center gap-[6px]'>
+                  {data?.price}
+                  <CustomImage
+                    src='/images/token/bling.webp'
+                    width={22}
+                    height={22}
+                    alt='err'
+                  />
+                </div>
+              ) : (
+                'Unlisted'
+              )}
             </p>
           </div>
         </div>

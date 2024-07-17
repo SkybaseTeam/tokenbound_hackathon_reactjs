@@ -128,7 +128,7 @@ const Play = () => {
         <h1 className='text-[32px] sm:text-[48px]'>
           Select your Token-Bound Account to Play game!
         </h1>
-        <div className='grid extra-sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 mt-[40px] gap-[16px] w-full'>
+        <div className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 mt-[40px] gap-[16px] w-full'>
           {address ? (
             filteredData !== undefined ? (
               filteredData?.length > 0 ? (

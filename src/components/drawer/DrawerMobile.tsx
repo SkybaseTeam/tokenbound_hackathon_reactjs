@@ -31,7 +31,7 @@ const DrawerMobile = ({ open, onClose, handleDisconnect, ethBalance }: any) => {
             <div className='flex items-center rounded-2xl gap-[10px] px-[12px] py-[10px] text-[16px] font-[400] border border-[#EFFEA3] bg-[#FBFDEB]'>
               <div className='flex items-center gap-[12px]'>
                 <CustomImage
-                  src='/images/default.webp'
+                  src='/images/profile/avt.webp'
                   width={70}
                   height={70}
                   alt='err'

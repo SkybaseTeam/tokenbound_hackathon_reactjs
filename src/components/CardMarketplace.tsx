@@ -3,7 +3,7 @@ import CustomImage from './custom/CustomImage';
 import CustomButton from './custom/CustomButton';
 import { useAccount } from '@starknet-react/core';
 import { useStore } from '@/context/store';
-import { formatToken } from '@/utils';
+import { formatStarknet, formatToken } from '@/utils';
 import { usePathname } from 'next/navigation';
 
 const CardMarketplace = ({
@@ -45,7 +45,17 @@ const CardMarketplace = ({
           </p>
           <div className='flex items-center gap-[12px] mt-[12px]  font-[300] text-[16px]'>
             <p className='text-[#546678]'>Price</p>
-            <p className='text-[18px] font-[400]'>{data?.price || ''} BLING</p>
+            <p className='text-[18px] font-[400]'>
+              <div className='flex items-center gap-[6px]'>
+                {data?.price}
+                <CustomImage
+                  src='/images/token/bling.webp'
+                  width={22}
+                  height={22}
+                  alt='err'
+                />
+              </div>
+            </p>
           </div>
         </div>
       </div>
@@ -53,7 +63,7 @@ const CardMarketplace = ({
         <CustomButton className='btn-primary w-full'>Go to Market</CustomButton>
       )}
       {path !== '/' &&
-        (data?.owner_address !== address ? (
+        (data?.owner_address !== formatStarknet(address) ? (
           <CustomButton
             onClick={() => {
               if (!isConnected) {

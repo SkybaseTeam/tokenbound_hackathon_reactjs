@@ -131,7 +131,7 @@ const Profile = () => {
           <CustomButton className='w-[163px] btn-primary'>Search</CustomButton>
         </div>
 
-        <div className='grid extra-sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 mt-[40px] gap-[16px]'>
+        <div className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 mt-[40px] gap-[16px]'>
           {address ? (
             profileData !== undefined ? (
               profileData?.length > 0 ? (

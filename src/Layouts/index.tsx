@@ -37,13 +37,13 @@ const Layout = ({ children }: any) => {
   return (
     <>
       {!isMounted && <Loading />}
+      {currentLayout}
       <ModalWaitTransaction
         open={showModalWaitTransaction}
         onCancel={() => {
           setShowModalWaitTransaction(false);
         }}
       />
-      {currentLayout}
     </>
   );
 };
