@@ -6,10 +6,12 @@ import { toastError, toastSuccess } from '@/utils/toast';
 import { useAccount, useProvider } from '@starknet-react/core';
 import { CallData } from 'starknet';
 import { useStore } from '@/context/store';
+import IconInfo from '@/assets/icons/IconInfo';
+import IconLoading from '@/assets/icons/IconLoading';
 
 const Achievement = ({ userPoints, tbaLoginData, accessToken }: any) => {
   const { isMounted } = useMounted();
-  const [currentRewardPoint, setCurrentRewardPoint] = useState(0);
+  const [currentRewardPoint, setCurrentRewardPoint] = useState();
   const { account } = useAccount();
   const { provider } = useProvider();
   const { getBlingOfTba, setShowModalWaitTransaction } = useStore();
@@ -25,9 +27,10 @@ const Achievement = ({ userPoints, tbaLoginData, accessToken }: any) => {
   };
 
   useEffect(() => {
-    if (!isMounted || !address) return;
-    fetchRewardProcess();
-  }, [isMounted, address]);
+    if (isMounted && address && accessToken) {
+      fetchRewardProcess();
+    }
+  }, [isMounted, address, accessToken]);
 
   const handleClaim = async () => {
     setLoadingClaim(true);
@@ -64,23 +67,28 @@ const Achievement = ({ userPoints, tbaLoginData, accessToken }: any) => {
 
   return (
     <div className='flex flex-col items-center gap-[0.5rem]'>
-      <p className='font-[500] text-[28px] sm:text-[48px]'>
-        <span className='text-white'>{(currentRewardPoint + 1) * 5} Point</span>{' '}
-        <span className='text-[18px] sm:text-[30px] text-[#B2C1EB] sm:px-[30px]'>
-          to get
-        </span>{' '}
-        <span className='text-[#DCFC36]'>10 BLING</span>
-      </p>
-      <div id='claim_bling_btn'>
-        <CustomButton
-          className='btn-primary w-[136px]'
-          onClick={handleClaim}
-          disabled={userPoints < (currentRewardPoint + 1) * 5}
-          loading={loadingClaim}
-        >
-          Claim
-        </CustomButton>
-      </div>
+      {currentRewardPoint !== undefined && userPoints !== undefined ? (
+        <>
+          <p className='text-[16px] text-[#DCFC36] flex items-center gap-[8px]'>
+            <IconInfo />
+            {(currentRewardPoint + 1) * 5} Point to get 10 BLING
+          </p>
+          <div id='claim_bling_btn'>
+            <CustomButton
+              className='btn-primary w-[136px] mt-[14px]'
+              onClick={handleClaim}
+              disabled={userPoints < (currentRewardPoint + 1) * 5}
+              loading={loadingClaim}
+            >
+              Claim
+            </CustomButton>
+          </div>
+        </>
+      ) : (
+        <div>
+          <IconLoading fill='white' className='animate-spin' />
+        </div>
+      )}
     </div>
   );
 };

@@ -20,7 +20,7 @@ const StoreProvider = ({ children }: any) => {
   const { connect, connectors } = useConnect();
   const [dcoin, setDcoin] = useState(0);
   const { isMounted } = useMounted();
-  const [point, setPoint] = useState(0);
+  const [point, setPoint] = useState(undefined);
   const { address, account } = useAccount();
   const [profileData, setProfileData] = useState<any>();
   const [tbaLoginData, setTbaLoginData] = useState<any>();

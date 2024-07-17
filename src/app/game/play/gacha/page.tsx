@@ -135,47 +135,37 @@ const Menu = () => {
   };
 
   return (
-    <div className='layout-container py-[5rem] sm:py-[8rem] flex flex-col items-center'>
-      <CustomButton
-        onClick={() => {
-          router.push('/game/menu/play');
-        }}
-        className='btn-primary w-[183px] animate-bounce mt-[3rem]'
-      >
-        PLAY NOW
-      </CustomButton>
+    accessToken && (
+      <div className='layout-container py-[5rem] sm:py-[8rem] flex flex-col items-center'>
+        <div className='bg-white rounded-[32px] text-[#031F68] mt-[1rem] sm:mt-[5rem] max-sm:mb-[5rem] p-[32px] sm:px-[48px] py-[32px]'>
+          <div className='layout-container flex flex-col items-center px-0'>
+            <h2 className='text-[38px] font-[500] font-glancyr max-lg:text-center '>
+              Increase your Power
+            </h2>
 
-      <TbaProfile />
-
-      <div className='bg-white rounded-[32px] text-[#031F68] mt-[5rem] px-[48px] py-[32px]'>
-        <div className='layout-container flex flex-col items-center px-0'>
-          <h2 className='text-[38px] font-[500] font-glancyr max-lg:text-center '>
-            Increase your Power
-          </h2>
-
-          <div className=' w-full mt-[30px]'>
-            <div className='flex justify-center items-center gap-[38px] max-sm:flex-col'>
-              <div className='p-[16px] rounded-2xl bg-[#E6EBF8] w-[300px] max-sm:w-full '>
-                <div className='aspect-square relative rounded-2xl'>
-                  <CustomImage
-                    src='https://cryptowalkers.mypinata.cloud/ipfs/QmdXKK6JJgX1bw1J974coE6i9GFDpMUZ7jyNiUvxqa31sN/supducks.png'
-                    className='rounded-2xl'
-                    alt='err'
-                    fill
-                  />
+            <div className=' w-full mt-[30px]'>
+              <div className='flex justify-center items-center gap-[38px] max-sm:flex-col'>
+                <div className='p-[16px] rounded-2xl bg-[#E6EBF8] w-[300px] max-sm:w-full '>
+                  <div className='aspect-square relative rounded-2xl'>
+                    <CustomImage
+                      src='https://cryptowalkers.mypinata.cloud/ipfs/QmdXKK6JJgX1bw1J974coE6i9GFDpMUZ7jyNiUvxqa31sN/supducks.png'
+                      className='rounded-2xl'
+                      alt='err'
+                      fill
+                    />
+                  </div>
                 </div>
-              </div>
-              <div className='max-sm:w-full flex flex-col'>
-                {/* <CustomImage
+                <div className='max-sm:w-full flex flex-col'>
+                  {/* <CustomImage
                   src='/images/mint/like.webp'
                   width={133}
                   height={44}
                   alt='err'
                 /> */}
-                <h1 className='text-[30px] font-[400] font-glancyr my-[10px]'>
-                  Bling Gun
-                </h1>
-                {/* <div className='flex items-center font-glancyr text-[16px] font-[300] text-[#546678] mb-[2px] justify-between'>
+                  <h1 className='text-[30px] font-[400] font-glancyr my-[10px]'>
+                    Bling Gun
+                  </h1>
+                  {/* <div className='flex items-center font-glancyr text-[16px] font-[300] text-[#546678] mb-[2px] justify-between'>
                   <p>Minted Item</p>
                   <p>
                     {remainingPool
@@ -194,36 +184,39 @@ const Menu = () => {
                       : 0
                   }
                 /> */}
-                <div className='flex items-center gap-[20px] my-[20px] font-glancyr'>
-                  <p className='text-[16px] font-[300] text-[#546678]'>Price</p>
-                  <p className='text-[30px] font-[400] text-[#031F68]'>
-                    {MINT_PRICE} BLING
-                  </p>
-                </div>
-                <div className='flex justify-start'>
-                  {' '}
-                  <CustomButton
-                    loading={loading}
-                    onClick={onMint}
-                    className='btn-primary w-[266px]'
-                  >
-                    Mint
-                  </CustomButton>
+                  <div className='flex items-center gap-[20px] my-[20px] font-glancyr'>
+                    <p className='text-[16px] font-[300] text-[#546678]'>
+                      Price
+                    </p>
+                    <p className='text-[30px] font-[400] text-[#031F68]'>
+                      {MINT_PRICE} BLING
+                    </p>
+                  </div>
+                  <div className='flex justify-start'>
+                    {' '}
+                    <CustomButton
+                      loading={loading}
+                      onClick={onMint}
+                      className='btn-primary w-[266px]'
+                    >
+                      Mint
+                    </CustomButton>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
 
-      <ModalMintTbaSuccess
-        open={showModalMintTbaSuccess}
-        onCancel={() => {
-          setShowModalMintTbaSuccess(false);
-        }}
-        mintedNft={mintedNft}
-      />
-    </div>
+        <ModalMintTbaSuccess
+          open={showModalMintTbaSuccess}
+          onCancel={() => {
+            setShowModalMintTbaSuccess(false);
+          }}
+          mintedNft={mintedNft}
+        />
+      </div>
+    )
   );
 };
 

@@ -7,7 +7,7 @@ const Loading = () => {
   return (
     <div className='fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-[#0538BD]'>
       <CustomImage
-        src='/images/logo.webp'
+        src='/images/token/bling-big.webp'
         alt='loading'
         className='animate-bounce'
         width={100}

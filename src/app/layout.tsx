@@ -9,8 +9,8 @@ import { StarknetProvider } from '@/context/StarknetProvider';
 import Layout from '@/Layouts';
 
 export const metadata: Metadata = {
-  title: 'BlingBling',
-  description: 'BlingBling - Starknet Tokenbound Hackathon',
+  title: 'Bling Bling',
+  description: 'Bling Bling - Starknet Tokenbound Hackathon',
 };
 
 const jakarta = Plus_Jakarta_Sans({

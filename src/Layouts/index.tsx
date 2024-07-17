@@ -5,10 +5,10 @@ import useMounted from '@/hook/useMounted';
 import { usePathname } from 'next/navigation';
 import Loading from '@/app/loading';
 import LayoutPrimary from './LayoutPrimary';
-import LayoutAdmin from './LayoutAdmin';
 import ModalWaitTransaction from '@/components/modal/ModalWaitTransaction';
 import { useStore } from '@/context/store';
 import { useAccount } from '@starknet-react/core';
+import LayoutGame from './LayoutGame';
 
 const Layout = ({ children }: any) => {
   const { isMounted } = useMounted();
@@ -21,8 +21,8 @@ const Layout = ({ children }: any) => {
     useStore();
 
   useEffect(() => {
-    if (pathName === '/admin') {
-      setCurrentLayout(<LayoutAdmin>{children}</LayoutAdmin>);
+    if (pathName.includes('/game/play')) {
+      setCurrentLayout(<LayoutGame>{children}</LayoutGame>);
     } else {
       setCurrentLayout(<LayoutPrimary>{children}</LayoutPrimary>);
     }
@@ -35,7 +35,7 @@ const Layout = ({ children }: any) => {
   }, [isMounted, address]);
 
   return (
-    <>
+    <div className='bg-[url("/images/bg.webp")] bg-center bg-cover bg-no-repeat bg-fixed min-h-[var(--100vh)]'>
       {!isMounted && <Loading />}
       {currentLayout}
       <ModalWaitTransaction
@@ -44,7 +44,7 @@ const Layout = ({ children }: any) => {
           setShowModalWaitTransaction(false);
         }}
       />
-    </>
+    </div>
   );
 };
 

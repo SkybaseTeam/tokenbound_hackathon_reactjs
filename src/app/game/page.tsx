@@ -13,7 +13,7 @@ import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 import { ArraySignatureType, typedData, TypedData } from 'starknet';
 
-const Play = () => {
+const Game = () => {
   const [openModalTbaDetail, setOpenModalTbaDetail] = useState(false);
   const [selectedNFT, setSelectedNFT] = useState<any>(null);
   const router = useRouter();
@@ -32,7 +32,7 @@ const Play = () => {
 
   useEffect(() => {
     if (accessToken && tbaLoginData) {
-      router.push(`/game/menu`);
+      router.push(`/game/play`);
     }
   }, [accessToken, tbaLoginData]);
 
@@ -69,7 +69,7 @@ const Play = () => {
       setTbaLoginData(item);
 
       // Join Game
-      router.push(`/game/menu`);
+      router.push(`/game/play`);
     } catch (error) {
       toastError('Login Game failed');
       setLoading(false);
@@ -122,7 +122,7 @@ const Play = () => {
         selectedNFT={selectedNFT}
       />
       <div className='py-[5rem] sm:py-[8rem] layout-container font-glancyr flex flex-col items-center'>
-        <h1 className='text-[32px] sm:text-[48px]'>
+        <h1 className='text-[32px] sm:text-[48px] text-center'>
           Select your Token-Bound Account to Play game!
         </h1>
         <div className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 mt-[40px] gap-[16px] w-full'>
@@ -152,7 +152,7 @@ const Play = () => {
                             {item?.tba_name || 'NFT Name'}
                           </p>
                           <p className='text-[16px] font-[300] text-[#546678] mt-[0.5rem]'>
-                            Total Points:
+                            Points:
                             <span className='text-[#031F68] text-[18px] font-[400] ml-[0.5rem]'>
                               {formatDecimal(Number(item?.point))}
                             </span>
@@ -162,6 +162,7 @@ const Play = () => {
 
                       <CustomButton
                         onClick={() => {
+                          if (!address) return;
                           setSelectedNFT(item);
                           onLoginGame(item);
                         }}
@@ -188,4 +189,4 @@ const Play = () => {
   );
 };
 
-export default Play;
+export default Game;
