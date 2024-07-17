@@ -167,6 +167,8 @@ const ModalTbaDetail = ({
                           {item?.nft_image ? (
                             <CustomImage
                               src={item?.nft_image}
+                              placeholder='blur'
+                              blurDataURL='/images/default.webp'
                               width={80}
                               height={80}
                               className='rounded-xl'
