@@ -29,6 +29,7 @@ const StoreProvider = ({ children }: any) => {
   const [blingTba, setBlingTba] = useState(0);
   const [showModalWaitTransaction, setShowModalWaitTransaction] =
     useState(false);
+  const [page, setPage] = useState(1);
 
   const { starknetkitConnectModal } = useStarknetkitConnectModal({
     connectors: connectors as any,
@@ -51,9 +52,15 @@ const StoreProvider = ({ children }: any) => {
 
   const getProfile = async () => {
     try {
-      const profileResponse: any = await profile(address?.toLocaleLowerCase());
-      const data = profileResponse?.data?.data;
-      setProfileData(data);
+      const profileResponse: any = await profile(address as string, page, 4);
+      const data = profileResponse?.data;
+      profileData
+        ? setProfileData((prev: any) => ({
+            pagination: data?.pagination,
+            data: [...prev?.data, ...data?.data],
+          }))
+        : setProfileData(data);
+      setPage(page + 1);
     } catch (err) {
       toastError('Get profile failed');
       console.log(err);
@@ -108,6 +115,8 @@ const StoreProvider = ({ children }: any) => {
         setShowModalWaitTransaction,
         point,
         setPoint,
+        page,
+        setPage,
       }}
     >
       {children}

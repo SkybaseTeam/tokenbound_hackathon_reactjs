@@ -5,7 +5,9 @@ import CardProfile from '@/components/CardProfile';
 import CustomButton from '@/components/custom/CustomButton';
 import CustomImage from '@/components/custom/CustomImage';
 import CustomInput from '@/components/custom/CustomInput';
+import ListNftSkeleton from '@/components/custom/CustomSkeleton/ListNftSkeleton';
 import NftSkeleton from '@/components/custom/CustomSkeleton/NftSkeleton';
+import InfiniteScrollWrapper from '@/components/InfiniteScrollWrapper';
 import ModalCancelListNFT from '@/components/modal/ModalCancelListNFT';
 import ModalListNFT from '@/components/modal/ModalListNFT';
 import ModalTbaDetail from '@/components/modal/ModalTbaDetail';
@@ -15,6 +17,7 @@ import { formatToken, formatWallet } from '@/utils';
 import { toastError } from '@/utils/toast';
 import { useAccount, useBalance } from '@starknet-react/core';
 import React, { useEffect, useState } from 'react';
+import InfiniteScroll from 'react-infinite-scroll-component';
 
 const Profile = () => {
   const [openModalListNFT, setOpenModalListNFT] = useState(false);
@@ -22,11 +25,11 @@ const Profile = () => {
   const [openModalCancelListNFT, setOpenModalCancelListNFT] = useState(false);
   const { address } = useAccount();
   const [selectedNFT, setSelectedNFT] = useState<any>(null);
-  const { dcoin, getProfile, profileData } = useStore();
+  const { dcoin, getProfile, profileData, setPage } = useStore();
 
   useEffect(() => {
     if (!address) return;
-
+    setPage(1);
     getProfile(address);
   }, [address]);
 
@@ -113,7 +116,7 @@ const Profile = () => {
             <p className='text-[18px] font-[400]'>Listed Tokens</p>
             <p className='text-[24px] md:text-[48px] font-[500] text-[#DCFC36]'>
               {(address &&
-                profileData?.filter((item: any) => item?.listing === true)
+                profileData?.data?.filter((item: any) => item?.listing === true)
                   ?.length) ||
                 0}
             </p>
@@ -131,30 +134,21 @@ const Profile = () => {
           <CustomButton className='w-[163px] btn-primary'>Search</CustomButton>
         </div>
 
-        <div className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 mt-[40px] gap-[16px]'>
-          {address ? (
-            profileData !== undefined ? (
-              profileData?.length > 0 ? (
-                profileData?.map((item: any, index: any) => (
-                  <div key={item?._id || index}>
-                    <CardProfile
-                      data={item}
-                      setOpenModalListNFT={setOpenModalListNFT}
-                      setOpenModalCancelListNFT={setOpenModalCancelListNFT}
-                      setOpenModalTbaDetail={setOpenModalTbaDetail}
-                      setSelectedNFT={setSelectedNFT}
-                    />
-                  </div>
-                ))
-              ) : (
-                <div className='text-[#031F68]'>No Data!</div>
-              )
-            ) : (
-              [...new Array(4)].map((_, index) => <NftSkeleton key={index} />)
-            )
-          ) : (
-            <div className='text-[#031F68]'>Please Connect your wallet!</div>
-          )}
+        <div className='mt-[40px] '>
+          <InfiniteScrollWrapper
+            listData={profileData}
+            renderData={profileData?.data?.map((item: any, index: any) => (
+              <div key={item?._id || index}>
+                <CardProfile
+                  data={item}
+                  setOpenModalListNFT={setOpenModalListNFT}
+                  setOpenModalCancelListNFT={setOpenModalCancelListNFT}
+                  setOpenModalTbaDetail={setOpenModalTbaDetail}
+                  setSelectedNFT={setSelectedNFT}
+                />
+              </div>
+            ))}
+          />
         </div>
       </div>
     </div>

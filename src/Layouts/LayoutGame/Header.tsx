@@ -167,7 +167,7 @@ const Header = () => {
           <div
             onClick={() => {
               if (
-                (item?.link?.includes('/market/profile') ||
+                (item?.link?.includes('/profile') ||
                   item?.link === '/game') &&
                 !isConnected
               ) {
@@ -191,7 +191,7 @@ const Header = () => {
           <div
             onClick={() => {
               if (
-                (item?.link?.includes('/market/profile') ||
+                (item?.link?.includes('/profile') ||
                   item?.link === '/game') &&
                 !isConnected
               ) {

@@ -49,10 +49,10 @@ const Header = () => {
     },
     {
       title: 'Profile',
-      link: `/market/profile/${address}`,
+      link: `/profile/${address}`,
       icon: (
         <IconProfile
-          fill={path === `/market/profile/${address}` ? '#0538BD' : '#8CA3E1'}
+          fill={path === `/profile/${address}` ? '#0538BD' : '#8CA3E1'}
         />
       ),
     },
@@ -97,7 +97,7 @@ const Header = () => {
           <div
             onClick={() => {
               if (
-                (item?.link?.includes('/market/profile') ||
+                (item?.link?.includes('/profile') ||
                   item?.link === '/game') &&
                 !isConnected
               ) {
@@ -121,7 +121,7 @@ const Header = () => {
           <div
             onClick={() => {
               if (
-                (item?.link?.includes('/market/profile') ||
+                (item?.link?.includes('/profile') ||
                   item?.link === '/game') &&
                 !isConnected
               ) {
