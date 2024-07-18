@@ -12,7 +12,6 @@ import { CallData } from 'starknet';
 import erc721ABI from '@/abi/erc721.json';
 import { refreshMintStatus } from '@/fetching/client/mint';
 import ModalMintTbaSuccess from '../modal/ModalMintTbaSuccess';
-import { profile } from '@/fetching/client/profile';
 
 export default function Mint() {
   const { isConnected, account, address } = useAccount();

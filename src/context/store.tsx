@@ -7,7 +7,6 @@ import { Contract } from 'starknet';
 import { useStarknetkitConnectModal } from 'starknetkit';
 import erc20abi from '@/abi/erc20.json';
 import useMounted from '@/hook/useMounted';
-import { profile } from '@/fetching/client/profile';
 import { fetchGameProfile } from '@/fetching/client/game';
 
 const storeContext = createContext<any>(null);
@@ -24,7 +23,6 @@ const StoreProvider = ({ children }: any) => {
   const { isMounted } = useMounted();
   const [point, setPoint] = useState(undefined);
   const { address, account } = useAccount();
-  const [profileData, setProfileData] = useState<any>();
   const [tbaLoginData, setTbaLoginData] = useState<any>();
   const [accessToken, setAccessToken] = useState<any>();
   const [listedNFTData, setListedNFTData] = useState<any>();
@@ -49,44 +47,6 @@ const StoreProvider = ({ children }: any) => {
     );
     const dcoin = await erc20Contract.balanceOf(address);
     setDcoin(dcoin);
-  };
-
-  const getProfile = async () => {
-    try {
-      pageProfile = 1;
-      const profileResponse: any = await profile(
-        address as string,
-        pageProfile,
-        4
-      );
-      const data = profileResponse?.data;
-      setProfileData(data);
-      pageProfile++;
-    } catch (err) {
-      toastError('Get profile failed');
-      console.log(err);
-    }
-  };
-
-  const getMoreProfile = async () => {
-    try {
-      const profileResponse: any = await profile(
-        address as string,
-        pageProfile,
-        4
-      );
-      const data = profileResponse?.data;
-
-      setProfileData((prev: any) => ({
-        pagination: data?.pagination,
-        data: [...prev?.data, ...data?.data],
-      }));
-
-      pageProfile++;
-    } catch (err) {
-      toastError('Get profile failed');
-      console.log(err);
-    }
   };
 
   const getGameProfile = async () => {
@@ -122,9 +82,6 @@ const StoreProvider = ({ children }: any) => {
         connectWallet,
         getDcoin,
         dcoin,
-        profileData,
-        getProfile,
-        getMoreProfile,
         getGameProfile,
         tbaLoginData,
         setTbaLoginData,

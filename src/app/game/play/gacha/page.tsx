@@ -16,10 +16,7 @@ import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 import erc721ItemABI from '@/abi/erc721Item.json';
 import erc20ABI from '@/abi/erc20.json';
-import CustomProgress from '@/components/custom/CustomProgress';
 import { cairo, CallData, selector } from 'starknet';
-import TbaProfile from '@/components/TbaProfile';
-import { profile } from '@/fetching/client/profile';
 import ModalMintTbaSuccess from '@/components/modal/ModalMintTbaSuccess';
 
 const Menu = () => {

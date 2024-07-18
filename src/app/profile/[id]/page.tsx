@@ -5,14 +5,20 @@ import CardProfile from '@/components/CardProfile';
 import CustomButton from '@/components/custom/CustomButton';
 import CustomImage from '@/components/custom/CustomImage';
 import CustomInput from '@/components/custom/CustomInput';
-import InfiniteScrollWrapper from '@/components/InfiniteScrollWrapper';
+import ListNftSkeleton from '@/components/custom/CustomSkeleton/ListNftSkeleton';
 import ModalCancelListNFT from '@/components/modal/ModalCancelListNFT';
 import ModalListNFT from '@/components/modal/ModalListNFT';
 import ModalTbaDetail from '@/components/modal/ModalTbaDetail';
 import { useStore } from '@/context/store';
+import { fetchUserTbaList } from '@/fetching/client/user';
+import useMounted from '@/hook/useMounted';
 import { formatToken, formatWallet } from '@/utils';
+import { toastError } from '@/utils/toast';
 import { useAccount, useBalance } from '@starknet-react/core';
 import React, { useEffect, useState } from 'react';
+import InfiniteScroll from 'react-infinite-scroll-component';
+
+let page = 2;
 
 const Profile = () => {
   const [openModalListNFT, setOpenModalListNFT] = useState(false);
@@ -20,13 +26,36 @@ const Profile = () => {
   const [openModalCancelListNFT, setOpenModalCancelListNFT] = useState(false);
   const { address } = useAccount();
   const [selectedNFT, setSelectedNFT] = useState<any>(null);
-  const { dcoin, getProfile, profileData, getMoreProfile } = useStore();
+  const { dcoin } = useStore();
+  const [userTbaList, setUserTbaList] = useState<any>();
+  const { isMounted } = useMounted();
 
   useEffect(() => {
-    if (!address) return;
+    if (!isMounted || !address) return;
+    getUserTbaList();
+  }, [isMounted, address]);
 
-    getProfile(address);
-  }, [address]);
+  const getUserTbaList = async () => {
+    fetchUserTbaList({ address, page: 1, limit: 4 }).then((res) => {
+      setUserTbaList(res.data);
+    });
+  };
+
+  const getMoreUserTbaList = async () => {
+    try {
+      fetchUserTbaList({ address, page, limit: 4 }).then((res) => {
+        const data = res?.data;
+        setUserTbaList((prev: any) => ({
+          pagination: data?.pagination,
+          data: [...prev?.data, ...data?.data],
+        }));
+      });
+      page++;
+    } catch (err) {
+      toastError('Get profile failed');
+      console.log(err);
+    }
+  };
 
   const ethBalance = useBalance({
     address,
@@ -41,7 +70,7 @@ const Profile = () => {
           setOpenModalListNFT(false);
         }}
         data={selectedNFT}
-        getProfile={getProfile}
+        getUserTbaList={getUserTbaList}
       />
       <ModalCancelListNFT
         open={openModalCancelListNFT}
@@ -104,14 +133,14 @@ const Profile = () => {
           <div className='md:text-right'>
             <p className='text-[18px] font-[400]'>Owned Tokens</p>
             <p className='text-[24px] md:text-[48px] font-[500] text-[#DCFC36]'>
-              {(address && profileData?.data?.length) || 0}
+              {(address && userTbaList?.data?.length) || 0}
             </p>
           </div>
           <div className='md:text-right'>
             <p className='text-[18px] font-[400]'>Listed Tokens</p>
             <p className='text-[24px] md:text-[48px] font-[500] text-[#DCFC36]'>
               {(address &&
-                profileData?.data?.filter((item: any) => item?.listing === true)
+                userTbaList?.data?.filter((item: any) => item?.listing === true)
                   ?.length) ||
                 0}
             </p>
@@ -130,21 +159,38 @@ const Profile = () => {
         </div>
 
         <div className='mt-[40px] '>
-          <InfiniteScrollWrapper
-            listData={profileData}
-            getMoreFunc={getMoreProfile}
-            renderData={profileData?.data?.map((item: any, index: any) => (
-              <div key={item?._id || index}>
-                <CardProfile
-                  data={item}
-                  setOpenModalListNFT={setOpenModalListNFT}
-                  setOpenModalCancelListNFT={setOpenModalCancelListNFT}
-                  setOpenModalTbaDetail={setOpenModalTbaDetail}
-                  setSelectedNFT={setSelectedNFT}
-                />
-              </div>
-            ))}
-          />
+          {address ? (
+            userTbaList !== undefined ? (
+              userTbaList?.data?.length > 0 ? (
+                <InfiniteScroll
+                  dataLength={userTbaList?.data?.length}
+                  next={getMoreUserTbaList}
+                  hasMore={userTbaList?.pagination?.hasMore}
+                  loader={<ListNftSkeleton />}
+                >
+                  <div className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 mt-[40px] gap-[16px]'>
+                    {userTbaList?.data?.map((item: any, index: any) => (
+                      <div key={item?._id || index}>
+                        <CardProfile
+                          data={item}
+                          setOpenModalListNFT={setOpenModalListNFT}
+                          setOpenModalCancelListNFT={setOpenModalCancelListNFT}
+                          setOpenModalTbaDetail={setOpenModalTbaDetail}
+                          setSelectedNFT={setSelectedNFT}
+                        />
+                      </div>
+                    ))}
+                  </div>
+                </InfiniteScroll>
+              ) : (
+                <div className='text-[#031F68]'>No Data!</div>
+              )
+            ) : (
+              <ListNftSkeleton />
+            )
+          ) : (
+            <div className='text-[#031F68]'>Please Connect your wallet!</div>
+          )}
         </div>
       </div>
     </div>

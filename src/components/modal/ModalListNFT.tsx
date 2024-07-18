@@ -9,10 +9,10 @@ import { toastError, toastSuccess } from '@/utils/toast';
 import { CallData, Contract, cairo } from 'starknet';
 import { refreshListing } from '@/fetching/client/home';
 
-const ModalListNFT = ({ open, onCancel, data, getProfile }: any) => {
+const ModalListNFT = ({ open, onCancel, data, getUserTbaList }: any) => {
   const [price, setPrice] = useState('');
 
-  const { isConnected, account, address } = useAccount();
+  const { isConnected, account } = useAccount();
   const { connectWallet, setShowModalWaitTransaction } = useStore();
   const { provider } = useProvider();
   const [loading, setLoading] = useState(false);
@@ -77,7 +77,7 @@ const ModalListNFT = ({ open, onCancel, data, getProfile }: any) => {
         token_id: TOKEN_ID,
         collection_address: data?.collection_address,
       });
-      await getProfile(address);
+      await getUserTbaList();
       toastSuccess('List for sale success');
       onCancel();
     } catch (err) {
