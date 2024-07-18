@@ -35,7 +35,7 @@ const Layout = ({ children }: any) => {
   }, [isMounted, address]);
 
   return (
-    <div className='bg-[url("/images/bg.webp")] bg-center bg-cover bg-no-repeat bg-fixed min-h-[var(--100vh)]'>
+    <div className=''>
       {!isMounted && <Loading />}
       {currentLayout}
       <ModalWaitTransaction
