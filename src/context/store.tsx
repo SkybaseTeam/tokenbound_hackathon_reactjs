@@ -22,7 +22,6 @@ const StoreProvider = ({ children }: any) => {
   const { address } = useAccount();
   const [tbaLoginData, setTbaLoginData] = useState<any>();
   const [accessToken, setAccessToken] = useState<any>();
-  const [listedNFTData, setListedNFTData] = useState<any>();
   const [blingTba, setBlingTba] = useState(0);
   const [showModalWaitTransaction, setShowModalWaitTransaction] =
     useState(false);
@@ -84,8 +83,6 @@ const StoreProvider = ({ children }: any) => {
         setTbaLoginData,
         accessToken,
         setAccessToken,
-        listedNFTData,
-        setListedNFTData,
         blingTba,
         getBlingOfTba,
         showModalWaitTransaction,

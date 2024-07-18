@@ -14,7 +14,12 @@ import CustomInput from '@/components/custom/CustomInput';
 import IconSearch from '@/assets/icons/IconSearch';
 import ModalTbaDetail from '@/components/modal/ModalTbaDetail';
 import ModalCancelListNFT from '@/components/modal/ModalCancelListNFT';
-import { useStore } from '@/context/store';
+import { fetchListedTba } from '@/fetching/client/tba';
+import { useAccount } from '@starknet-react/core';
+import InfiniteScroll from 'react-infinite-scroll-component';
+import ListNftSkeleton from '@/components/custom/CustomSkeleton/ListNftSkeleton';
+
+let page = 2;
 
 const MarketContainer = () => {
   const [openModalBuyNTF, setOpenModalBuyNTF] = useState(false);
@@ -22,27 +27,43 @@ const MarketContainer = () => {
   const [openModalCancelListNFT, setOpenModalCancelListNFT] = useState(false);
   const { isMounted } = useMounted();
   const [selectedNFT, setSelectedNFT] = useState<any>(null);
-  const { listedNFTData, setListedNFTData } = useStore();
+  const [listedTba, setListedTba] = useState<any>();
 
   useEffect(() => {
     if (!isMounted) return;
-
-    const getHomeData = async () => {
-      try {
-        const [listedNFTResponse]: any = await Promise.allSettled([
-          listedNFT(),
-        ]);
-
-        const listedNFTResponseData = listedNFTResponse?.value?.data?.data;
-        setListedNFTData(listedNFTResponseData);
-      } catch (err) {
-        toastError('Get Listed Data failed');
-        console.log(err);
-      }
-    };
-
-    getHomeData();
+    getListedTba();
   }, [isMounted]);
+
+  const LIMIT = 7;
+
+  const getListedTba = async () => {
+    try {
+      page = 2;
+      window.scrollTo(0, 0);
+      fetchListedTba({ page: 1, limit: LIMIT, listing: true }).then((res) => {
+        setListedTba(res.data);
+      });
+    } catch (err) {
+      toastError('Get profile failed');
+      console.log(err);
+    }
+  };
+
+  const getMoreListedTba = async () => {
+    try {
+      fetchListedTba({ page, limit: LIMIT, listing: true }).then((res) => {
+        const data = res?.data;
+        setListedTba((prev: any) => ({
+          pagination: data?.pagination,
+          data: [...prev?.data, ...data?.data],
+        }));
+      });
+      page++;
+    } catch (err) {
+      toastError('Get listed tba failed');
+      console.log(err);
+    }
+  };
 
   return (
     <div className='pt-[6rem] sm:pt-[8rem] pb-[8rem] md:px-[32px]'>
@@ -92,7 +113,7 @@ const MarketContainer = () => {
           <CustomButton className='w-[163px] btn-primary'>Search</CustomButton>
         </div>
 
-        <div className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 mt-[40px] gap-[16px]'>
+        {/* <div className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 mt-[40px] gap-[16px]'>
           <CardMint />
 
           {listedNFTData !== undefined ? (
@@ -113,6 +134,38 @@ const MarketContainer = () => {
             )
           ) : (
             [...new Array(7)].map((_, index) => <NftSkeleton key={index} />)
+          )}
+        </div> */}
+
+        <div className='mt-[40px] '>
+          {listedTba !== undefined ? (
+            listedTba?.data?.length > 0 ? (
+              <InfiniteScroll
+                dataLength={listedTba?.data?.length}
+                next={getMoreListedTba}
+                hasMore={listedTba?.pagination?.hasMore}
+                loader={<ListNftSkeleton />}
+              >
+                <div className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-[16px]'>
+                  <CardMint />
+                  {listedTba?.data?.map((item: any, index: any) => (
+                    <div key={item?._id || index}>
+                      <CardMarketplace
+                        data={item}
+                        setOpenModalTbaDetail={setOpenModalTbaDetail}
+                        setOpenModalBuyNTF={setOpenModalBuyNTF}
+                        setOpenModalCancelListNFT={setOpenModalCancelListNFT}
+                        setSelectedNFT={setSelectedNFT}
+                      />
+                    </div>
+                  ))}
+                </div>
+              </InfiniteScroll>
+            ) : (
+              <div className='text-[#031F68]'>No Data!</div>
+            )
+          ) : (
+            <ListNftSkeleton />
           )}
         </div>
       </div>

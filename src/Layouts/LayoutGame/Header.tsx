@@ -52,9 +52,7 @@ const Header = () => {
       title: 'Play',
       link: '/game/play',
       icon: (
-        <IconGamePlay
-          fill={path === `/game/play` ? '#0538BD' : '#8CA3E1'}
-        />
+        <IconGamePlay fill={path === `/game/play` ? '#0538BD' : '#8CA3E1'} />
       ),
     },
     {
@@ -167,8 +165,7 @@ const Header = () => {
           <div
             onClick={() => {
               if (
-                (item?.link?.includes('/profile') ||
-                  item?.link === '/game') &&
+                (item?.link?.includes('/profile') || item?.link === '/game') &&
                 !isConnected
               ) {
                 connectWallet();
@@ -191,8 +188,7 @@ const Header = () => {
           <div
             onClick={() => {
               if (
-                (item?.link?.includes('/profile') ||
-                  item?.link === '/game') &&
+                (item?.link?.includes('/profile') || item?.link === '/game') &&
                 !isConnected
               ) {
                 connectWallet();
@@ -253,6 +249,7 @@ const Header = () => {
               <IconLogout
                 className='cursor-pointer'
                 onClick={handleDisconnect}
+                fill='#ef4444'
               />
             </div>
           </div>

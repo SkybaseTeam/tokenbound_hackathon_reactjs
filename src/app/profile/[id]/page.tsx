@@ -35,17 +35,24 @@ const Profile = () => {
     getUserTbaList();
   }, [isMounted, address]);
 
+  const LIMIT = 8;
+
   const getUserTbaList = async () => {
-    page = 2;
-    window.scrollTo(0, 0);
-    fetchUserTbaList({ address, page: 1, limit: 4 }).then((res) => {
-      setUserTbaList(res.data);
-    });
+    try {
+      page = 2;
+      window.scrollTo(0, 0);
+      fetchUserTbaList({ address, page: 1, limit: LIMIT }).then((res) => {
+        setUserTbaList(res.data);
+      });
+    } catch (err) {
+      toastError('Get profile failed');
+      console.log(err);
+    }
   };
 
   const getMoreUserTbaList = async () => {
     try {
-      fetchUserTbaList({ address, page, limit: 4 }).then((res) => {
+      fetchUserTbaList({ address, page, limit: LIMIT }).then((res) => {
         const data = res?.data;
         setUserTbaList((prev: any) => ({
           pagination: data?.pagination,

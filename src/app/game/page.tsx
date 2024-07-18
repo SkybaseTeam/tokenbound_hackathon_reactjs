@@ -31,6 +31,8 @@ const Game = () => {
   const { isMounted } = useMounted();
   const [userUnlistedTba, setUserUnlistedTba] = useState<any>();
 
+  const LIMIT = 8;
+
   useEffect(() => {
     if (accessToken && tbaLoginData) {
       router.push(`/game/play`);
@@ -44,7 +46,7 @@ const Game = () => {
 
   const getUserTbaList = async () => {
     page = 2;
-    fetchUserTbaList({ address, page: 1, limit: 4, listing: false }).then(
+    fetchUserTbaList({ address, page: 1, limit: LIMIT, listing: false }).then(
       (res) => {
         setUserUnlistedTba(res.data);
         window.scrollTo(0, 0);
@@ -54,7 +56,7 @@ const Game = () => {
 
   const getMoreUserTbaList = async () => {
     try {
-      fetchUserTbaList({ address, page, limit: 4, listing: false }).then(
+      fetchUserTbaList({ address, page, limit: LIMIT, listing: false }).then(
         (res) => {
           const data = res?.data;
           setUserUnlistedTba((prev: any) => ({
@@ -155,6 +157,7 @@ const Game = () => {
                   next={getMoreUserTbaList}
                   hasMore={userUnlistedTba?.pagination?.hasMore}
                   loader={<ListNftSkeleton />}
+                  // scrollThreshold={-10}
                 >
                   <div className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-[16px]'>
                     {userUnlistedTba?.data?.map((item: any, index: any) => (

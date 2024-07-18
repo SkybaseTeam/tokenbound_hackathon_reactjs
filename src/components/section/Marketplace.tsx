@@ -8,32 +8,33 @@ import { useStore } from '@/context/store';
 import useMounted from '@/hook/useMounted';
 import { listedNFT } from '@/fetching/client/home';
 import { toastError } from '@/utils/toast';
+import { fetchListedTba } from '@/fetching/client/tba';
+import { useAccount } from '@starknet-react/core';
 
 const Marketplace = () => {
   const [openModalBuyNTF, setOpenModalBuyNTF] = useState(false);
   const [selectedNFT, setSelectedNFT] = useState<any>(null);
-  const { listedNFTData, setListedNFTData } = useStore();
+  const [listedTba, setListedTba] = useState<any>();
   const { isMounted } = useMounted();
+
+  const LIMIT = 4;
 
   useEffect(() => {
     if (!isMounted) return;
-
-    const getHomeData = async () => {
-      try {
-        const [listedNFTResponse]: any = await Promise.allSettled([
-          listedNFT(),
-        ]);
-
-        const listedNFTResponseData = listedNFTResponse?.value?.data?.data;
-        setListedNFTData(listedNFTResponseData);
-      } catch (err) {
-        toastError('Get Listed Data failed');
-        console.log(err);
-      }
-    };
-
-    getHomeData();
+    getListedTba();
   }, [isMounted]);
+
+  const getListedTba = async () => {
+    try {
+      window.scrollTo(0, 0);
+      fetchListedTba({ page: 1, limit: LIMIT, listing: true }).then((res) => {
+        setListedTba(res?.data?.data);
+      });
+    } catch (err) {
+      toastError('Get listed tba failed');
+      console.log(err);
+    }
+  };
 
   return (
     <section
@@ -61,8 +62,8 @@ const Marketplace = () => {
           </Link>
 
           <div className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-[1rem] mt-[52px]  w-full'>
-            {listedNFTData?.length !== undefined
-              ? listedNFTData?.slice(0, 4)?.map((item: any, index: any) => (
+            {listedTba?.length !== undefined
+              ? listedTba?.map((item: any, index: any) => (
                   <Link href={'/market'} key={index}>
                     <CardMarketplace
                       data={item}
@@ -73,7 +74,7 @@ const Marketplace = () => {
                     />
                   </Link>
                 ))
-              : listedNFTData
+              : listedTba
                   ?.slice(0, 4)
                   ?.map((item: any, index: any) => <NftSkeleton key={index} />)}
           </div>
