@@ -5,19 +5,14 @@ import CardProfile from '@/components/CardProfile';
 import CustomButton from '@/components/custom/CustomButton';
 import CustomImage from '@/components/custom/CustomImage';
 import CustomInput from '@/components/custom/CustomInput';
-import ListNftSkeleton from '@/components/custom/CustomSkeleton/ListNftSkeleton';
-import NftSkeleton from '@/components/custom/CustomSkeleton/NftSkeleton';
 import InfiniteScrollWrapper from '@/components/InfiniteScrollWrapper';
 import ModalCancelListNFT from '@/components/modal/ModalCancelListNFT';
 import ModalListNFT from '@/components/modal/ModalListNFT';
 import ModalTbaDetail from '@/components/modal/ModalTbaDetail';
 import { useStore } from '@/context/store';
-import { profile } from '@/fetching/client/profile';
 import { formatToken, formatWallet } from '@/utils';
-import { toastError } from '@/utils/toast';
 import { useAccount, useBalance } from '@starknet-react/core';
 import React, { useEffect, useState } from 'react';
-import InfiniteScroll from 'react-infinite-scroll-component';
 
 const Profile = () => {
   const [openModalListNFT, setOpenModalListNFT] = useState(false);
@@ -25,11 +20,11 @@ const Profile = () => {
   const [openModalCancelListNFT, setOpenModalCancelListNFT] = useState(false);
   const { address } = useAccount();
   const [selectedNFT, setSelectedNFT] = useState<any>(null);
-  const { dcoin, getProfile, profileData, setPage } = useStore();
+  const { dcoin, getProfile, profileData, getMoreProfile } = useStore();
 
   useEffect(() => {
     if (!address) return;
-    setPage(1);
+
     getProfile(address);
   }, [address]);
 
@@ -109,7 +104,7 @@ const Profile = () => {
           <div className='md:text-right'>
             <p className='text-[18px] font-[400]'>Owned Tokens</p>
             <p className='text-[24px] md:text-[48px] font-[500] text-[#DCFC36]'>
-              {(address && profileData?.length) || 0}
+              {(address && profileData?.data?.length) || 0}
             </p>
           </div>
           <div className='md:text-right'>
@@ -137,6 +132,7 @@ const Profile = () => {
         <div className='mt-[40px] '>
           <InfiniteScrollWrapper
             listData={profileData}
+            getMoreFunc={getMoreProfile}
             renderData={profileData?.data?.map((item: any, index: any) => (
               <div key={item?._id || index}>
                 <CardProfile

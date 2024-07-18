@@ -14,6 +14,8 @@ const storeContext = createContext<any>(null);
 
 export const useStore = () => useContext(storeContext);
 
+let pageProfile = 1;
+
 const StoreProvider = ({ children }: any) => {
   const [userLoginData, setUserLoginData] = useState<any>(true);
   const { provider } = useProvider();
@@ -29,7 +31,6 @@ const StoreProvider = ({ children }: any) => {
   const [blingTba, setBlingTba] = useState(0);
   const [showModalWaitTransaction, setShowModalWaitTransaction] =
     useState(false);
-  const [page, setPage] = useState(1);
 
   const { starknetkitConnectModal } = useStarknetkitConnectModal({
     connectors: connectors as any,
@@ -52,15 +53,36 @@ const StoreProvider = ({ children }: any) => {
 
   const getProfile = async () => {
     try {
-      const profileResponse: any = await profile(address as string, page, 4);
+      pageProfile = 1;
+      const profileResponse: any = await profile(
+        address as string,
+        pageProfile,
+        4
+      );
       const data = profileResponse?.data;
-      profileData
-        ? setProfileData((prev: any) => ({
-            pagination: data?.pagination,
-            data: [...prev?.data, ...data?.data],
-          }))
-        : setProfileData(data);
-      setPage(page + 1);
+      setProfileData(data);
+      pageProfile++;
+    } catch (err) {
+      toastError('Get profile failed');
+      console.log(err);
+    }
+  };
+
+  const getMoreProfile = async () => {
+    try {
+      const profileResponse: any = await profile(
+        address as string,
+        pageProfile,
+        4
+      );
+      const data = profileResponse?.data;
+
+      setProfileData((prev: any) => ({
+        pagination: data?.pagination,
+        data: [...prev?.data, ...data?.data],
+      }));
+
+      pageProfile++;
     } catch (err) {
       toastError('Get profile failed');
       console.log(err);
@@ -102,6 +124,7 @@ const StoreProvider = ({ children }: any) => {
         dcoin,
         profileData,
         getProfile,
+        getMoreProfile,
         getGameProfile,
         tbaLoginData,
         setTbaLoginData,
@@ -115,8 +138,6 @@ const StoreProvider = ({ children }: any) => {
         setShowModalWaitTransaction,
         point,
         setPoint,
-        page,
-        setPage,
       }}
     >
       {children}

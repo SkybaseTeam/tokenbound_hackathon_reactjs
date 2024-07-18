@@ -7,12 +7,14 @@ import ListNftSkeleton from './custom/CustomSkeleton/ListNftSkeleton';
 const InfiniteScrollWrapper = ({
   listData,
   renderData,
+  getMoreFunc,
 }: {
   listData: any;
   renderData: any;
+  getMoreFunc: any;
 }) => {
   const { address } = useAccount();
-  const { getProfile } = useStore();
+
   return (
     <>
       {address ? (
@@ -20,7 +22,7 @@ const InfiniteScrollWrapper = ({
           listData?.data?.length > 0 ? (
             <InfiniteScroll
               dataLength={listData?.data?.length}
-              next={getProfile}
+              next={getMoreFunc}
               hasMore={listData?.pagination?.hasMore}
               loader={<ListNftSkeleton />}
             >
