@@ -71,7 +71,7 @@ export default function Mint() {
       );
       const tokenId = parseInt(data?.events[3]?.data[2], 16);
       console.log('TokenId', tokenId);
-      await Promise.allSettled([
+      const mintedNft: any = await Promise.allSettled([
         refreshMintStatus({
           token_id: tokenId,
           owner_address: address,
@@ -80,11 +80,7 @@ export default function Mint() {
         // getDcoin(),
         getRemainingPool(),
       ]);
-
-      const res: any = await profile(address?.toLocaleLowerCase());
-      setMintedNft(
-        res?.data?.data?.find((item: any) => item?.token_id === tokenId)
-      );
+      setMintedNft(mintedNft[0]?.value?.data?.data);
       setShowModalMintTbaSuccess(true);
     } catch (err) {
       console.log(err);

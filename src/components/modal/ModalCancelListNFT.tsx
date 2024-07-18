@@ -12,14 +12,10 @@ import { formatWallet } from '@/utils';
 import CustomTooltip from '../custom/CustomTooltip';
 import useCopyToClipboard from '@/hook/useCopyToClipboard';
 
-const ModalCancelListNFT = ({ open, onCancel, data }: any) => {
+const ModalCancelListNFT = ({ open, onCancel, data, getUserTbaList }: any) => {
   const { isConnected, account, address } = useAccount();
-  const {
-    connectWallet,
-    getProfile,
-    setListedNFTData,
-    setShowModalWaitTransaction,
-  } = useStore();
+  const { connectWallet, setListedNFTData, setShowModalWaitTransaction } =
+    useStore();
   const { provider } = useProvider();
   const [loading, setLoading] = useState(false);
   const path = usePathname();
@@ -55,7 +51,7 @@ const ModalCancelListNFT = ({ open, onCancel, data }: any) => {
         token_id: TOKEN_ID,
         collection_address: data?.collection_address,
       });
-      path.includes('/profile') && (await getProfile(address));
+      path.includes('/profile') && (await getUserTbaList());
       if (path === '/market') {
         const newListedNfts = await listedNFT();
         setListedNFTData(newListedNfts?.data?.data);

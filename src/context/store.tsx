@@ -13,16 +13,13 @@ const storeContext = createContext<any>(null);
 
 export const useStore = () => useContext(storeContext);
 
-let pageProfile = 1;
-
 const StoreProvider = ({ children }: any) => {
   const [userLoginData, setUserLoginData] = useState<any>(true);
   const { provider } = useProvider();
   const { connect, connectors } = useConnect();
   const [dcoin, setDcoin] = useState(0);
-  const { isMounted } = useMounted();
   const [point, setPoint] = useState(undefined);
-  const { address, account } = useAccount();
+  const { address } = useAccount();
   const [tbaLoginData, setTbaLoginData] = useState<any>();
   const [accessToken, setAccessToken] = useState<any>();
   const [listedNFTData, setListedNFTData] = useState<any>();

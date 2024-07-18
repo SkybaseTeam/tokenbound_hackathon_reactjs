@@ -99,7 +99,7 @@ const Menu = () => {
         console.log(data);
         const tokenId = parseInt(data?.events[4]?.data[2], 16);
         console.log('TokenId', tokenId);
-        await Promise.allSettled([
+        const nftMinted: any = await Promise.allSettled([
           refreshNftMintStatus({
             token_id: tokenId,
             collection_address: process.env.NEXT_PUBLIC_ERC721_ITEM,
@@ -107,14 +107,7 @@ const Menu = () => {
           // getDcoin(),
           // getRemainingPool(),
         ]);
-        const res: any = await fetchNft(
-          tbaLoginData?.tba_address?.toLocaleLowerCase()
-        );
-        setMintedNft(
-          res?.data?.data?.find(
-            (item: any) => item?.token_id === tokenId.toString()
-          )
-        );
+        setMintedNft(nftMinted[0]?.value?.data?.data);
         setShowModalMintTbaSuccess(true);
       } catch (error) {
         toastError('Mint failed');

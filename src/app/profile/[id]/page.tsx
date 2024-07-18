@@ -36,6 +36,8 @@ const Profile = () => {
   }, [isMounted, address]);
 
   const getUserTbaList = async () => {
+    page = 2;
+    window.scrollTo(0, 0);
     fetchUserTbaList({ address, page: 1, limit: 4 }).then((res) => {
       setUserTbaList(res.data);
     });
@@ -78,6 +80,7 @@ const Profile = () => {
           setOpenModalCancelListNFT(false);
         }}
         data={selectedNFT}
+        getUserTbaList={getUserTbaList}
       />
       <ModalTbaDetail
         open={openModalTbaDetail}
@@ -167,8 +170,9 @@ const Profile = () => {
                   next={getMoreUserTbaList}
                   hasMore={userTbaList?.pagination?.hasMore}
                   loader={<ListNftSkeleton />}
+                  // pullDownToRefreshThreshold={100}
                 >
-                  <div className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 mt-[40px] gap-[16px]'>
+                  <div className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-[16px]'>
                     {userTbaList?.data?.map((item: any, index: any) => (
                       <div key={item?._id || index}>
                         <CardProfile

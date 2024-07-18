@@ -2,33 +2,34 @@
 
 import CustomButton from '@/components/custom/CustomButton';
 import CustomImage from '@/components/custom/CustomImage';
+import ListNftSkeleton from '@/components/custom/CustomSkeleton/ListNftSkeleton';
 import NftSkeleton from '@/components/custom/CustomSkeleton/NftSkeleton';
 import ModalTbaDetail from '@/components/modal/ModalTbaDetail';
 import { useStore } from '@/context/store';
 import { login } from '@/fetching/client/game';
+import { fetchUserTbaList } from '@/fetching/client/user';
+import useMounted from '@/hook/useMounted';
 import { formatDecimal } from '@/utils';
 import { toastError } from '@/utils/toast';
 import { useAccount, useSignTypedData } from '@starknet-react/core';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
+import InfiniteScroll from 'react-infinite-scroll-component';
 import { ArraySignatureType, typedData, TypedData } from 'starknet';
+
+let page = 2;
 
 const Game = () => {
   const [openModalTbaDetail, setOpenModalTbaDetail] = useState(false);
   const [selectedNFT, setSelectedNFT] = useState<any>(null);
   const router = useRouter();
-  const {
-    profileData,
-    getProfile,
-    setTbaLoginData,
-    setAccessToken,
-    accessToken,
-    tbaLoginData,
-  } = useStore();
+  const { setTbaLoginData, setAccessToken, accessToken, tbaLoginData } =
+    useStore();
   const { address } = useAccount();
   const { signTypedDataAsync } = useSignTypedData({ primaryType: 'Validate' });
   const [loading, setLoading] = useState(false);
-  const [filteredData, setFilteredData] = useState<any>([]);
+  const { isMounted } = useMounted();
+  const [userUnlistedTba, setUserUnlistedTba] = useState<any>();
 
   useEffect(() => {
     if (accessToken && tbaLoginData) {
@@ -37,17 +38,37 @@ const Game = () => {
   }, [accessToken, tbaLoginData]);
 
   useEffect(() => {
-    const newProfile = profileData?.filter(
-      (item: any) => item?.listing === false
+    if (!isMounted || !address) return;
+    getUserTbaList();
+  }, [isMounted, address]);
+
+  const getUserTbaList = async () => {
+    page = 2;
+    fetchUserTbaList({ address, page: 1, limit: 4, listing: false }).then(
+      (res) => {
+        setUserUnlistedTba(res.data);
+        window.scrollTo(0, 0);
+      }
     );
-    setFilteredData(newProfile);
-  }, [profileData]);
+  };
 
-  useEffect(() => {
-    if (!address || accessToken) return;
-
-    getProfile(address);
-  }, [address, accessToken]);
+  const getMoreUserTbaList = async () => {
+    try {
+      fetchUserTbaList({ address, page, limit: 4, listing: false }).then(
+        (res) => {
+          const data = res?.data;
+          setUserUnlistedTba((prev: any) => ({
+            pagination: data?.pagination,
+            data: [...prev?.data, ...data?.data],
+          }));
+        }
+      );
+      page++;
+    } catch (err) {
+      toastError('Get Unlisted Tba failed');
+      console.log(err);
+    }
+  };
 
   const onLoginGame = async (item: any) => {
     setLoading(true);
@@ -125,60 +146,69 @@ const Game = () => {
         <h1 className='text-[32px] sm:text-[48px] text-center'>
           Select your Token-Bound Account to Play game!
         </h1>
-        <div className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 mt-[40px] gap-[16px] w-full'>
+        <div className='w-full  mt-[40px]'>
           {address ? (
-            filteredData !== undefined ? (
-              filteredData?.length > 0 ? (
-                filteredData?.map((item: any, index: any) => (
-                  <div key={item?._id || index}>
-                    <div className='p-[12px] rounded-2xl border border-[#EFFEA3] bg-[#FBFDEB] text-[#031F68]'>
-                      <div
-                        className=' group cursor-pointer'
-                        onClick={() => {
-                          setSelectedNFT(item);
-                          setOpenModalTbaDetail(true);
-                        }}
-                      >
-                        <div className='aspect-square w-full relative overflow-hidden rounded-2xl'>
-                          <CustomImage
-                            src={item?.tba_image}
-                            fill
-                            alt='Nft'
-                            className='object-cover w-full rounded-2xl group-hover:scale-110 transition-all duration-500 ease-in-out'
-                          />
-                        </div>
-                        <div className='my-[16px]'>
-                          <p className='text-[18px] uppercase font-[400] truncate'>
-                            {item?.tba_name || 'NFT Name'}
-                          </p>
-                          <p className='text-[16px] font-[300] text-[#546678] mt-[0.5rem]'>
-                            Points:
-                            <span className='text-[#031F68] text-[18px] font-[400] ml-[0.5rem]'>
-                              {formatDecimal(Number(item?.point))}
-                            </span>
-                          </p>
+            userUnlistedTba !== undefined ? (
+              userUnlistedTba?.data?.length > 0 ? (
+                <InfiniteScroll
+                  dataLength={userUnlistedTba?.data?.length}
+                  next={getMoreUserTbaList}
+                  hasMore={userUnlistedTba?.pagination?.hasMore}
+                  loader={<ListNftSkeleton />}
+                >
+                  <div className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-[16px]'>
+                    {userUnlistedTba?.data?.map((item: any, index: any) => (
+                      <div key={item?._id || index}>
+                        <div className='p-[12px] rounded-2xl border border-[#EFFEA3] bg-[#FBFDEB] text-[#031F68]'>
+                          <div
+                            className=' group cursor-pointer'
+                            onClick={() => {
+                              setSelectedNFT(item);
+                              setOpenModalTbaDetail(true);
+                            }}
+                          >
+                            <div className='aspect-square w-full relative overflow-hidden rounded-2xl'>
+                              <CustomImage
+                                src={item?.tba_image}
+                                fill
+                                alt='Nft'
+                                className='object-cover w-full rounded-2xl group-hover:scale-110 transition-all duration-500 ease-in-out'
+                              />
+                            </div>
+                            <div className='my-[16px]'>
+                              <p className='text-[18px] uppercase font-[400] truncate'>
+                                {item?.tba_name || 'NFT Name'}
+                              </p>
+                              <p className='text-[16px] font-[300] text-[#546678] mt-[0.5rem]'>
+                                Points:
+                                <span className='text-[#031F68] text-[18px] font-[400] ml-[0.5rem]'>
+                                  {formatDecimal(Number(item?.point))}
+                                </span>
+                              </p>
+                            </div>
+                          </div>
+
+                          <CustomButton
+                            onClick={() => {
+                              if (!address) return;
+                              setSelectedNFT(item);
+                              onLoginGame(item);
+                            }}
+                            className='btn-primary w-full'
+                            loading={selectedNFT?._id === item?._id && loading}
+                          >
+                            Login Game
+                          </CustomButton>
                         </div>
                       </div>
-
-                      <CustomButton
-                        onClick={() => {
-                          if (!address) return;
-                          setSelectedNFT(item);
-                          onLoginGame(item);
-                        }}
-                        className='btn-primary w-full'
-                        loading={selectedNFT?._id === item?._id && loading}
-                      >
-                        Login Game
-                      </CustomButton>
-                    </div>
+                    ))}
                   </div>
-                ))
+                </InfiniteScroll>
               ) : (
                 <div className='text-[#DCFC36]'>No Data!</div>
               )
             ) : (
-              [...new Array(4)].map((_, index) => <NftSkeleton key={index} />)
+              <ListNftSkeleton />
             )
           ) : (
             <div className='text-[#DCFC36]'>Please Connect your wallet!</div>
