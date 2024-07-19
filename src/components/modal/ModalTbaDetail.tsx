@@ -66,7 +66,7 @@ const ModalTbaDetail = ({
   return (
     <CustomModal width={1205} open={open} onCancel={onCancel}>
       <div className='max-sm:pt-[1rem] max-lg:!pr-0 sm:p-[24px] p-[12px] font-glancyr text-[#031F68] '>
-        <div className='max-lg:max-h-[80vh] max-lg:overflow-auto rounded-2xl pr-[1rem]'>
+        <div className='max-lg:max-h-[80vh] max-lg:overflow-auto rounded-2xl'>
           <h2 className='text-[48px] font-[500] text-[#031F68]'>
             {selectedNFT?.tba_name}
           </h2>
@@ -84,7 +84,7 @@ const ModalTbaDetail = ({
             </div>
 
             <div
-              className='lg:basis-1/2 w-full lg:overflow-y-auto'
+              className='lg:basis-1/2 w-full lg:overflow-y-auto pr-[0.5rem]'
               style={{
                 height: windowSize?.width >= 1024 ? height : 'auto',
               }}
@@ -200,7 +200,7 @@ const ModalTbaDetail = ({
 
                           <div className='overflow-hidden'>
                             <p className='text-[24px] font-[400] text-[#0538BD] truncate '>
-                              NFT Item #{item?.token_id}
+                              NFT #{item?.token_id}
                             </p>
                             <p className='text-[18px] mt-[8px]  font-[300] text-[#546678] flex items-center gap-[0.5rem]'>
                               Power:{' '}

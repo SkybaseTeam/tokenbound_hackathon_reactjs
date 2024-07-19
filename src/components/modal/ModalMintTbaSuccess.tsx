@@ -105,17 +105,31 @@ const ModalMintTbaSuccess = ({ open, onCancel, mintedNft }: any) => {
             )}
           </div>
         </div>
-        <div className='mt-[30px] text-[16px] font-[300] text-[#546678]'>
-          Go to My Profile to check your item
-          <CustomButton
-            onClick={() => {
-              router.push('/profile/' + address);
-            }}
-            className='btn-primary w-full mt-[16px]'
-          >
-            Go to Profile
-          </CustomButton>
-        </div>
+        {mintedNft?.tba_name && (
+          <div className='mt-[30px] text-[16px] font-[300] text-[#546678]'>
+            Go to My Profile to check your item
+            <CustomButton
+              onClick={() => {
+                router.push('/profile/' + address);
+              }}
+              className='btn-primary w-full mt-[16px]'
+            >
+              Go to Profile
+            </CustomButton>
+          </div>
+        )}
+        {mintedNft?.nft_name && (
+          <div className='mt-[30px] text-[16px] font-[300] text-[#546678]'>
+            <CustomButton
+              onClick={() => {
+                onCancel();
+              }}
+              className='btn-primary w-full mt-[16px]'
+            >
+              Close
+            </CustomButton>
+          </div>
+        )}
       </div>
     </CustomModal>
   );

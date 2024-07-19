@@ -13,3 +13,13 @@ export const fetchListedTba = async ({
     `/tba/all?page=${page}&limit=${limit}&listing=${listing}`
   );
 };
+
+export const fetchTbaRank = async ({
+  page,
+  limit,
+}: {
+  page?: number;
+  limit?: number;
+}) => {
+  return await axiosClient.get(`/tba/rank?page=${page}&limit=${limit}`);
+};

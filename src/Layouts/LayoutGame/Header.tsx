@@ -208,7 +208,7 @@ const Header = () => {
       {accessToken && (
         <div className='flex items-center justify-end max-lg:hidden'>
           <div className='flex items-center gap-[1rem] max-md:hidden'>
-            <div className='max-md:hidden border border-[#DCFC36] text-[16px] font-[400] text-[#DCFC36] px-[12px]  p-[8px] rounded-[32px] flex items-center '>
+            <div className='max-md:hidden border border-[#DCFC36] text-[16px] font-[400] text-[#DCFC36] px-[12px] py-[6px] rounded-[32px] flex items-center '>
               <div /* className=' mt-[0.3rem]' */>
                 <CustomButton
                   loading={loadingWithDraw}
@@ -227,7 +227,7 @@ const Header = () => {
               </div>
             </div>
 
-            <div className='flex items-center rounded-full gap-[10px] px-[12px] text-[16px] font-[400] border p-[8px] border-white '>
+            <div className='flex items-center rounded-full gap-[10px] px-[12px] text-[16px] font-[400] border py-[6px] border-white '>
               <CustomImage
                 src={tbaLoginData?.tba_image}
                 width={35}

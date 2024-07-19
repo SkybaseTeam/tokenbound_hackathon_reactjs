@@ -47,30 +47,31 @@ const Game = () => {
 
   const getUserTbaList = async () => {
     page = 2;
-    fetchUserTbaList({ address, page: 1, limit: LIMIT, listing: false }).then(
-      (res) => {
+    fetchUserTbaList({ address, page: 1, limit: LIMIT, listing: false })
+      .then((res) => {
         setUserUnlistedTba(res.data);
         window.scrollTo(0, 0);
-      }
-    );
+      })
+      .catch((err) => {
+        toastError('Get Unlisted Tba failed');
+        console.log(err);
+      });
   };
 
   const getMoreUserTbaList = async () => {
-    try {
-      fetchUserTbaList({ address, page, limit: LIMIT, listing: false }).then(
-        (res) => {
-          const data = res?.data;
-          setUserUnlistedTba((prev: any) => ({
-            pagination: data?.pagination,
-            data: [...prev?.data, ...data?.data],
-          }));
-        }
-      );
-      page++;
-    } catch (err) {
-      toastError('Get Unlisted Tba failed');
-      console.log(err);
-    }
+    fetchUserTbaList({ address, page, limit: LIMIT, listing: false })
+      .then((res) => {
+        const data = res?.data;
+        setUserUnlistedTba((prev: any) => ({
+          pagination: data?.pagination,
+          data: [...prev?.data, ...data?.data],
+        }));
+        page++;
+      })
+      .catch((err) => {
+        toastError('Get Unlisted Tba failed');
+        console.log(err);
+      });
   };
 
   const onLoginGame = async (item: any) => {
