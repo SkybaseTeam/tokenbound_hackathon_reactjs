@@ -18,6 +18,7 @@ import erc721ItemABI from '@/abi/erc721Item.json';
 import erc20ABI from '@/abi/erc20.json';
 import { cairo, CallData, selector } from 'starknet';
 import ModalMintTbaSuccess from '@/components/modal/ModalMintTbaSuccess';
+import { feltToInt } from '@/utils';
 
 const Menu = () => {
   const router = useRouter();
@@ -97,7 +98,10 @@ const Menu = () => {
           tx?.transaction_hash as any
         );
         console.log(data);
-        const tokenId = parseInt(data?.events[4]?.data[2], 16);
+        const tokenId = feltToInt({
+          low: parseInt(data?.events[4]?.data[0]),
+          high: parseInt(data?.events[4]?.data[1]),
+        });
         console.log('TokenId', tokenId);
         const nftMinted: any = await Promise.allSettled([
           refreshNftMintStatus({

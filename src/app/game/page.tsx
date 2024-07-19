@@ -1,5 +1,6 @@
 'use client';
 
+import IconPower from '@/assets/icons/IconPower';
 import CustomButton from '@/components/custom/CustomButton';
 import CustomImage from '@/components/custom/CustomImage';
 import ListNftSkeleton from '@/components/custom/CustomSkeleton/ListNftSkeleton';
@@ -162,7 +163,7 @@ const Game = () => {
                   <div className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-[16px]'>
                     {userUnlistedTba?.data?.map((item: any, index: any) => (
                       <div key={item?._id || index}>
-                        <div className='p-[12px] rounded-2xl border border-[#EFFEA3] bg-[#FBFDEB] text-[#031F68]'>
+                        <div className='p-[12px] rounded-2xl bg-[#fff] text-[#031F68]'>
                           <div
                             className=' group cursor-pointer'
                             onClick={() => {
@@ -182,12 +183,25 @@ const Game = () => {
                               <p className='text-[18px] uppercase font-[400] truncate'>
                                 {item?.tba_name || 'NFT Name'}
                               </p>
-                              <p className='text-[16px] font-[300] text-[#546678] mt-[0.5rem]'>
-                                Points:
-                                <span className='text-[#031F68] text-[18px] font-[400] ml-[0.5rem]'>
-                                  {formatDecimal(Number(item?.point))}
-                                </span>
-                              </p>
+                              <div className='grid grid-cols-2 p-[12px] bg-[#FBFDEB] rounded-2xl mt-[12px] '>
+                                <div className='font-[300] text-[16px]'>
+                                  <p className='text-[#546678]'>Power</p>
+                                  <p className='text-[18px] font-[400] mt-[4px]'>
+                                    <div className='flex items-center gap-[6px]'>
+                                      <IconPower />
+                                      {item?.power}
+                                    </div>
+                                  </p>
+                                </div>
+                                <div className='font-[300] text-[16px]'>
+                                  <p className='text-[#546678]'>Total Points</p>
+                                  <p className='text-[18px] font-[400] mt-[4px]'>
+                                    <div className='flex items-center gap-[6px]'>
+                                      {formatDecimal(Number(item?.point))}
+                                    </div>
+                                  </p>
+                                </div>
+                              </div>
                             </div>
                           </div>
 

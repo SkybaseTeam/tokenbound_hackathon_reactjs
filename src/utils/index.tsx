@@ -35,3 +35,7 @@ export const formatStarknet: any = (address: any) => {
     address.split('x')[1]
   );
 };
+
+export const feltToInt = ({ low, high }: any) => {
+  return Number((BigInt(high) << BigInt(64)) + BigInt(low));
+};

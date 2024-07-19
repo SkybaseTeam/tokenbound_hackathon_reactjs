@@ -50,7 +50,7 @@ const ModalMintTbaSuccess = ({ open, onCancel, mintedNft }: any) => {
               >
                 <span
                   onClick={() => copy(mintedNft?.tba_name as string)}
-                  className='text-[#031F68] text-[24px] font-[400] ml-[0.5rem] cursor-pointer'
+                  className='text-[#031F68] text-[24px] font-[400] ml-[0.5rem] cursor-pointer truncate'
                 >
                   {mintedNft
                     ? mintedNft?.tba_name || mintedNft?.nft_name

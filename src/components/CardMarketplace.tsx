@@ -5,6 +5,7 @@ import { useAccount } from '@starknet-react/core';
 import { useStore } from '@/context/store';
 import { formatStarknet, formatToken } from '@/utils';
 import { usePathname } from 'next/navigation';
+import IconPower from '@/assets/icons/IconPower';
 
 const CardMarketplace = ({
   setOpenModalBuyNTF,
@@ -43,19 +44,30 @@ const CardMarketplace = ({
           <p className='text-[18px] uppercase font-[400] truncate'>
             {data?.tba_name || 'NFT Name'}
           </p>
-          <div className='flex items-center gap-[12px] mt-[12px]  font-[300] text-[16px]'>
-            <p className='text-[#546678]'>Price</p>
-            <p className='text-[18px] font-[400]'>
-              <div className='flex items-center gap-[6px]'>
-                {data?.price}
-                <CustomImage
-                  src='/images/token/bling.webp'
-                  width={22}
-                  height={22}
-                  alt='err'
-                />
-              </div>
-            </p>
+          <div className='grid grid-cols-2 p-[12px] bg-[#F4FEC1] rounded-2xl mt-[12px] '>
+            <div className='font-[300] text-[16px]'>
+              <p className='text-[#546678]'>Power</p>
+              <p className='text-[18px] font-[400] mt-[4px]'>
+                <div className='flex items-center gap-[6px]'>
+                  <IconPower />
+                  {data?.power}
+                </div>
+              </p>
+            </div>
+            <div className='font-[300] text-[16px]'>
+              <p className='text-[#546678]'>Price</p>
+              <p className='text-[18px] font-[400] mt-[4px]'>
+                <div className='flex items-center gap-[6px]'>
+                  <CustomImage
+                    src='/images/token/bling.webp'
+                    width={22}
+                    height={22}
+                    alt='err'
+                  />
+                  {data?.price}
+                </div>
+              </p>
+            </div>
           </div>
         </div>
       </div>

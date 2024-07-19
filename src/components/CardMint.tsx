@@ -3,6 +3,7 @@ import React from 'react';
 import CustomImage from './custom/CustomImage';
 import CustomButton from './custom/CustomButton';
 import { useRouter } from 'next/navigation';
+import IconPower from '@/assets/icons/IconPower';
 
 const CardMint = ({ data }: any) => {
   const router = useRouter();
@@ -29,9 +30,21 @@ const CardMint = ({ data }: any) => {
         <p className='text-[18px] uppercase font-[400] truncate'>
           {'ERC-6551 Token-bound Account'}
         </p>
-        <div className='flex items-center gap-[12px] mt-[12px]  font-[300] text-[16px]'>
-          <p className='text-[#587AD3] truncate'>Price</p>
-          <p className='text-[18px] font-[400]'>{'FREE'}</p>
+        <div className='grid grid-cols-2 p-[12px] bg-[#CCD7F4] rounded-2xl mt-[12px] '>
+          <div className='font-[300] text-[16px]'>
+            <p className='text-[#3760CA]'>Power</p>
+            <p className='text-[18px] font-[400] mt-[4px]'>
+              <div className='flex items-center gap-[6px]'>
+                <IconPower />0
+              </div>
+            </p>
+          </div>
+          <div className='font-[300] text-[16px]'>
+            <p className='text-[#3760CA]'>Price</p>
+            <p className='text-[18px] font-[400] mt-[4px]'>
+              FREE
+            </p>
+          </div>
         </div>
       </div>
       <CustomButton className='btn-secondary w-full'>Mint</CustomButton>
