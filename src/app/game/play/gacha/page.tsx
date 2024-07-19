@@ -25,11 +25,10 @@ const Menu = () => {
   const { isConnected, account, address } = useAccount();
   const {
     connectWallet,
-    getDcoin,
     accessToken,
     tbaLoginData,
     setShowModalWaitTransaction,
-    getGameProfile,
+    blingTba,
   } = useStore();
   const { provider } = useProvider();
   const [loading, setLoading] = useState(false);
@@ -191,6 +190,7 @@ const Menu = () => {
                     <CustomButton
                       loading={loading}
                       onClick={onMint}
+                      disabled={blingTba < MINT_PRICE}
                       className='btn-primary w-[266px]'
                     >
                       Mint

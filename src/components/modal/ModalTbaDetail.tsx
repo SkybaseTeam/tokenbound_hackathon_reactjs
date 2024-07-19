@@ -4,7 +4,7 @@ import CustomImage from '../custom/CustomImage';
 import IconVerified from '@/assets/icons/IconVerified';
 import CustomButton from '../custom/CustomButton';
 import { useAccount, useProvider } from '@starknet-react/core';
-import { formatWallet } from '@/utils';
+import { formatWallet, rankMapping } from '@/utils';
 import CustomTooltip from '../custom/CustomTooltip';
 import useCopyToClipboard from '@/hook/useCopyToClipboard';
 import { fetchNft } from '@/fetching/client/mint';
@@ -15,6 +15,7 @@ import IconCopy from '@/assets/icons/IconCopy';
 import IconCopyTba from '@/assets/icons/IconCopyTba';
 import NftSkeleton from '../custom/CustomSkeleton/NftSkeleton';
 import { Skeleton } from 'antd';
+import IconPower from '@/assets/icons/IconPower';
 
 const ModalTbaDetail = ({
   open,
@@ -88,9 +89,16 @@ const ModalTbaDetail = ({
                 height: windowSize?.width >= 1024 ? height : 'auto',
               }}
             >
-              <div className='grid sm:grid-cols-2 gap-[2rem] sm:gap-[5rem]'>
-                <div className='text-[18px] font-[300] text-[#546678]'>
-                  Token-Bound Address
+              <div className='flex max-sm:flex-col max-sm:gap-[1rem] justify-between'>
+                <div className='text-[18px]  font-[300] text-[#546678]'>
+                  Power
+                  <p className='mt-[8px] flex items-center gap-[0.5rem] font-[400] text-[24px] text-[#031F68]'>
+                    <IconPower />
+                    {selectedNFT?.power}
+                  </p>
+                </div>
+                <div className='text-[18px]  font-[300] text-[#546678]'>
+                  TBA Address
                   <div className='flex items-center gap-[0.5rem]'>
                     <p className='mt-[8px] font-[400] text-[24px] text-[#031F68]'>
                       {formatWallet(selectedNFT?.tba_address)}
@@ -100,16 +108,18 @@ const ModalTbaDetail = ({
                       placement='right'
                       trigger={['click']}
                     >
-                      <div
-                        className='cursor-pointer'
-                        onClick={() => copy(selectedNFT?.tba_address as string)}
-                      >
-                        <IconCopyTba />
+                      <div className='max-xl:hidden'>
+                        <IconCopyTba
+                          className='cursor-pointer '
+                          onClick={() =>
+                            copy(selectedNFT?.tba_address as string)
+                          }
+                        />
                       </div>
                     </CustomTooltip>
                   </div>
                 </div>
-                <div className='text-[18px] font-[300] text-[#546678]'>
+                <div className='text-[18px]  font-[300] text-[#546678]'>
                   Owner
                   <div className='flex items-center gap-[0.5rem]'>
                     <p className='mt-[8px] font-[400] text-[24px] text-[#031F68]'>
@@ -120,13 +130,13 @@ const ModalTbaDetail = ({
                       placement='right'
                       trigger={['click']}
                     >
-                      <div
-                        className='cursor-pointer'
-                        onClick={() =>
-                          copy(selectedNFT?.owner_address as string)
-                        }
-                      >
-                        <IconCopyTba />
+                      <div className='max-xl:hidden'>
+                        <IconCopyTba
+                          className='cursor-pointer'
+                          onClick={() =>
+                            copy(selectedNFT?.owner_address as string)
+                          }
+                        />
                       </div>
                     </CustomTooltip>
                   </div>
@@ -154,16 +164,26 @@ const ModalTbaDetail = ({
 
               <div className='mt-[40px]'>
                 <p className='text-[24px] text-[#546678]'>Items</p>
-                <div className='grid gap-[16px] mt-[16px] '>
+                <div className='grid sm:grid-cols-2 gap-[16px] mt-[16px] '>
                   {nftItemList !== undefined ? (
                     nftItemList?.length > 0 ? (
                       nftItemList?.map((item: any, index: any) => (
                         <a
                           href={`${process.env.NEXT_PUBLIC_STARKSCAN_URL + '/nft/' + item?.collection_address + '/' + item?.token_id}`}
                           target='_blank'
-                          className='bg-[#F4FEC1] p-[8px] hover:bg-[#e9fc8c] transition-all rounded-2xl flex items-center gap-[12px] cursor-pointer '
+                          className='bg-[#F4FEC1] p-[8px] relative hover:bg-[#e9fc8c] transition-all rounded-2xl flex items-center gap-[12px] cursor-pointer '
                           key={item?._id}
                         >
+                          <div
+                            style={{
+                              background: rankMapping(item?.nft_rank).bg,
+                            }}
+                            className='absolute rounded-full text-[12px] font-[400] w-[24px] h-[24px] top-0 left-0 text-white flex items-center justify-center'
+                          >
+                            <p className='mt-[0.1rem]'>
+                              {rankMapping(item?.nft_rank).rank}
+                            </p>
+                          </div>
                           {item?.nft_image ? (
                             <CustomImage
                               src={item?.nft_image}
@@ -179,11 +199,14 @@ const ModalTbaDetail = ({
                           )}
 
                           <div className='overflow-hidden'>
-                            <p className='text-[18px] font-[300] text-[#546678]'>
-                              NFT
+                            <p className='text-[24px] font-[400] text-[#0538BD] truncate '>
+                              NFT Item #{item?.token_id}
                             </p>
-                            <p className='mt-[8px] text-[24px] font-[400] text-[#0538BD] truncate '>
-                              {item?.nft_name}
+                            <p className='text-[18px] mt-[8px]  font-[300] text-[#546678] flex items-center gap-[0.5rem]'>
+                              Power:{' '}
+                              <span className='flex items-center'>
+                                <IconPower /> {item?.power}
+                              </span>
                             </p>
                           </div>
                         </a>

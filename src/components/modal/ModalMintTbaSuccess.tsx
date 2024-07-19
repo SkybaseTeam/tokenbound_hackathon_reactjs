@@ -2,12 +2,13 @@ import React, { useEffect, useState } from 'react';
 import CustomModal from '../custom/CustomModal';
 import CustomImage from '../custom/CustomImage';
 import CustomButton from '../custom/CustomButton';
-import { formatWallet } from '@/utils';
+import { formatWallet, rankMapping } from '@/utils';
 import CustomTooltip from '../custom/CustomTooltip';
 import { useRouter } from 'next/navigation';
 import { useAccount } from '@starknet-react/core';
 import useCopyToClipboard from '@/hook/useCopyToClipboard';
 import ImageSkeleton from '../custom/CustomSkeleton/ImageSkeleton';
+import IconPower from '@/assets/icons/IconPower';
 
 const ModalMintTbaSuccess = ({ open, onCancel, mintedNft }: any) => {
   const router = useRouter();
@@ -27,14 +28,27 @@ const ModalMintTbaSuccess = ({ open, onCancel, mintedNft }: any) => {
           </p>
           <div className='relative w-full aspect-square'>
             {mintedNft ? (
-              <CustomImage
-                placeholder='blur'
-                blurDataURL='/images/default.webp'
-                src={mintedNft?.tba_image || mintedNft?.nft_image}
-                alt='nft'
-                className='rounded-2xl w-full'
-                fill
-              />
+              <>
+                {' '}
+                <CustomImage
+                  placeholder='blur'
+                  blurDataURL='/images/default.webp'
+                  src={mintedNft?.tba_image || mintedNft?.nft_image}
+                  alt='nft'
+                  className='rounded-2xl w-full'
+                  fill
+                />
+                <div
+                  style={{
+                    background: rankMapping(mintedNft?.nft_rank).bg,
+                  }}
+                  className='absolute rounded-full text-[18px] font-[400] w-[48px] h-[48px] top-[-1rem] left-0 text-white flex items-center justify-center'
+                >
+                  <p className='mt-[0.1rem]'>
+                    {rankMapping(mintedNft?.nft_rank).rank}
+                  </p>
+                </div>
+              </>
             ) : (
               <ImageSkeleton />
             )}
@@ -77,6 +91,18 @@ const ModalMintTbaSuccess = ({ open, onCancel, mintedNft }: any) => {
                 </span>
               </CustomTooltip>
             </p>
+            {mintedNft?.nft_name && (
+              <p className='text-[16px] font-[300] text-[#546678] flex justify-between items-center mt-[6px]'>
+                Power
+                <span
+                  onClick={() => copy(mintedNft?.owner_address as string)}
+                  className='text-[#031F68] text-[24px] font-[400] ml-[0.5rem] flex items-center gap-[0.5rem] cursor-pointer'
+                >
+                  {mintedNft ? mintedNft?.power : '...'}
+                  <IconPower />
+                </span>
+              </p>
+            )}
           </div>
         </div>
         <div className='mt-[30px] text-[16px] font-[300] text-[#546678]'>

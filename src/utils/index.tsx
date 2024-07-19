@@ -39,3 +39,25 @@ export const formatStarknet: any = (address: any) => {
 export const feltToInt = ({ low, high }: any) => {
   return Number((BigInt(high) << BigInt(64)) + BigInt(low));
 };
+
+export const rankMapping: any = (item: any) => {
+  switch (item) {
+    case 0:
+      return {
+        bg: '#0538BD',
+        rank: 'B',
+      };
+    case 1:
+      return {
+        bg: '#1BCE51',
+        rank: 'A',
+      };
+    case 2:
+      return {
+        bg: '#EA3F28',
+        rank: 'A',
+      };
+    default:
+      return 'black';
+  }
+};
