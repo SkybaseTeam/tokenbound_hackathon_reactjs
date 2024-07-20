@@ -96,7 +96,7 @@ const Game = () => {
       // Join Game
       router.push(`/game/play`);
     } catch (error) {
-      toastError('Login Game failed');
+      toastError('Login Game failed, try reconnect your wallet!');
       setLoading(false);
       console.log('error', error);
     }

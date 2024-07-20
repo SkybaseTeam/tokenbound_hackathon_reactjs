@@ -84,7 +84,7 @@ export default function Mint() {
       setShowModalMintTbaSuccess(true);
     } catch (err) {
       console.log(err);
-      toastError('Mint failed');
+      toastError('Mint failed, try reconnect your wallet!');
     } finally {
       setLoading(false);
       setShowModalWaitTransaction(false);

@@ -99,7 +99,7 @@ const ModalBuyNFT = ({ open, onCancel, selectedNFT }: any) => {
       onCancel();
     } catch (err) {
       console.log(err);
-      toastError('Buy failed');
+      toastError('Buy failed, try reconnect your wallet!');
     } finally {
       setLoading(false);
       setShowModalWaitTransaction(false);

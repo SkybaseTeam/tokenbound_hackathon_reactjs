@@ -82,7 +82,7 @@ const ModalListNFT = ({ open, onCancel, data, getUserTbaList }: any) => {
       onCancel();
     } catch (err) {
       console.log(err);
-      toastError('List for sale failed');
+      toastError('List for sale failed, try reconnect your wallet!');
     } finally {
       setLoading(false);
       setShowModalWaitTransaction(false);

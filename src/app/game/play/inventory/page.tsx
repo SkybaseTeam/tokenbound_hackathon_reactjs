@@ -44,16 +44,43 @@ const Inventory = () => {
             <p className='text-[48px] font-[500] mt-[1rem] flex items-center justify-center gap-[1rem]'>
               <IconPower width={48} height={48} /> {tbaLoginData?.power}
             </p>
-            <div className='p-[16px] rounded-2xl bg-[#E6EBF8] max-sm:w-full '>
-              <div className='aspect-square relative rounded-2xl'>
-                <CustomImage
-                  src={tbaLoginData?.tba_image}
-                  className='rounded-2xl'
-                  alt='err'
-                  fill
-                />
+            {/* start */}
+            <div className='flex items-center gap-[1rem]'>
+              <div className='flex flex-col gap-[1rem]'>
+                {[...Array(3)].map((_, index) => (
+                  <div
+                    key={index}
+                    className='aspect-square w-[7rem] text-[#546678] flex items-center justify-center bg-white rounded-2xl'
+                  >
+                    asd
+                  </div>
+                ))}
+              </div>
+
+              <div className='p-[16px] rounded-2xl bg-[#E6EBF8] w-[20rem]'>
+                <div className='aspect-square relative rounded-2xl'>
+                  <CustomImage
+                    src={tbaLoginData?.tba_image}
+                    className='rounded-2xl'
+                    alt='err'
+                    fill
+                  />
+                </div>
+              </div>
+
+              <div className='flex flex-col gap-[1rem]'>
+                {[...Array(3)].map((_, index) => (
+                  <div
+                    key={index}
+                    className='aspect-square w-[7rem] text-[#546678] flex items-center justify-center bg-white rounded-2xl'
+                  >
+                    asd
+                  </div>
+                ))}
               </div>
             </div>
+
+            {/* end */}
             <div className='flex justify-center mt-[1rem]'>
               <CustomButton
                 className='btn-primary w-[190px] uppercase'
@@ -65,22 +92,22 @@ const Inventory = () => {
           </div>
 
           <div className='basis-2/3 bg-white rounded-[16px] p-[16px] items-start'>
-            <div className='grid sm:grid-cols-2 lg:grid-cols-3 gap-[16px]'>
+            <div className='grid sm:grid-cols-4 lg:grid-cols-5 gap-[12px]'>
               {nftItemList !== undefined ? (
                 nftItemList?.length > 0 ? (
                   nftItemList?.map((item: any, index: any) => (
                     <div key={item?._id} className='group relative'>
-                      <div className='group-hover:flex hidden items-center gap-[0.5rem] absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-[999]'>
-                        <CustomButton className='btn-secondary  '>
-                          Detail
-                        </CustomButton>
+                      <div className='group-hover:flex hidden flex-col items-center gap-[0.5rem] absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-[999]'>
                         <CustomButton className='btn-primary  '>
                           Equip
                         </CustomButton>
+                        <CustomButton className='btn-secondary  '>
+                          Detail
+                        </CustomButton>
                       </div>
 
-                      <div className='bg-[#F4FEC1] border border-[#a2b34e] group-hover:blur-sm p-[8px] relative transition-all rounded-2xl flex items-center gap-[12px] cursor-pointer '>
-                        <div className='absolute top-0 left-0'>
+                      <div className='group-hover:blur-sm bg-[#E6EBF8] border border-[#B2C1EB] p-[8px] relative transition-all rounded-2xl flex flex-col gap-[12px] cursor-pointer '>
+                        <div className='absolute top-0 left-0 z-[99]'>
                           <RankItem
                             data={{
                               rank: rankMapping(item?.nft_rank).rank,
@@ -91,25 +118,22 @@ const Inventory = () => {
                         </div>
 
                         {item?.nft_image ? (
-                          <CustomImage
-                            src={item?.nft_image}
-                            placeholder='blur'
-                            blurDataURL='/images/default.webp'
-                            width={80}
-                            height={80}
-                            className='rounded-xl'
-                            alt='err'
-                          />
+                          <div className='aspect-square relative'>
+                            <CustomImage
+                              src={item?.nft_image}
+                              placeholder='blur'
+                              blurDataURL='/images/default.webp'
+                              fill
+                              className='rounded-xl'
+                              alt='err'
+                            />
+                          </div>
                         ) : (
                           <ImageSkeleton />
                         )}
 
                         <div className='overflow-hidden'>
-                          <p className='text-[24px] font-[400] text-[#0538BD] truncate '>
-                            NFT #{item?.token_id}
-                          </p>
                           <p className='text-[18px] mt-[8px]  font-[300] text-[#546678] flex items-center gap-[0.5rem]'>
-                            Power:{' '}
                             <span className='flex items-center'>
                               <IconPower /> {item?.power}
                             </span>

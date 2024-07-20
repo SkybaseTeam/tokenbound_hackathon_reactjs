@@ -57,7 +57,7 @@ const Achievement = ({ userPoints, tbaLoginData, accessToken }: any) => {
       await Promise.allSettled([fetchRewardProcess(), getBlingOfTba()]);
       toastSuccess('Claim success');
     } catch (error) {
-      toastError('Claim failed');
+      toastError('Claim failed, try reconnect your wallet!');
       console.log(error);
     } finally {
       setLoadingClaim(false);

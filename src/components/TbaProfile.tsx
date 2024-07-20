@@ -65,7 +65,7 @@ const TbaProfile = () => {
       await Promise.allSettled([getDcoin(), getBlingOfTba()]);
       toastSuccess('WithDraw success');
     } catch (error) {
-      toastError('WithDraw failed');
+      toastError('WithDraw failed, try reconnect your wallet!');
       console.log(error);
     } finally {
       setLoadingWithDraw(false);

@@ -77,54 +77,47 @@ const Menu = () => {
     }
     setLoading(true);
 
+    setLoading(true);
     try {
-      setLoading(true);
-      try {
-        // mint Item
-        const tx = await account?.execute([
-          {
-            contractAddress: tbaLoginData?.tba_address,
-            entrypoint: 'mint_nft',
-            calldata: CallData.compile({
-              nft_contract: process.env.NEXT_PUBLIC_ERC721_ITEM as string,
-              token_contract: process.env
-                .NEXT_PUBLIC_ERC20_CONTRACT_ADDRESS as string,
-            }),
-          },
-        ]);
-
-        setShowModalWaitTransaction(true);
-        const data: any = await provider.waitForTransaction(
-          tx?.transaction_hash as any
-        );
-        console.log(data);
-        const tokenId = feltToInt({
-          low: parseInt(data?.events[4]?.data[0]),
-          high: parseInt(data?.events[4]?.data[1]),
-        });
-        console.log('TokenId', tokenId);
-        const nftMinted: any = await Promise.allSettled([
-          refreshNftMintStatus({
-            token_id: tokenId,
-            collection_address: process.env.NEXT_PUBLIC_ERC721_ITEM,
+      // mint Item
+      const tx = await account?.execute([
+        {
+          contractAddress: tbaLoginData?.tba_address,
+          entrypoint: 'mint_nft',
+          calldata: CallData.compile({
+            nft_contract: process.env.NEXT_PUBLIC_ERC721_ITEM as string,
+            token_contract: process.env
+              .NEXT_PUBLIC_ERC20_CONTRACT_ADDRESS as string,
           }),
-          // getDcoin(),
-          // getRemainingPool(),
-        ]);
-        setMintedNft(nftMinted[0]?.value?.data?.data);
-        setShowModalMintTbaSuccess(true);
-      } catch (error) {
-        toastError('Mint failed');
-        console.log(error);
-      } finally {
-        setLoading(false);
-        setShowModalWaitTransaction(false);
-      }
-    } catch (err) {
-      console.log(err);
-      toastError('Mint failed');
+        },
+      ]);
+
+      setShowModalWaitTransaction(true);
+      const data: any = await provider.waitForTransaction(
+        tx?.transaction_hash as any
+      );
+      console.log(data);
+      const tokenId = feltToInt({
+        low: parseInt(data?.events[4]?.data[0]),
+        high: parseInt(data?.events[4]?.data[1]),
+      });
+      console.log('TokenId', tokenId);
+      const nftMinted: any = await Promise.allSettled([
+        refreshNftMintStatus({
+          token_id: tokenId,
+          collection_address: process.env.NEXT_PUBLIC_ERC721_ITEM,
+        }),
+        // getDcoin(),
+        // getRemainingPool(),
+      ]);
+      setMintedNft(nftMinted[0]?.value?.data?.data);
+      setShowModalMintTbaSuccess(true);
+    } catch (error) {
+      toastError('Mint failed, try reconnect your wallet!');
+      console.log(error);
     } finally {
       setLoading(false);
+      setShowModalWaitTransaction(false);
     }
   };
 
