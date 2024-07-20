@@ -55,7 +55,7 @@ export const rankMapping: any = (item: any) => {
     case 2:
       return {
         bg: '#EA3F28',
-        rank: 'A',
+        rank: 'S',
       };
     default:
       return 'black';

@@ -210,6 +210,12 @@ const Header = () => {
           <div className='flex items-center gap-[1rem] max-md:hidden'>
             <div className='max-md:hidden border border-[#DCFC36] text-[16px] font-[400] text-[#DCFC36] px-[12px] py-[6px] rounded-[32px] flex items-center '>
               <div /* className=' mt-[0.3rem]' */>
+                {blingTba || 0} BLING
+                {/*   {ethBalance?.data && address
+                ? formatToken(ethBalance?.data?.value as any, 18) + ' '
+                : '0'}{' '}
+              {ethBalance?.data?.symbol || 'ETH'} */}
+                <span className='px-[10px]'>|</span>
                 <CustomButton
                   loading={loadingWithDraw}
                   className='btn-primary h-[2.2rem]'
@@ -218,12 +224,6 @@ const Header = () => {
                 >
                   WithDraw
                 </CustomButton>
-                <span className='px-[10px]'>|</span>
-                {blingTba || 0} BLING
-                {/*   {ethBalance?.data && address
-                ? formatToken(ethBalance?.data?.value as any, 18) + ' '
-                : '0'}{' '}
-              {ethBalance?.data?.symbol || 'ETH'} */}
               </div>
             </div>
 

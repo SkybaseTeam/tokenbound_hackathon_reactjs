@@ -30,7 +30,7 @@ const CardMint = ({ data }: any) => {
         <p className='text-[18px] uppercase font-[400] truncate'>
           {'ERC-6551 Token-bound Account'}
         </p>
-        <div className='grid grid-cols-2 p-[12px] bg-[#CCD7F4] rounded-2xl mt-[12px] '>
+        <div className='grid sm:grid-cols-2 max-sm:gap-[0.5rem] p-[12px] bg-[#CCD7F4] rounded-2xl mt-[12px] '>
           <div className='font-[300] text-[16px]'>
             <p className='text-[#3760CA]'>Power</p>
             <p className='text-[18px] font-[400] mt-[4px]'>

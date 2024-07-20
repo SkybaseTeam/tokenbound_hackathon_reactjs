@@ -18,7 +18,8 @@ import erc721ItemABI from '@/abi/erc721Item.json';
 import erc20ABI from '@/abi/erc20.json';
 import { cairo, CallData, selector } from 'starknet';
 import ModalMintTbaSuccess from '@/components/modal/ModalMintTbaSuccess';
-import { feltToInt } from '@/utils';
+import { feltToInt, rankMapping } from '@/utils';
+import IconInfo from '@/assets/icons/IconInfo';
 
 const Menu = () => {
   const router = useRouter();
@@ -130,7 +131,7 @@ const Menu = () => {
   return (
     accessToken && (
       <div className='layout-container py-[5rem] sm:py-[8rem] flex flex-col items-center'>
-        <div className='bg-white rounded-[32px] text-[#031F68] mt-[1rem] sm:mt-[5rem] max-sm:mb-[5rem] p-[32px] sm:px-[48px] py-[32px]'>
+        <div className='bg-white rounded-[32px] text-[#031F68]  max-sm:mb-[5rem] p-[32px] sm:px-[48px] py-[32px]  mt-[1rem] sm:mt-[5rem]'>
           <div className='layout-container flex flex-col items-center px-0'>
             <h2 className='text-[38px] font-[500] font-glancyr max-lg:text-center '>
               Increase your Power
@@ -155,9 +156,21 @@ const Menu = () => {
                   height={44}
                   alt='err'
                 /> */}
+
                   <h1 className='text-[30px] font-[400] font-glancyr my-[10px]'>
                     Bling Gun
                   </h1>
+                  <p className='text-[16px] text-[#546678] max-w-[400px] font-[300] py-[1rem] gap-[0.5rem] whitespace-pre-wrap'>
+                    <IconInfo
+                      className='inline-block mr-[0.3rem]'
+                      fill='#031F68'
+                    />
+                    Every <span className='font-[400]'>10</span> mint is
+                    guaranteed to include at least one{' '}
+                    <span className='font-[400]'>A rank</span> or higher item,{' '}
+                    <span className='font-[400]'>90</span> mint is{' '}
+                    <span className='font-[400]'>S rank</span> item.
+                  </p>
                   {/* <div className='flex items-center font-glancyr text-[16px] font-[300] text-[#546678] mb-[2px] justify-between'>
                   <p>Minted Item</p>
                   <p>
@@ -181,11 +194,17 @@ const Menu = () => {
                     <p className='text-[16px] font-[300] text-[#546678]'>
                       Price
                     </p>
-                    <p className='text-[30px] font-[400] text-[#031F68]'>
+                    <p className='text-[30px] font-[400] text-[#031F68] flex items-center gap-[15px]'>
+                      <CustomImage
+                        src='/images/token/bling-big.webp'
+                        width={40}
+                        height={40}
+                        alt='err'
+                      />
                       {MINT_PRICE} BLING
                     </p>
                   </div>
-                  <div className='flex justify-start'>
+                  <div className='flex max-sm:justify-center'>
                     {' '}
                     <CustomButton
                       loading={loading}
@@ -193,7 +212,7 @@ const Menu = () => {
                       disabled={blingTba < MINT_PRICE}
                       className='btn-primary w-[266px]'
                     >
-                      Mint
+                      Mint Now
                     </CustomButton>
                   </div>
                 </div>

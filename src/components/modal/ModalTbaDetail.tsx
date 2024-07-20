@@ -16,6 +16,7 @@ import IconCopyTba from '@/assets/icons/IconCopyTba';
 import NftSkeleton from '../custom/CustomSkeleton/NftSkeleton';
 import { Skeleton } from 'antd';
 import IconPower from '@/assets/icons/IconPower';
+import RankItem from '../RankItem';
 
 const ModalTbaDetail = ({
   open,
@@ -174,16 +175,16 @@ const ModalTbaDetail = ({
                           className='bg-[#F4FEC1] p-[8px] relative hover:bg-[#e9fc8c] transition-all rounded-2xl flex items-center gap-[12px] cursor-pointer '
                           key={item?._id}
                         >
-                          <div
-                            style={{
-                              background: rankMapping(item?.nft_rank).bg,
-                            }}
-                            className='absolute rounded-full text-[12px] font-[400] w-[24px] h-[24px] top-0 left-0 text-white flex items-center justify-center'
-                          >
-                            <p className='mt-[0.1rem]'>
-                              {rankMapping(item?.nft_rank).rank}
-                            </p>
+                          <div className='absolute top-0 left-0'>
+                            <RankItem
+                              data={{
+                                rank: rankMapping(item?.nft_rank).rank,
+                                bg: rankMapping(item?.nft_rank).bg,
+                              }}
+                              className='!w-[24px] !h-[24px] !text-[12px] !leading-[24px]'
+                            />
                           </div>
+
                           {item?.nft_image ? (
                             <CustomImage
                               src={item?.nft_image}

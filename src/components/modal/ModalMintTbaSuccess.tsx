@@ -9,6 +9,7 @@ import { useAccount } from '@starknet-react/core';
 import useCopyToClipboard from '@/hook/useCopyToClipboard';
 import ImageSkeleton from '../custom/CustomSkeleton/ImageSkeleton';
 import IconPower from '@/assets/icons/IconPower';
+import RankItem from '../RankItem';
 
 const ModalMintTbaSuccess = ({ open, onCancel, mintedNft }: any) => {
   const router = useRouter();
@@ -38,15 +39,13 @@ const ModalMintTbaSuccess = ({ open, onCancel, mintedNft }: any) => {
                   className='rounded-2xl w-full'
                   fill
                 />
-                <div
-                  style={{
-                    background: rankMapping(mintedNft?.nft_rank).bg,
-                  }}
-                  className='absolute rounded-full text-[18px] font-[400] w-[48px] h-[48px] top-[-1rem] left-0 text-white flex items-center justify-center'
-                >
-                  <p className='mt-[0.1rem]'>
-                    {rankMapping(mintedNft?.nft_rank).rank}
-                  </p>
+                <div className='absolute  top-[-1rem] left-0'>
+                  <RankItem
+                    data={{
+                      rank: rankMapping(mintedNft?.nft_rank).rank,
+                      bg: rankMapping(mintedNft?.nft_rank).bg,
+                    }}
+                  />
                 </div>
               </>
             ) : (

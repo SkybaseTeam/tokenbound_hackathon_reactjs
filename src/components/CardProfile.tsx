@@ -38,7 +38,7 @@ const CardProfile = ({
           <p className='text-[18px] uppercase font-[400] truncate'>
             {data?.tba_name || 'NFT Name'}
           </p>
-          <div className='grid grid-cols-2 p-[12px] bg-[#F4FEC1] rounded-2xl mt-[12px] '>
+          <div className='grid sm:grid-cols-2 max-sm:gap-[0.5rem] p-[12px] bg-[#F4FEC1] rounded-2xl mt-[12px] '>
             <div className='font-[300] text-[16px]'>
               <p className='text-[#546678]'>Power</p>
               <p className='text-[18px] font-[400] mt-[4px]'>
