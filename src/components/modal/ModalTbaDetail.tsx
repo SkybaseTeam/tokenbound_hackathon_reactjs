@@ -216,29 +216,27 @@ const ModalTbaDetail = ({
                       <div className='text-[#031F68]'>No Data!</div>
                     )
                   ) : (
-                    <div className='grid gap-[20px]'>
-                      {[...new Array(4)].map((_, index) => (
-                        <div
-                          key={index}
-                          className='w-full rounded-lg flex items-center gap-[1rem]'
-                        >
-                          <Skeleton.Button
-                            shape='square'
-                            active
-                            className='aspect-square !w-[5rem] rounded-lg skeleton-image'
-                            block
-                          />
-                          <div className='mt-2 space-y-2 w-full'>
-                            <div className='w-full'>
-                              <Skeleton.Button size='small' active block />
-                            </div>
-                            <div className='w-4/6'>
-                              <Skeleton.Button size='small' active block />
-                            </div>
+                    [...new Array(4)].map((_, index) => (
+                      <div
+                        key={index}
+                        className='w-full rounded-lg flex items-center gap-[1rem]'
+                      >
+                        <Skeleton.Button
+                          shape='square'
+                          active
+                          className='aspect-square !w-[5rem] rounded-lg skeleton-image'
+                          block
+                        />
+                        <div className='mt-2 space-y-2 w-full'>
+                          <div className='w-full'>
+                            <Skeleton.Button size='small' active block />
+                          </div>
+                          <div className='w-4/6'>
+                            <Skeleton.Button size='small' active block />
                           </div>
                         </div>
-                      ))}
-                    </div>
+                      </div>
+                    ))
                   )}
                 </div>
               </div>

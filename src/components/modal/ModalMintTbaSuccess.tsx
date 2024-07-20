@@ -62,7 +62,9 @@ const ModalMintTbaSuccess = ({ open, onCancel, mintedNft }: any) => {
                 trigger={['click']}
               >
                 <span
-                  onClick={() => copy(mintedNft?.tba_name as string)}
+                  onClick={() =>
+                    copy((mintedNft?.tba_name || mintedNft?.nft_name) as string)
+                  }
                   className='text-[#031F68] text-[24px] font-[400] ml-[0.5rem] cursor-pointer truncate'
                 >
                   {mintedNft
@@ -93,10 +95,7 @@ const ModalMintTbaSuccess = ({ open, onCancel, mintedNft }: any) => {
             {mintedNft?.nft_name && (
               <p className='text-[16px] font-[300] text-[#546678] flex justify-between items-center mt-[6px]'>
                 Power
-                <span
-                  onClick={() => copy(mintedNft?.owner_address as string)}
-                  className='text-[#031F68] text-[24px] font-[400] ml-[0.5rem] flex items-center gap-[0.5rem] cursor-pointer'
-                >
+                <span className='text-[#031F68] text-[24px] font-[400] ml-[0.5rem] flex items-center gap-[0.5rem]'>
                   {mintedNft ? mintedNft?.power : '...'}
                   <IconPower />
                 </span>
