@@ -34,7 +34,7 @@ const ModalTbaDetail = ({
 
   useEffect(() => {
     const getNftItemList = async () => {
-      const res = await fetchNft(selectedNFT?.tba_address);
+      const res = await fetchNft({ tbaAddress: selectedNFT?.tba_address });
       setNftItemList(res?.data?.data);
     };
     if (isMounted && selectedNFT?.tba_address && open) {

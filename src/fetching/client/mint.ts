@@ -12,6 +12,6 @@ export const refreshNftMintStatus = async (data: any) => {
   return await axiosClient.post('/nft/refresh-mint-status', data);
 };
 
-export const fetchNft = async (tbaAddress: any) => {
-  return await axiosClient.get(`/nft/get-nft/${tbaAddress}`);
+export const fetchNft = async ({ tbaAddress, ...data }: any) => {
+  return await axiosClient.get(`/nft/get-nft/${tbaAddress}`, { params: data });
 };

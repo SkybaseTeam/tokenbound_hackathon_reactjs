@@ -75,7 +75,6 @@ const Menu = () => {
       connectWallet();
       return;
     }
-    setLoading(true);
 
     setLoading(true);
     try {

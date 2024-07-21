@@ -81,12 +81,17 @@ const ModalMintTbaSuccess = ({ open, onCancel, mintedNft }: any) => {
                 trigger={['click']}
               >
                 <span
-                  onClick={() => copy(mintedNft?.owner_address as string)}
+                  onClick={() =>
+                    copy(
+                      (mintedNft?.tba_address ||
+                        mintedNft?.nft_address) as string
+                    )
+                  }
                   className='text-[#031F68] text-[24px] font-[400] ml-[0.5rem] cursor-pointer'
                 >
                   {mintedNft
                     ? formatWallet(
-                        mintedNft?.tba_address || mintedNft?.collection_address
+                        mintedNft?.tba_address || mintedNft?.nft_address
                       )
                     : '...'}
                 </span>
