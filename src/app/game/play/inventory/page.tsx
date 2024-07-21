@@ -8,7 +8,7 @@ import RankItem from '@/components/RankItem';
 import { useStore } from '@/context/store';
 import { fetchNft } from '@/fetching/client/mint';
 import useMounted from '@/hook/useMounted';
-import { feltToInt, rankMapping } from '@/utils';
+import { deepEqual, feltToInt, rankMapping } from '@/utils';
 import { Skeleton } from 'antd';
 import { useRouter, useSearchParams } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
@@ -18,6 +18,15 @@ import { useAccount, useProvider } from '@starknet-react/core';
 import { cairo, CallData } from 'starknet';
 import { toastError, toastSuccess } from '@/utils/toast';
 import { refreshEquip } from '@/fetching/client/nft';
+
+interface IEquippedItem {
+  hair: any;
+  nose: any;
+  mouth: any;
+  eye: any;
+  eyebrows: any;
+  extras: any;
+}
 
 const Inventory = () => {
   const {
@@ -30,14 +39,8 @@ const Inventory = () => {
   const router = useRouter();
   const [nftItemList, setNftItemList] = useState<any>();
   const [activeTab, setActiveTab] = useState<any>('all');
-  const [equippedItem, setEquippedItem] = useState<{
-    hair: any;
-    nose: any;
-    mouth: any;
-    eye: any;
-    eyebrows: any;
-    extras: any;
-  }>();
+  const [equippedItem, setEquippedItem] = useState<IEquippedItem>();
+  const [equippedItemBefore, setEquippedItemBefore] = useState<IEquippedItem>();
   const searchParams = useSearchParams();
   const { address, account } = useAccount();
   const [loading, setLoading] = useState(false);
@@ -52,34 +55,39 @@ const Inventory = () => {
     setNftItemList(res?.data?.data);
   };
 
+  const handleSetEquippedItem = (data: any, setter: any) => {
+    data?.map((item: any) => {
+      switch (item?.nft_type) {
+        case 0:
+          setter((prev: any) => ({ ...prev, hair: item }));
+          break;
+        case 1:
+          setter((prev: any) => ({ ...prev, nose: item }));
+          break;
+        case 2:
+          setter((prev: any) => ({ ...prev, mouth: item }));
+          break;
+        case 3:
+          setter((prev: any) => ({ ...prev, eye: item }));
+          break;
+        case 4:
+          setter((prev: any) => ({ ...prev, eyebrows: item }));
+          break;
+        case 5:
+          setter((prev: any) => ({ ...prev, extras: item }));
+          break;
+      }
+    });
+  };
+
   const getEquippedNftList = async () => {
     const res = await fetchNft({
       tbaAddress: tbaLoginData?.tba_address,
       equip: true,
     });
     const data = res?.data?.data;
-    data?.map((item: any) => {
-      switch (item?.nft_type) {
-        case 0:
-          setEquippedItem((prev: any) => ({ ...prev, hair: item }));
-          break;
-        case 1:
-          setEquippedItem((prev: any) => ({ ...prev, nose: item }));
-          break;
-        case 2:
-          setEquippedItem((prev: any) => ({ ...prev, mouth: item }));
-          break;
-        case 3:
-          setEquippedItem((prev: any) => ({ ...prev, eye: item }));
-          break;
-        case 4:
-          setEquippedItem((prev: any) => ({ ...prev, eyebrows: item }));
-          break;
-        case 5:
-          setEquippedItem((prev: any) => ({ ...prev, extras: item }));
-          break;
-      }
-    });
+    handleSetEquippedItem(data, setEquippedItem);
+    handleSetEquippedItem(data, setEquippedItemBefore);
   };
 
   useEffect(() => {
@@ -117,37 +125,53 @@ const Inventory = () => {
     }
   }, []);
 
-  const onEquip = async (item: any) => {
+  const handleEquip = (item: any) => {
+    if (!address) {
+      return;
+    }
+    handleSetEquippedItem([item], setEquippedItem);
+  };
+
+  const handleConfirmEquip = async () => {
     if (!address) {
       return;
     }
 
     setLoading(true);
     try {
-      console.log(item?.token_id);
-      const tx = await account?.execute([
-        {
-          contractAddress: tbaLoginData?.tba_address,
-          entrypoint: 'equip_item',
-          calldata: CallData.compile({
-            contract_address: process.env.NEXT_PUBLIC_ERC721_ITEM as string,
-            token_id: cairo.uint256(item?.token_id),
-          }),
-        },
-      ]);
+      const equippedItemBeforeArr = Object.values(equippedItemBefore as any);
+      const idsSet = new Set(
+        equippedItemBeforeArr.map((item: any) => item.token_id)
+      );
+      const newEquippedItem: any = Object.values(equippedItem as any).filter(
+        (item: any) => !idsSet.has(item.token_id)
+      );
+      console.log(newEquippedItem);
+
+      const multiCall = newEquippedItem.map((item: any) => ({
+        contractAddress: tbaLoginData?.tba_address,
+        entrypoint: 'equip_item',
+        calldata: CallData.compile({
+          contract_address: process.env.NEXT_PUBLIC_ERC721_ITEM as string,
+          token_id: cairo.uint256(item?.token_id),
+        }),
+      }));
+      const tx = await account?.execute(multiCall);
 
       setShowModalWaitTransaction(true);
       const data: any = await provider.waitForTransaction(
         tx?.transaction_hash as any
       );
 
-      await Promise.allSettled([
-        refreshEquip({
-          slot: item?.nft_type,
-          tba_address: tbaLoginData?.tba_address,
-          token_id: item?.token_id,
-        }),
-      ]);
+      await Promise.allSettled(
+        newEquippedItem.map((item: any) =>
+          refreshEquip({
+            tba_address: tbaLoginData?.tba_address,
+            token_id: item?.token_id,
+            slot: item?.nft_type,
+          })
+        )
+      );
       await getEquippedNftList();
       toastSuccess('Equip success!');
     } catch (error) {
@@ -162,7 +186,7 @@ const Inventory = () => {
   return (
     accessToken && (
       <div className='layout-container pb-[7rem] pt-[5rem] sm:py-[6rem]'>
-        <div className='mt-[2rem] flex max-lg:flex-col gap-[2rem]'>
+        <div className='mt-[2rem] flex max-lg:flex-col gap-[5rem]'>
           <div className='basis-1/3 max-lg:order-2'>
             <p className='text-[48px] font-[500] mt-[1rem] flex items-center justify-center gap-[1rem]'>
               <IconPower width={48} height={48} /> {tbaLoginData?.power}
@@ -233,17 +257,19 @@ const Inventory = () => {
             <div className='flex justify-center mt-[1rem]'>
               <CustomButton
                 className='btn-primary w-[190px] uppercase'
-                disabled
+                disabled={deepEqual(equippedItem, equippedItemBefore) as any}
+                onClick={() => {
+                  handleConfirmEquip();
+                }}
+                loading={loading}
               >
                 Confirm
               </CustomButton>
             </div>
           </div>
 
-          <div className='basis-2/3 bg-white rounded-[16px] p-[16px] items-start'>
-            <h1 className='text-[36px] font-[500] text-[#0538BD]'>
-              My Inventory
-            </h1>
+          <div className='basis-2/3 bg-white rounded-[16px] p-[24px] items-start'>
+            <h1 className='text-[36px] font-[500] text-[#0538BD]'>INVENTORY</h1>
             <div className='pb-[24px] pt-[12px]'>
               <Tab tabData={tabData} activeTab={activeTab} />
             </div>
@@ -260,21 +286,14 @@ const Inventory = () => {
                       className='group relative rounded-2xl'
                     >
                       <div className='group-hover:flex hidden flex-col items-center gap-[0.5rem] absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-[999]'>
-                        {item?.equip ? (
-                          <CustomButton className='btn-primary'>
-                            Equipped
-                          </CustomButton>
-                        ) : (
-                          <CustomButton
-                            onClick={() => {
-                              onEquip(item);
-                            }}
-                            className='btn-primary'
-                            loading={loading}
-                          >
-                            Equip
-                          </CustomButton>
-                        )}
+                        <CustomButton
+                          onClick={() => {
+                            handleEquip(item);
+                          }}
+                          className='btn-primary'
+                        >
+                          Equip
+                        </CustomButton>
                         <CustomButton className='btn-secondary  '>
                           Detail
                         </CustomButton>
