@@ -5,6 +5,7 @@ const nextConfig = {
       'grow-api.memeland.com',
       'i.seadn.io',
       'cryptowalkers.mypinata.cloud',
+      'res.cloudinary.com',
     ],
   },
 };

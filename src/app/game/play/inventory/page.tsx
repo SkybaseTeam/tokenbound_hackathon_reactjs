@@ -25,7 +25,7 @@ interface IEquippedItem {
   mouth: any;
   eye: any;
   eyebrows: any;
-  extras: any;
+  ears: any;
 }
 
 const initEquippedItem: IEquippedItem = {
@@ -34,7 +34,7 @@ const initEquippedItem: IEquippedItem = {
   mouth: '',
   eye: '',
   eyebrows: '',
-  extras: '',
+  ears: '',
 };
 
 const Inventory = () => {
@@ -86,7 +86,7 @@ const Inventory = () => {
           setter((prev: any) => ({ ...prev, eyebrows: item }));
           break;
         case 5:
-          setter((prev: any) => ({ ...prev, extras: item }));
+          setter((prev: any) => ({ ...prev, ears: item }));
           break;
       }
     });
@@ -128,7 +128,7 @@ const Inventory = () => {
     { id: 4, title: 'Mouth', type: 2 },
     { id: 5, title: 'Eye', type: 3 },
     { id: 6, title: 'Eyebrows', type: 4 },
-    { id: 7, title: 'Extras', type: 5 },
+    { id: 7, title: 'Ears', type: 5 },
   ];
 
   useEffect(() => {
@@ -249,6 +249,18 @@ const Inventory = () => {
                     alt='err'
                     fill
                   />
+                  {Object.values(equippedItem)?.map(
+                    (item: any) =>
+                      item && (
+                        <CustomImage
+                          src={item?.nft_image}
+                          className='rounded-2xl opacity-50'
+                          alt='err'
+                          key={item?._id}
+                          fill
+                        />
+                      )
+                  )}
                 </div>
               </div>
 
@@ -268,10 +280,10 @@ const Inventory = () => {
                   )}
                 </div>
                 <div className='aspect-square relative w-[7rem] text-[#546678] flex items-center justify-center bg-white rounded-2xl'>
-                  {equippedItem?.extras ? (
-                    <EquippedItem data={equippedItem?.extras} />
+                  {equippedItem?.ears ? (
+                    <EquippedItem data={equippedItem?.ears} />
                   ) : (
-                    'Extras'
+                    'Ears'
                   )}
                 </div>
               </div>
