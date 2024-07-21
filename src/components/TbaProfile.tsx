@@ -28,7 +28,7 @@ const TbaProfile = () => {
   } = useStore();
   const { provider } = useProvider();
   const [loadingWithDraw, setLoadingWithDraw] = useState(false);
-  const { account } = useAccount();
+  const { account, address } = useAccount();
   const { setShowModalWaitTransaction, setAccessToken, accessToken } =
     useStore();
   const { isMounted } = useMounted();
@@ -47,6 +47,8 @@ const TbaProfile = () => {
   }, [isMounted, tbaLoginData?.tba_address]);
 
   const onWithDraw = async () => {
+    if (!address || !tbaLoginData) return;
+
     setLoadingWithDraw(true);
     try {
       // mint BLING

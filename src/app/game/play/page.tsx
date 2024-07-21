@@ -1,6 +1,7 @@
 'use client';
 
 import Achievement from '@/components/Achievement';
+import { POINT_PER_CLICK } from '@/constant';
 import { useStore } from '@/context/store';
 import { updatePoint } from '@/fetching/client/game';
 import useCopyToClipboard from '@/hook/useCopyToClipboard';
@@ -42,7 +43,7 @@ const Play = () => {
   }, []);
 
   const handleClick = async (e: any) => {
-    setPoint((prevPoint: any) => prevPoint + 0.05);
+    setPoint((prevPoint: any) => prevPoint + POINT_PER_CLICK);
     isPostedPoint = false;
 
     const newBling = {

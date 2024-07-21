@@ -75,6 +75,8 @@ const Game = () => {
   };
 
   const onLoginGame = async (item: any) => {
+    if (!address) return;
+
     setLoading(true);
     try {
       // Sign argentX Address

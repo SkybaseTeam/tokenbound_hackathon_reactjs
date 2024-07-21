@@ -12,11 +12,10 @@ import IconLoading from '@/assets/icons/IconLoading';
 const Achievement = ({ userPoints, tbaLoginData, accessToken }: any) => {
   const { isMounted } = useMounted();
   const [currentRewardPoint, setCurrentRewardPoint] = useState();
-  const { account } = useAccount();
+  const { account, address } = useAccount();
   const { provider } = useProvider();
   const { getBlingOfTba, setShowModalWaitTransaction } = useStore();
   const [loadingClaim, setLoadingClaim] = useState(false);
-  const { address } = useAccount();
 
   const fetchRewardProcess = async () => {
     const res: any = await getRewardProcess(
@@ -33,6 +32,8 @@ const Achievement = ({ userPoints, tbaLoginData, accessToken }: any) => {
   }, [isMounted, address, accessToken]);
 
   const handleClaim = async () => {
+    if (!address || !tbaLoginData) return;
+
     setLoadingClaim(true);
     try {
       // get signature from server

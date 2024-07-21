@@ -71,8 +71,7 @@ const Menu = () => {
   }, []);
 
   const onMint = async () => {
-    if (!isConnected) {
-      connectWallet();
+    if (!address || !tbaLoginData) {
       return;
     }
 

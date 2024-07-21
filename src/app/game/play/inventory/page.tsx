@@ -16,7 +16,8 @@ import EquippedItem from './EquippedItem';
 import Tab from '@/components/Tab';
 import { useAccount, useProvider } from '@starknet-react/core';
 import { cairo, CallData } from 'starknet';
-import { toastError } from '@/utils/toast';
+import { toastError, toastSuccess } from '@/utils/toast';
+import { refreshEquip } from '@/fetching/client/nft';
 
 const Inventory = () => {
   const {
@@ -38,7 +39,7 @@ const Inventory = () => {
     extras: any;
   }>();
   const searchParams = useSearchParams();
-  const { isConnected, account } = useAccount();
+  const { address, account } = useAccount();
   const [loading, setLoading] = useState(false);
   const { provider } = useProvider();
   const [selectedNft, setSelectedNft] = useState<any>();
@@ -51,15 +52,35 @@ const Inventory = () => {
     setNftItemList(res?.data?.data);
   };
 
-  const tabData = [
-    { id: 1, title: 'All', type: undefined },
-    { id: 2, title: 'Hair', type: 0 },
-    { id: 3, title: 'Nose', type: 1 },
-    { id: 4, title: 'Mouth', type: 2 },
-    { id: 5, title: 'Eye', type: 3 },
-    { id: 6, title: 'Eyebrows', type: 4 },
-    { id: 7, title: 'Extras', type: 5 },
-  ];
+  const getEquippedNftList = async () => {
+    const res = await fetchNft({
+      tbaAddress: tbaLoginData?.tba_address,
+      equip: true,
+    });
+    const data = res?.data?.data;
+    data?.map((item: any) => {
+      switch (item?.nft_type) {
+        case 0:
+          setEquippedItem((prev: any) => ({ ...prev, hair: item }));
+          break;
+        case 1:
+          setEquippedItem((prev: any) => ({ ...prev, nose: item }));
+          break;
+        case 2:
+          setEquippedItem((prev: any) => ({ ...prev, mouth: item }));
+          break;
+        case 3:
+          setEquippedItem((prev: any) => ({ ...prev, eye: item }));
+          break;
+        case 4:
+          setEquippedItem((prev: any) => ({ ...prev, eyebrows: item }));
+          break;
+        case 5:
+          setEquippedItem((prev: any) => ({ ...prev, extras: item }));
+          break;
+      }
+    });
+  };
 
   useEffect(() => {
     const currentTab = searchParams?.get('tab');
@@ -75,33 +96,20 @@ const Inventory = () => {
   }, [searchParams, isMounted, tbaLoginData?.tba_address]);
 
   useEffect(() => {
-    if (nftItemList) {
-      nftItemList?.map((item: any) => {
-        if (item?.equip) {
-          switch (item?.nft_type) {
-            case 0:
-              setEquippedItem((prev: any) => ({ ...prev, hair: item }));
-              break;
-            case 1:
-              setEquippedItem((prev: any) => ({ ...prev, nose: item }));
-              break;
-            case 2:
-              setEquippedItem((prev: any) => ({ ...prev, mouth: item }));
-              break;
-            case 3:
-              setEquippedItem((prev: any) => ({ ...prev, eye: item }));
-              break;
-            case 4:
-              setEquippedItem((prev: any) => ({ ...prev, eyebrows: item }));
-              break;
-            case 5:
-              setEquippedItem((prev: any) => ({ ...prev, extras: item }));
-              break;
-          }
-        }
-      });
+    if (isMounted && tbaLoginData?.tba_address) {
+      getEquippedNftList();
     }
-  }, [nftItemList]);
+  }, [isMounted, tbaLoginData?.tba_address]);
+
+  const tabData = [
+    { id: 1, title: 'All', type: undefined },
+    { id: 2, title: 'Hair', type: 0 },
+    { id: 3, title: 'Nose', type: 1 },
+    { id: 4, title: 'Mouth', type: 2 },
+    { id: 5, title: 'Eye', type: 3 },
+    { id: 6, title: 'Eyebrows', type: 4 },
+    { id: 7, title: 'Extras', type: 5 },
+  ];
 
   useEffect(() => {
     if (!accessToken) {
@@ -110,14 +118,12 @@ const Inventory = () => {
   }, []);
 
   const onEquip = async (item: any) => {
-    if (!isConnected) {
-      connectWallet();
+    if (!address) {
       return;
     }
 
     setLoading(true);
     try {
-      // mint Item
       console.log(item?.token_id);
       const tx = await account?.execute([
         {
@@ -134,22 +140,16 @@ const Inventory = () => {
       const data: any = await provider.waitForTransaction(
         tx?.transaction_hash as any
       );
-      console.log(data);
-      const tokenId = feltToInt({
-        low: parseInt(data?.events[4]?.data[0]),
-        high: parseInt(data?.events[4]?.data[1]),
-      });
-      console.log('TokenId', tokenId);
-      const nftMinted: any = await Promise.allSettled([
-        // refreshNftMintStatus({
-        //   token_id: tokenId,
-        //   collection_address: process.env.NEXT_PUBLIC_ERC721_ITEM,
-        // }),
-        // getDcoin(),
-        // getRemainingPool(),
+
+      await Promise.allSettled([
+        refreshEquip({
+          slot: item?.nft_type,
+          tba_address: tbaLoginData?.tba_address,
+          token_id: item?.token_id,
+        }),
       ]);
-      // setMintedNft(nftMinted[0]?.value?.data?.data);
-      // setShowModalMintTbaSuccess(true);
+      await getEquippedNftList();
+      toastSuccess('Equip success!');
     } catch (error) {
       toastError('Equip failed, try reconnect your wallet!');
       console.log(error);
@@ -262,7 +262,7 @@ const Inventory = () => {
                       <div className='group-hover:flex hidden flex-col items-center gap-[0.5rem] absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-[999]'>
                         {item?.equip ? (
                           <CustomButton className='btn-primary'>
-                            Unequip
+                            Equipped
                           </CustomButton>
                         ) : (
                           <CustomButton
