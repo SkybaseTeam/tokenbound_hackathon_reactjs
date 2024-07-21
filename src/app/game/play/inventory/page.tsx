@@ -28,19 +28,31 @@ interface IEquippedItem {
   extras: any;
 }
 
+const initEquippedItem: IEquippedItem = {
+  hair: '',
+  nose: '',
+  mouth: '',
+  eye: '',
+  eyebrows: '',
+  extras: '',
+};
+
 const Inventory = () => {
   const {
     accessToken,
     tbaLoginData,
     connectWallet,
     setShowModalWaitTransaction,
+    getGameProfile,
   } = useStore();
   const { isMounted } = useMounted();
   const router = useRouter();
   const [nftItemList, setNftItemList] = useState<any>();
   const [activeTab, setActiveTab] = useState<any>('all');
-  const [equippedItem, setEquippedItem] = useState<IEquippedItem>();
-  const [equippedItemBefore, setEquippedItemBefore] = useState<IEquippedItem>();
+  const [equippedItem, setEquippedItem] =
+    useState<IEquippedItem>(initEquippedItem);
+  const [equippedItemBefore, setEquippedItemBefore] =
+    useState<IEquippedItem>(initEquippedItem);
   const searchParams = useSearchParams();
   const { address, account } = useAccount();
   const [loading, setLoading] = useState(false);
@@ -132,6 +144,12 @@ const Inventory = () => {
     handleSetEquippedItem([item], setEquippedItem);
   };
 
+  useEffect(() => {
+    console.log('0', equippedItemBefore);
+    console.log('1', equippedItem);
+    console.log(deepEqual(equippedItem, equippedItemBefore) as any);
+  }, [equippedItem, equippedItemBefore]);
+
   const handleConfirmEquip = async () => {
     if (!address) {
       return;
@@ -141,10 +159,10 @@ const Inventory = () => {
     try {
       const equippedItemBeforeArr = Object.values(equippedItemBefore as any);
       const idsSet = new Set(
-        equippedItemBeforeArr.map((item: any) => item.token_id)
+        equippedItemBeforeArr.map((item: any) => item?.token_id)
       );
       const newEquippedItem: any = Object.values(equippedItem as any).filter(
-        (item: any) => !idsSet.has(item.token_id)
+        (item: any) => !idsSet.has(item?.token_id)
       );
       console.log(newEquippedItem);
 
@@ -172,7 +190,13 @@ const Inventory = () => {
           })
         )
       );
-      await getEquippedNftList();
+      await Promise.allSettled([getEquippedNftList(), getGameProfile(), ,]);
+      if (searchParams?.get('tab') === 'all') {
+        await getNftItemList();
+      } else {
+        router.push('/game/play/inventory?tab=all');
+      }
+
       toastSuccess('Equip success!');
     } catch (error) {
       toastError('Equip failed, try reconnect your wallet!');
@@ -254,9 +278,9 @@ const Inventory = () => {
             </div>
 
             {/* end */}
-            <div className='flex justify-center mt-[1rem]'>
+            <div className='flex justify-center mt-[1rem] gap-[1rem]'>
               <CustomButton
-                className='btn-primary w-[190px] uppercase'
+                className='btn-primary uppercase'
                 disabled={deepEqual(equippedItem, equippedItemBefore) as any}
                 onClick={() => {
                   handleConfirmEquip();
@@ -264,6 +288,15 @@ const Inventory = () => {
                 loading={loading}
               >
                 Confirm
+              </CustomButton>
+              <CustomButton
+                className='btn-primary uppercase'
+                disabled={deepEqual(equippedItem, equippedItemBefore) as any}
+                onClick={() => {
+                  setEquippedItem(equippedItemBefore);
+                }}
+              >
+                Reset
               </CustomButton>
             </div>
           </div>
@@ -286,14 +319,16 @@ const Inventory = () => {
                       className='group relative rounded-2xl'
                     >
                       <div className='group-hover:flex hidden flex-col items-center gap-[0.5rem] absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-[999]'>
-                        <CustomButton
-                          onClick={() => {
-                            handleEquip(item);
-                          }}
-                          className='btn-primary'
-                        >
-                          Equip
-                        </CustomButton>
+                        {!item?.equip && (
+                          <CustomButton
+                            onClick={() => {
+                              handleEquip(item);
+                            }}
+                            className='btn-primary'
+                          >
+                            Equip
+                          </CustomButton>
+                        )}
                         <CustomButton className='btn-secondary  '>
                           Detail
                         </CustomButton>
@@ -325,7 +360,9 @@ const Inventory = () => {
                           <ImageSkeleton />
                         )}
 
-                        <div className='bg-[#F4FEC1] rounded-b-2xl'>
+                        <div
+                          className={`${item?.equip && '!bg-[#E3FD5E]'} bg-[#F4FEC1] rounded-b-2xl`}
+                        >
                           <p className='text-[18px] font-[400] px-[8px] py-[6px] text-[#031F68] flex items-center justify-center gap-[0.5rem]'>
                             <span className='flex items-center'>
                               <IconPower /> {item?.power}
