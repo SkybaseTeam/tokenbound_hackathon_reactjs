@@ -8,7 +8,7 @@ import { toastError, toastSuccess } from '@/utils/toast';
 import { cairo, Contract } from 'starknet';
 import { listedNFT, refreshListing } from '@/fetching/client/home';
 import { usePathname } from 'next/navigation';
-import { formatWallet } from '@/utils';
+import { formatWallet, tbaPowerBg } from '@/utils';
 import CustomTooltip from '../custom/CustomTooltip';
 import useCopyToClipboard from '@/hook/useCopyToClipboard';
 
@@ -82,6 +82,9 @@ const ModalCancelListNFT = ({ open, onCancel, data, getUserTbaList }: any) => {
               width={100}
               height={100}
               className='rounded-2xl'
+              style={{
+                background: tbaPowerBg(data?.power),
+              }}
             />
             <div className='flex-1 flex flex-col justify-between truncate '>
               <span className='truncate text-[24px] text-[#031F68] font-[400]'>

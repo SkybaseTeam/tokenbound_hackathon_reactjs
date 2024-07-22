@@ -2,7 +2,7 @@ import Logo from '@/components/Logo';
 
 import CustomTooltip from '@/components/custom/CustomTooltip';
 import { useStore } from '@/context/store';
-import { formatToken, formatWallet } from '@/utils';
+import { formatToken, formatWallet, tbaPowerBg } from '@/utils';
 import {
   useAccount,
   useBalance,
@@ -23,6 +23,7 @@ import { toastError, toastSuccess } from '@/utils/toast';
 import CustomImage from '@/components/custom/CustomImage';
 import CustomButton from '@/components/custom/CustomButton';
 import DrawerMobileGame from '@/components/drawer/DrawerMobileGame';
+import ModalTbaDetail from '@/components/modal/ModalTbaDetail';
 
 const Header = () => {
   const { disconnect } = useDisconnect();
@@ -46,6 +47,7 @@ const Header = () => {
   const [loadingWithDraw, setLoadingWithDraw] = useState(false);
   const { account } = useAccount();
   const { isMounted } = useMounted();
+  const [openModalTbaDetail, setOpenModalTbaDetail] = useState(false);
 
   const menuData: any = [
     {
@@ -235,17 +237,16 @@ const Header = () => {
                 alt='err'
                 className='rounded-full'
               />
-              <CustomTooltip
-                title='Copied Address'
-                placement='bottom'
-                trigger={['click']}
+
+              <p
+                onClick={() => {
+                  setOpenModalTbaDetail(true);
+                }}
+                className='cursor-pointer'
               >
-                <div className='cursor-pointer '>
-                  <p onClick={() => copy(tbaLoginData?.tba_address as string)}>
-                    {formatWallet(tbaLoginData?.tba_address)}
-                  </p>
-                </div>
-              </CustomTooltip>
+                {formatWallet(tbaLoginData?.tba_address)}
+              </p>
+
               <IconLogout
                 className='cursor-pointer'
                 onClick={handleDisconnect}
@@ -255,6 +256,14 @@ const Header = () => {
           </div>
         </div>
       )}
+      <ModalTbaDetail
+        open={openModalTbaDetail}
+        onCancel={() => {
+          setOpenModalTbaDetail(false);
+        }}
+        showBuy={false}
+        selectedNFT={tbaLoginData}
+      />
     </div>
   );
 };

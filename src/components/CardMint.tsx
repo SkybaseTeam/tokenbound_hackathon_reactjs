@@ -19,7 +19,7 @@ const CardMint = ({ data }: any) => {
           placeholder='blur'
           blurDataURL='/images/default.webp'
           src={
-            'https://i.seadn.io/s/raw/files/af7296d9d79348b19bfdb151f5698cb7.gif?auto=format&dpr=1&w=1000'
+            'https://res.cloudinary.com/dfnvpr9lg/image/upload/v1721241037/head/head393.png'
           }
           fill
           alt='Nft'

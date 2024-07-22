@@ -112,7 +112,7 @@ export default function Mint() {
             <div className='p-[16px] rounded-2xl bg-[#E6EBF8] w-[484px] max-sm:w-full '>
               <div className='aspect-square relative rounded-2xl'>
                 <CustomImage
-                  src='https://i.seadn.io/s/raw/files/af7296d9d79348b19bfdb151f5698cb7.gif?auto=format&dpr=1&w=1000'
+                  src='https://res.cloudinary.com/dfnvpr9lg/image/upload/v1721241037/head/head393.png'
                   className='rounded-2xl'
                   alt='err'
                   fill

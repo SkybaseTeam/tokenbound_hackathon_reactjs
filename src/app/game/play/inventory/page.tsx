@@ -61,6 +61,11 @@ const Inventory = () => {
   const [loadingNft, setLoadingNft] = useState(false);
   const { provider } = useProvider();
   const [selectedNft, setSelectedNft] = useState<any>();
+  const [power, setPower] = useState<any>();
+
+  useEffect(() => {
+    setPower(tbaLoginData?.power);
+  }, [tbaLoginData?.power]);
 
   const getNftItemList = async (filter?: any) => {
     try {
@@ -161,10 +166,14 @@ const Inventory = () => {
   };
 
   useEffect(() => {
-    console.log('0', equippedItemBefore);
-    console.log('1', equippedItem);
-    console.log(deepEqual(equippedItem, equippedItemBefore) as any);
-  }, [equippedItem, equippedItemBefore]);
+    let totalPower = 0;
+    Object.values(equippedItem).forEach((item) => {
+      if (item?.power) {
+        totalPower += item.power;
+      }
+    });
+    setPower(totalPower);
+  }, [equippedItem]);
 
   const handleConfirmEquip = async () => {
     if (!address) {
@@ -257,13 +266,13 @@ const Inventory = () => {
     accessToken && (
       <div className='layout-container pb-[7rem] pt-[5rem] sm:py-[6rem]'>
         <div className='mt-[2rem] flex max-lg:flex-col gap-[5rem]'>
-          <div className='basis-1/3 max-lg:order-2'>
+          <div className='basis-1/3'>
             <p className='text-[48px] font-[500] mt-[1rem] flex items-center justify-center gap-[1rem]'>
-              <IconPower width={48} height={48} /> {tbaLoginData?.power}
+              <IconPower width={48} height={48} /> {power}
             </p>
             {/* start */}
-            <div className='flex items-center gap-[1rem]'>
-              <div className='flex flex-col gap-[1rem]'>
+            <div className='flex items-center gap-[1rem] max-lg:justify-center max-sm:flex-col'>
+              <div className='flex sm:flex-col gap-[1rem]'>
                 <div className='aspect-square relative w-[7rem] text-[#546678] flex items-center justify-center bg-white rounded-2xl'>
                   {equippedItem?.hair ? (
                     <EquippedItem data={equippedItem?.hair} />
@@ -314,7 +323,7 @@ const Inventory = () => {
                 </div>
               </div>
 
-              <div className='flex flex-col gap-[1rem]'>
+              <div className='flex sm:flex-col gap-[1rem]'>
                 <div className='aspect-square relative w-[7rem] text-[#546678] flex items-center justify-center bg-white rounded-2xl'>
                   {equippedItem?.eye ? (
                     <EquippedItem data={equippedItem?.eye} />
@@ -369,7 +378,7 @@ const Inventory = () => {
               <Tab tabData={tabData} activeTab={activeTab} />
             </div>
 
-            <div className='grid sm:grid-cols-4 lg:grid-cols-5 gap-[12px] overflow-y-auto max-h-[25rem]'>
+            <div className='grid lg:grid-cols-5 sm:grid-cols-4 grid-cols-2 gap-[12px] overflow-y-auto max-h-[25rem]'>
               {!loadingNft ? (
                 nftItemList?.length > 0 ? (
                   nftItemList?.map((item: any, index: any) => (
@@ -391,12 +400,20 @@ const Inventory = () => {
                             Equip
                           </CustomButton>
                         )}
-                        <CustomButton className='btn-secondary  '>
+                        <CustomButton
+                          onClick={() => {
+                            window.open(
+                              `${process.env.NEXT_PUBLIC_STARKSCAN_URL + '/nft/' + item?.collection_address + '/' + item?.token_id}`,
+                              '_blank'
+                            );
+                          }}
+                          className='btn-secondary  '
+                        >
                           Detail
                         </CustomButton>
                       </div>
 
-                      <div className='group-hover:blur-sm relative transition-all flex flex-col cursor-pointer'>
+                      <div className='group-hover:blur-sm rounded-2xl relative transition-all flex flex-col cursor-pointer'>
                         <div className='absolute top-0 left-0 z-[99]'>
                           <RankItem
                             data={{

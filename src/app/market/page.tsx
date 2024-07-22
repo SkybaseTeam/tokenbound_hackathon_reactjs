@@ -18,6 +18,7 @@ import { fetchListedTba } from '@/fetching/client/tba';
 import { useAccount } from '@starknet-react/core';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import ListNftSkeleton from '@/components/custom/CustomSkeleton/ListNftSkeleton';
+import { formatStarknet } from '@/utils';
 
 let page = 2;
 
@@ -28,6 +29,7 @@ const MarketContainer = () => {
   const { isMounted } = useMounted();
   const [selectedNFT, setSelectedNFT] = useState<any>(null);
   const [listedTba, setListedTba] = useState<any>();
+  const { address } = useAccount();
 
   useEffect(() => {
     if (!isMounted) return;
@@ -74,6 +76,7 @@ const MarketContainer = () => {
         }}
         setOpenModalBuyNTF={setOpenModalBuyNTF}
         selectedNFT={selectedNFT}
+        showBuy={selectedNFT?.owner_address !== formatStarknet(address)}
       />
       <ModalBuyNFT
         open={openModalBuyNTF}

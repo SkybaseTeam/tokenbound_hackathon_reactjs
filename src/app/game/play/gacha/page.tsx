@@ -133,7 +133,7 @@ const Menu = () => {
                 <div className='p-[16px] rounded-2xl bg-[#E6EBF8] w-[300px] max-sm:w-full '>
                   <div className='aspect-square relative rounded-2xl'>
                     <CustomImage
-                      src='https://cryptowalkers.mypinata.cloud/ipfs/QmdXKK6JJgX1bw1J974coE6i9GFDpMUZ7jyNiUvxqa31sN/supducks.png'
+                      src='https://res.cloudinary.com/dfnvpr9lg/image/upload/v1721269912/hair/hair531.png'
                       className='rounded-2xl'
                       alt='err'
                       fill
@@ -148,8 +148,8 @@ const Menu = () => {
                   alt='err'
                 /> */}
 
-                  <h1 className='text-[30px] font-[400] font-glancyr my-[10px]'>
-                    Bling Gun
+                  <h1 className='text-[30px] font-[400] font-glancyr my-[10px] '>
+                    Bling NFT Item
                   </h1>
                   <p className='text-[16px] text-[#546678] max-w-[400px] font-[300] py-[1rem] gap-[0.5rem] whitespace-pre-wrap'>
                     <IconInfo

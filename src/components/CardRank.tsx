@@ -1,6 +1,6 @@
 import React from 'react';
 import CustomImage from './custom/CustomImage';
-import { formatWallet } from '@/utils';
+import { formatWallet, tbaPowerBg } from '@/utils';
 
 const CardRank = ({ data }: any) => {
   return (
@@ -16,6 +16,9 @@ const CardRank = ({ data }: any) => {
             width={53}
             height={53}
             className='rounded'
+            style={{
+              background: tbaPowerBg(data?.power),
+            }}
           />
           <div>
             <p className='uppercase text-[18px] text-white'>{data?.tba_name}</p>
@@ -27,9 +30,7 @@ const CardRank = ({ data }: any) => {
       </div>
       <div>
         <p className='text[16px] text-[#8CA3E1]'>Power</p>
-        <p className='text-[#DCFC36] font-[500] text-[30px]'>
-          {data?.power}
-        </p>
+        <p className='text-[#DCFC36] font-[500] text-[30px]'>{data?.power}</p>
       </div>
     </div>
   );

@@ -5,6 +5,7 @@ import { useAccount } from '@starknet-react/core';
 import { useStore } from '@/context/store';
 import IconVerified from '@/assets/icons/IconVerified';
 import IconPower from '@/assets/icons/IconPower';
+import { tbaPowerBg } from '@/utils';
 
 const CardProfile = ({
   setOpenModalListNFT,
@@ -31,6 +32,9 @@ const CardProfile = ({
             src={data?.tba_image}
             fill
             alt='Nft'
+            style={{
+              background: tbaPowerBg(data?.power),
+            }}
             className='object-cover w-full rounded-2xl group-hover:scale-110 transition-all duration-500 ease-in-out'
           />
         </div>

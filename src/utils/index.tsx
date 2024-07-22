@@ -91,3 +91,13 @@ export const deepEqual = (obj1: any, obj2: any) => {
 
   return true;
 };
+
+export const tbaPowerBg = (power: any) => {
+  if (power >= 10 && power <= 50) {
+    return '#0538BD';
+  } else if (power >= 51 && power <= 100) {
+    return '#1BCE51';
+  } else if (power >= 101 && power <= 150) {
+    return '#EA3F28';
+  }
+};

@@ -10,7 +10,7 @@ import { useStore } from '@/context/store';
 import { login } from '@/fetching/client/game';
 import { fetchUserTbaList } from '@/fetching/client/user';
 import useMounted from '@/hook/useMounted';
-import { formatDecimal } from '@/utils';
+import { formatDecimal, tbaPowerBg } from '@/utils';
 import { toastError } from '@/utils/toast';
 import { useAccount, useSignTypedData } from '@starknet-react/core';
 import { useRouter } from 'next/navigation';
@@ -178,6 +178,9 @@ const Game = () => {
                               <CustomImage
                                 src={item?.tba_image}
                                 fill
+                                style={{
+                                  background: tbaPowerBg(item?.power),
+                                }}
                                 alt='Nft'
                                 className='object-cover w-full rounded-2xl group-hover:scale-110 transition-all duration-500 ease-in-out'
                               />
@@ -187,7 +190,7 @@ const Game = () => {
                                 {item?.tba_name || 'NFT Name'}
                               </p>
                               <div className='grid sm:grid-cols-2 max-sm:gap-[0.5rem] p-[12px] bg-[#FBFDEB] rounded-2xl mt-[12px] '>
-                                <div className='font-[300] text-[16px]'>
+                                <div className='font-[300] text-[16px] max-sm:flex flex-col items-center'>
                                   <p className='text-[#546678]'>Power</p>
                                   <p className='text-[18px] font-[400] mt-[4px]'>
                                     <div className='flex items-center gap-[6px]'>
@@ -196,8 +199,10 @@ const Game = () => {
                                     </div>
                                   </p>
                                 </div>
-                                <div className='font-[300] text-[16px]'>
-                                  <p className='text-[#546678]'>Total Points</p>
+                                <div className='font-[300] text-[16px] max-sm:flex flex-col items-center'>
+                                  <p className='text-[#546678] '>
+                                    Total Points
+                                  </p>
                                   <p className='text-[18px] font-[400] mt-[4px]'>
                                     <div className='flex items-center gap-[6px]'>
                                       {formatDecimal(Number(item?.point))}

@@ -12,6 +12,7 @@ import {
   refreshListing,
   refreshOwner,
 } from '@/fetching/client/home';
+import { tbaPowerBg } from '@/utils';
 
 const ModalBuyNFT = ({ open, onCancel, selectedNFT }: any) => {
   const [text, copy] = useCopyToClipboard();
@@ -121,6 +122,9 @@ const ModalBuyNFT = ({ open, onCancel, selectedNFT }: any) => {
               width={100}
               height={100}
               className='rounded-2xl'
+              style={{
+                background: tbaPowerBg(selectedNFT?.power),
+              }}
             />
             <div className='flex-1 flex flex-col justify-between truncate '>
               <span className='truncate text-[24px] text-[#031F68] font-[400]'>

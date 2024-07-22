@@ -4,7 +4,7 @@ import CustomImage from '../custom/CustomImage';
 import IconVerified from '@/assets/icons/IconVerified';
 import CustomButton from '../custom/CustomButton';
 import { useAccount, useProvider } from '@starknet-react/core';
-import { formatWallet, rankMapping } from '@/utils';
+import { formatWallet, rankMapping, tbaPowerBg } from '@/utils';
 import CustomTooltip from '../custom/CustomTooltip';
 import useCopyToClipboard from '@/hook/useCopyToClipboard';
 import { fetchNft } from '@/fetching/client/mint';
@@ -81,6 +81,9 @@ const ModalTbaDetail = ({
                 fill
                 alt='err'
                 className='rounded-2xl'
+                style={{
+                  background: tbaPowerBg(selectedNFT?.power),
+                }}
               />
             </div>
 
@@ -195,7 +198,7 @@ const ModalTbaDetail = ({
                               }}
                               width={80}
                               height={80}
-                              className='rounded-xl'
+                              className='rounded-xl bg-slate-100'
                               alt='err'
                             />
                           ) : (

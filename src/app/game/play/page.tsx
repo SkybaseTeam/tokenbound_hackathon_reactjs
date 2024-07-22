@@ -1,6 +1,7 @@
 'use client';
 
 import Achievement from '@/components/Achievement';
+import CustomImage from '@/components/custom/CustomImage';
 import { POINT_PER_CLICK } from '@/constant';
 import { useStore } from '@/context/store';
 import { updatePoint } from '@/fetching/client/game';
@@ -69,7 +70,13 @@ const Play = () => {
             className='bling z-[100]'
             style={{ left: `${bling.x}px`, top: `${bling.y}px` }}
           >
-            bling
+            <CustomImage
+              alt='err'
+              src='/images/token/bling.webp'
+              width={45}
+              height={45}
+            />
+            BLING
           </div>
         ))}
         <div className='layout-container py-[4rem] sm:pb-0 sm:pt-[6rem] relative'>

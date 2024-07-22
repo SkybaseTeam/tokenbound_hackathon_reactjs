@@ -3,7 +3,7 @@ import CustomImage from './custom/CustomImage';
 import CustomButton from './custom/CustomButton';
 import { useAccount } from '@starknet-react/core';
 import { useStore } from '@/context/store';
-import { formatStarknet, formatToken } from '@/utils';
+import { formatStarknet, formatToken, tbaPowerBg } from '@/utils';
 import { usePathname } from 'next/navigation';
 import IconPower from '@/assets/icons/IconPower';
 
@@ -37,6 +37,9 @@ const CardMarketplace = ({
             src={data?.tba_image}
             fill
             alt='Nft'
+            style={{
+              background: tbaPowerBg(data?.power),
+            }}
             className='object-cover w-full rounded-2xl group-hover:scale-110 transition-all duration-500 ease-in-out'
           />
         </div>

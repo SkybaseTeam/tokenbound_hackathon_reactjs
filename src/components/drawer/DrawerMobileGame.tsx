@@ -8,7 +8,7 @@ import CustomImage from '../custom/CustomImage';
 import IconCloseDrawer from '@/assets/icons/IconCloseDrawer';
 import IconCopy from '@/assets/icons/IconCopy';
 import { useRouter } from 'next/navigation';
-import { formatDecimal, formatWallet } from '@/utils';
+import { formatDecimal, formatWallet, tbaPowerBg } from '@/utils';
 
 const DrawerMobileGame = ({
   open,
@@ -39,6 +39,9 @@ const DrawerMobileGame = ({
                   height={60}
                   alt='err'
                   className='rounded-2xl'
+                  style={{
+                    background: tbaPowerBg(tbaLoginData?.power),
+                  }}
                 />
 
                 <div className='flex flex-col gap-[3px] mt-[4px]'>
