@@ -197,7 +197,7 @@ const Inventory = () => {
         tx?.transaction_hash as any
       );
 
-      await Promise.allSettled(
+      const refresh = await Promise.allSettled(
         newEquippedItem.map((item: any) =>
           refreshEquip({
             tba_address: tbaLoginData?.tba_address,
@@ -206,6 +206,9 @@ const Inventory = () => {
           })
         )
       );
+      if (!refresh) {
+        throw new Error('Refresh equip failed');
+      }
 
       const formData: any = await exportedImage();
       formData.append('token_id', tbaLoginData?.token_id);
@@ -233,7 +236,9 @@ const Inventory = () => {
   const exportedImage = async () => {
     if (!elementRef.current) return;
     try {
-      const canvas = await html2canvas(elementRef.current);
+      const canvas = await html2canvas(elementRef.current, {
+        backgroundColor: null,
+      });
       const dataUrl = canvas.toDataURL('image/png');
       const response = await fetch(dataUrl);
       const blob = await response.blob();
@@ -289,7 +294,7 @@ const Inventory = () => {
                   className='aspect-square relative rounded-2xl'
                 >
                   <CustomImage
-                    src={tbaLoginData?.tba_image}
+                    src={tbaLoginData?.genesis_image}
                     className='rounded-2xl'
                     alt='err'
                     fill
@@ -373,7 +378,7 @@ const Inventory = () => {
                       onClick={() => {
                         setSelectedNft(item);
                       }}
-                      className='group relative rounded-2xl'
+                      className={`group relative rounded-2xl`}
                     >
                       <div className='group-hover:flex hidden flex-col items-center gap-[0.5rem] absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-[999]'>
                         {!item?.equip && (
@@ -403,7 +408,12 @@ const Inventory = () => {
                         </div>
 
                         {item?.nft_image ? (
-                          <div className='aspect-square relative'>
+                          <div
+                            style={{
+                              border: `3px solid ${rankMapping(item?.nft_rank).bg}`,
+                            }}
+                            className='aspect-square relative rounded-t-2xl'
+                          >
                             <CustomImage
                               src={item?.nft_image}
                               placeholder='blur'

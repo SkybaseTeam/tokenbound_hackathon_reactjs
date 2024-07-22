@@ -27,17 +27,24 @@ const ModalMintTbaSuccess = ({ open, onCancel, mintedNft }: any) => {
           <p className='text-center text-[16px] font-[300] mb-[30px]'>
             Your minting was successfully completed!
           </p>
-          <div className='relative w-full aspect-square'>
+          <div
+            style={{
+              border: mintedNft?.nft_name
+                ? `4px solid ${rankMapping(mintedNft?.nft_rank).bg}`
+                : 'none',
+            }}
+            className={` relative w-full aspect-square rounded-2xl`}
+          >
             {mintedNft ? (
               <>
                 {' '}
-                <CustomImage
-                  placeholder='blur'
-                  blurDataURL='/images/default.webp'
+                <img
+                  // placeholder='blur'
+                  // blurDataURL='/images/default.webp'
                   src={mintedNft?.tba_image || mintedNft?.nft_image}
                   alt='nft'
                   className='rounded-2xl w-full'
-                  fill
+                  // fill
                 />
                 <div className='absolute  top-[-1rem] left-0'>
                   <RankItem

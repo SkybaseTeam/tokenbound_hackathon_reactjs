@@ -11,6 +11,9 @@ const EquippedItem = ({ data }: any) => {
         fill
         alt='err'
         className='rounded-2xl'
+        style={{
+          border: `3px solid ${rankMapping(data?.nft_rank).bg}`,
+        }}
       />
       <div className='absolute top-0 left-0 z-[99]'>
         <RankItem

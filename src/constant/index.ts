@@ -1,1 +1,1 @@
-export const POINT_PER_CLICK = 5;
+export const POINT_PER_CLICK = 0.05;

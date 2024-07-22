@@ -190,6 +190,9 @@ const ModalTbaDetail = ({
                               src={item?.nft_image}
                               placeholder='blur'
                               blurDataURL='/images/default.webp'
+                              style={{
+                                border: `1px solid ${rankMapping(item?.nft_rank).bg}`,
+                              }}
                               width={80}
                               height={80}
                               className='rounded-xl'

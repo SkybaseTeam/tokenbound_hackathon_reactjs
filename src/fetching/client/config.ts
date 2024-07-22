@@ -3,7 +3,7 @@ import axios from 'axios';
 
 export const axiosClient = axios.create({
   baseURL: process.env.NEXT_PUBLIC_BE_URL,
-  timeout: 20000,
+  timeout: 100000,
   headers: {
     'Content-Type': 'application/json',
     'Access-Control-Allow-Origin': '*',
