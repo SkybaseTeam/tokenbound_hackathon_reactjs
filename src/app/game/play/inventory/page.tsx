@@ -11,13 +11,15 @@ import useMounted from '@/hook/useMounted';
 import { deepEqual, feltToInt, rankMapping } from '@/utils';
 import { Skeleton } from 'antd';
 import { useRouter, useSearchParams } from 'next/navigation';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import EquippedItem from './EquippedItem';
 import Tab from '@/components/Tab';
 import { useAccount, useProvider } from '@starknet-react/core';
 import { cairo, CallData } from 'starknet';
 import { toastError, toastSuccess } from '@/utils/toast';
 import { refreshEquip } from '@/fetching/client/nft';
+import html2canvas from 'html2canvas';
+import { uploadTbaImage } from '@/fetching/client/tba';
 
 interface IEquippedItem {
   hair: any;
@@ -56,15 +58,24 @@ const Inventory = () => {
   const searchParams = useSearchParams();
   const { address, account } = useAccount();
   const [loading, setLoading] = useState(false);
+  const [loadingNft, setLoadingNft] = useState(false);
   const { provider } = useProvider();
   const [selectedNft, setSelectedNft] = useState<any>();
 
   const getNftItemList = async (filter?: any) => {
-    const res = await fetchNft({
-      tbaAddress: tbaLoginData?.tba_address,
-      ...filter,
-    });
-    setNftItemList(res?.data?.data);
+    try {
+      setLoadingNft(true);
+      const res = await fetchNft({
+        tbaAddress: tbaLoginData?.tba_address,
+        ...filter,
+      });
+      setNftItemList(res?.data?.data);
+    } catch (err) {
+      console.log(err);
+      toastError('Get NFT list failed, try reconnect your wallet!');
+    } finally {
+      setLoadingNft(false);
+    }
   };
 
   const handleSetEquippedItem = (data: any, setter: any) => {
@@ -93,13 +104,18 @@ const Inventory = () => {
   };
 
   const getEquippedNftList = async () => {
-    const res = await fetchNft({
-      tbaAddress: tbaLoginData?.tba_address,
-      equip: true,
-    });
-    const data = res?.data?.data;
-    handleSetEquippedItem(data, setEquippedItem);
-    handleSetEquippedItem(data, setEquippedItemBefore);
+    try {
+      const res = await fetchNft({
+        tbaAddress: tbaLoginData?.tba_address,
+        equip: true,
+      });
+      const data = res?.data?.data;
+      handleSetEquippedItem(data, setEquippedItem);
+      handleSetEquippedItem(data, setEquippedItemBefore);
+    } catch (err) {
+      console.log(err);
+      toastError('Get equipped NFT list failed, try reconnect your wallet!');
+    }
   };
 
   useEffect(() => {
@@ -190,6 +206,11 @@ const Inventory = () => {
           })
         )
       );
+
+      const formData: any = await exportedImage();
+      formData.append('token_id', tbaLoginData?.token_id);
+      if (formData) await uploadTbaImage(formData, accessToken);
+
       await Promise.allSettled([getEquippedNftList(), getGameProfile(), ,]);
       if (searchParams?.get('tab') === 'all') {
         await getNftItemList();
@@ -204,6 +225,26 @@ const Inventory = () => {
     } finally {
       setLoading(false);
       setShowModalWaitTransaction(false);
+    }
+  };
+
+  const elementRef = useRef(null);
+
+  const exportedImage = async () => {
+    if (!elementRef.current) return;
+    try {
+      const canvas = await html2canvas(elementRef.current);
+      const dataUrl = canvas.toDataURL('image/png');
+      const response = await fetch(dataUrl);
+      const blob = await response.blob();
+      const formData = new FormData();
+      formData.append('image', blob);
+      formData.forEach((value, key) => {
+        console.log(key, value);
+      });
+      return formData;
+    } catch (error) {
+      console.error('Error exporting element:', error);
     }
   };
 
@@ -242,7 +283,11 @@ const Inventory = () => {
               </div>
 
               <div className='p-[16px] rounded-2xl bg-[#E6EBF8] w-[20rem]'>
-                <div className='aspect-square relative rounded-2xl'>
+                <div
+                  id='tba_image_combine'
+                  ref={elementRef}
+                  className='aspect-square relative rounded-2xl'
+                >
                   <CustomImage
                     src={tbaLoginData?.tba_image}
                     className='rounded-2xl'
@@ -254,7 +299,7 @@ const Inventory = () => {
                       item && (
                         <CustomImage
                           src={item?.nft_image}
-                          className='rounded-2xl opacity-50'
+                          className='rounded-2xl'
                           alt='err'
                           key={item?._id}
                           fill
@@ -319,8 +364,8 @@ const Inventory = () => {
               <Tab tabData={tabData} activeTab={activeTab} />
             </div>
 
-            <div className='grid sm:grid-cols-4 lg:grid-cols-5 gap-[12px]'>
-              {nftItemList !== undefined ? (
+            <div className='grid sm:grid-cols-4 lg:grid-cols-5 gap-[12px] overflow-y-auto max-h-[25rem]'>
+              {!loadingNft ? (
                 nftItemList?.length > 0 ? (
                   nftItemList?.map((item: any, index: any) => (
                     <div

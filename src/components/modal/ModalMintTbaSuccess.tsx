@@ -84,14 +84,14 @@ const ModalMintTbaSuccess = ({ open, onCancel, mintedNft }: any) => {
                   onClick={() =>
                     copy(
                       (mintedNft?.tba_address ||
-                        mintedNft?.nft_address) as string
+                        mintedNft?.collection_address) as string
                     )
                   }
                   className='text-[#031F68] text-[24px] font-[400] ml-[0.5rem] cursor-pointer'
                 >
                   {mintedNft
                     ? formatWallet(
-                        mintedNft?.tba_address || mintedNft?.nft_address
+                        mintedNft?.tba_address || mintedNft?.collection_address
                       )
                     : '...'}
                 </span>
@@ -123,13 +123,14 @@ const ModalMintTbaSuccess = ({ open, onCancel, mintedNft }: any) => {
         )}
         {mintedNft?.nft_name && (
           <div className='mt-[30px] text-[16px] font-[300] text-[#546678]'>
+            Go to Inventory to equip your item
             <CustomButton
               onClick={() => {
-                onCancel();
+                router.push('/game/play/inventory');
               }}
               className='btn-primary w-full mt-[16px]'
             >
-              Close
+              Go to Inventory
             </CustomButton>
           </div>
         )}

@@ -11,3 +11,12 @@ export const fetchListedTba = async (data: {
 export const fetchTbaRank = async (data: { page?: number; limit?: number }) => {
   return await axiosClient.get(`/tba/rank`, { params: data });
 };
+
+export const uploadTbaImage = async (data: any, accessToken: any) => {
+  return await axiosClient.post(`/tba/upload`, data, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
+};
