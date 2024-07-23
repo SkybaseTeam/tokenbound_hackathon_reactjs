@@ -24,6 +24,9 @@ import CustomImage from '@/components/custom/CustomImage';
 import CustomButton from '@/components/custom/CustomButton';
 import DrawerMobileGame from '@/components/drawer/DrawerMobileGame';
 import ModalTbaDetail from '@/components/modal/ModalTbaDetail';
+import IconGacha from '@/assets/icons/IconGacha';
+import IconLeaderBoard from '@/assets/icons/IconLeaderBoard';
+import IconInventory from '@/assets/icons/IconInventory';
 
 const Header = () => {
   const { disconnect } = useDisconnect();
@@ -61,16 +64,14 @@ const Header = () => {
       title: 'Gacha',
       link: `/game/play/gacha`,
       icon: (
-        <IconProfile
-          fill={path === `/game/play/gacha` ? '#0538BD' : '#8CA3E1'}
-        />
+        <IconGacha fill={path === `/game/play/gacha` ? '#0538BD' : '#8CA3E1'} />
       ),
     },
     {
       title: 'Ranking',
       link: `/game/play/ranking`,
       icon: (
-        <IconProfile
+        <IconLeaderBoard
           fill={path === `/game/play/ranking` ? '#0538BD' : '#8CA3E1'}
         />
       ),
@@ -79,7 +80,7 @@ const Header = () => {
       title: 'Inventory',
       link: `/game/play/inventory`,
       icon: (
-        <IconProfile
+        <IconInventory
           fill={path === `/game/play/inventory` ? '#0538BD' : '#8CA3E1'}
         />
       ),
