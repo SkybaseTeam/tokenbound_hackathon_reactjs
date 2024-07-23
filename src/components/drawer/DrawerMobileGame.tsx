@@ -33,16 +33,20 @@ const DrawerMobileGame = ({
           <div className=' rounded-2xl p-[12px] text-[16px] font-[400] bg-[#3760CA]  relative'>
             <div>
               <div className='flex items-start sm:items-center gap-[12px]'>
-                <CustomImage
-                  src={tbaLoginData?.tba_image}
-                  width={60}
-                  height={60}
-                  alt='err'
-                  className='rounded-2xl'
+                <div
                   style={{
                     background: tbaPowerBg(tbaLoginData?.power),
                   }}
-                />
+                  className='rounded-2xl'
+                >
+                  <CustomImage
+                    src={tbaLoginData?.tba_image}
+                    width={60}
+                    height={60}
+                    alt='err'
+                    className='rounded-2xl'
+                  />
+                </div>
 
                 <div className='flex flex-col gap-[3px] mt-[4px]'>
                   <div className=' text-white flex items-center gap-[0.5rem]'>

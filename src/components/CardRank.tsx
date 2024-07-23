@@ -10,16 +10,21 @@ const CardRank = ({ data }: any) => {
           {data?.rank}
         </div>
         <div className='flex items-center gap-[12px]'>
-          <CustomImage
-            alt='err'
-            src={data?.tba_image}
-            width={53}
-            height={53}
-            className='rounded'
+          <div
             style={{
               background: tbaPowerBg(data?.power),
             }}
-          />
+            className='rounded-2xl'
+          >
+            <CustomImage
+              alt='err'
+              src={data?.tba_image}
+              width={53}
+              height={53}
+              className='rounded-2xl'
+            />
+          </div>
+
           <div>
             <p className='uppercase text-[18px] text-white'>{data?.tba_name}</p>
             <p className='text-[16px] text-[#DCFC36]'>

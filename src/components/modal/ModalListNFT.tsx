@@ -8,6 +8,7 @@ import { useStore } from '@/context/store';
 import { toastError, toastSuccess } from '@/utils/toast';
 import { CallData, Contract, cairo } from 'starknet';
 import { refreshListing } from '@/fetching/client/home';
+import { tbaPowerBg } from '@/utils';
 
 const ModalListNFT = ({ open, onCancel, data, getUserTbaList }: any) => {
   const [price, setPrice] = useState('');
@@ -98,13 +99,21 @@ const ModalListNFT = ({ open, onCancel, data, getUserTbaList }: any) => {
 
         <div className='overflow-y-auto scrollbar-custom mt-[25px]'>
           <div className='text-white flex justify-between items-center gap-[24px]'>
-            <CustomImage
-              src={data?.tba_image}
-              alt='nft'
-              width={100}
-              height={100}
+            <div
+              style={{
+                background: tbaPowerBg(data?.power),
+              }}
               className='rounded-2xl'
-            />
+            >
+              <CustomImage
+                src={data?.tba_image}
+                alt='nft'
+                width={100}
+                height={100}
+                className='rounded-2xl'
+              />
+            </div>
+
             <div className='flex-1 flex flex-col justify-between truncate '>
               <span className='truncate text-[24px] text-[#031F68] font-[400]'>
                 {data?.tba_name || "NFT's Name"}

@@ -74,16 +74,16 @@ const ModalTbaDetail = ({
           <div className='mt-[20px] flex items-start gap-[40px] max-lg:flex-col'>
             <div
               id='tba_info_img'
-              className='lg:basis-1/2 w-full relative aspect-square'
+              className='lg:basis-1/2 w-full relative aspect-square rounded-2xl'
+              style={{
+                background: tbaPowerBg(selectedNFT?.power),
+              }}
             >
               <CustomImage
                 src={selectedNFT?.tba_image}
                 fill
                 alt='err'
                 className='rounded-2xl'
-                style={{
-                  background: tbaPowerBg(selectedNFT?.power),
-                }}
               />
             </div>
 
@@ -189,18 +189,22 @@ const ModalTbaDetail = ({
                           </div>
 
                           {item?.nft_image ? (
-                            <CustomImage
-                              src={item?.nft_image}
-                              placeholder='blur'
-                              blurDataURL='/images/default.webp'
+                            <div
                               style={{
                                 border: `1px solid ${rankMapping(item?.nft_rank).bg}`,
                               }}
-                              width={80}
-                              height={80}
-                              className='rounded-xl bg-slate-100'
-                              alt='err'
-                            />
+                              className='rounded-xl'
+                            >
+                              <CustomImage
+                                src={item?.nft_image}
+                                placeholder='blur'
+                                blurDataURL='/images/default.webp'
+                                width={80}
+                                height={80}
+                                className='rounded-xl bg-slate-100'
+                                alt='err'
+                              />
+                            </div>
                           ) : (
                             <ImageSkeleton />
                           )}

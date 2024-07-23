@@ -25,16 +25,18 @@ const CardProfile = ({
           setOpenModalTbaDetail(true);
         }}
       >
-        <div className='aspect-square w-full relative overflow-hidden rounded-2xl'>
+        <div
+          style={{
+            background: tbaPowerBg(data?.power),
+          }}
+          className='aspect-square w-full relative overflow-hidden rounded-2xl'
+        >
           <CustomImage
             placeholder='blur'
             blurDataURL='/images/default.webp'
             src={data?.tba_image}
             fill
             alt='Nft'
-            style={{
-              background: tbaPowerBg(data?.power),
-            }}
             className='object-cover w-full rounded-2xl group-hover:scale-110 transition-all duration-500 ease-in-out'
           />
         </div>

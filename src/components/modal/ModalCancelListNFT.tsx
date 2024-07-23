@@ -76,16 +76,21 @@ const ModalCancelListNFT = ({ open, onCancel, data, getUserTbaList }: any) => {
 
         <div className='overflow-y-auto scrollbar-custom mt-[30px]'>
           <div className='text-white flex justify-between items-center gap-[24px]'>
-            <CustomImage
-              src={data?.tba_image}
-              alt='nft'
-              width={100}
-              height={100}
-              className='rounded-2xl'
+            <div
               style={{
                 background: tbaPowerBg(data?.power),
               }}
-            />
+              className='rounded-2xl'
+            >
+              <CustomImage
+                src={data?.tba_image}
+                alt='nft'
+                width={100}
+                height={100}
+                className='rounded-2xl'
+              />
+            </div>
+
             <div className='flex-1 flex flex-col justify-between truncate '>
               <span className='truncate text-[24px] text-[#031F68] font-[400]'>
                 {data?.tba_name}

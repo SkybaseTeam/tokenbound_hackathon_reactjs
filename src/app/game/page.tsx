@@ -174,13 +174,15 @@ const Game = () => {
                               setOpenModalTbaDetail(true);
                             }}
                           >
-                            <div className='aspect-square w-full relative overflow-hidden rounded-2xl'>
+                            <div
+                              style={{
+                                background: tbaPowerBg(item?.power),
+                              }}
+                              className='aspect-square w-full relative overflow-hidden rounded-2xl'
+                            >
                               <CustomImage
                                 src={item?.tba_image}
                                 fill
-                                style={{
-                                  background: tbaPowerBg(item?.power),
-                                }}
                                 alt='Nft'
                                 className='object-cover w-full rounded-2xl group-hover:scale-110 transition-all duration-500 ease-in-out'
                               />
