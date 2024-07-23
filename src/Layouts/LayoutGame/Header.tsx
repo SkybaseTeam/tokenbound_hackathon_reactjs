@@ -231,13 +231,20 @@ const Header = () => {
             </div>
 
             <div className='flex items-center rounded-full gap-[10px] px-[12px] text-[16px] font-[400] border py-[6px] border-white '>
-              <CustomImage
-                src={tbaLoginData?.tba_image}
-                width={35}
-                height={35}
-                alt='err'
+              <div
+                style={{
+                  background: tbaPowerBg(tbaLoginData?.power),
+                }}
                 className='rounded-full'
-              />
+              >
+                <CustomImage
+                  src={tbaLoginData?.tba_image}
+                  width={35}
+                  height={35}
+                  alt='err'
+                  className='rounded-full'
+                />
+              </div>
 
               <p
                 onClick={() => {
