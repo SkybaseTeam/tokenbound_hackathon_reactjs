@@ -2,7 +2,7 @@ import Logo from '@/components/Logo';
 
 import CustomTooltip from '@/components/custom/CustomTooltip';
 import { useStore } from '@/context/store';
-import { formatToken, formatWallet, tbaPowerBg } from '@/utils';
+import { formatDecimal, formatToken, formatWallet, tbaPowerBg } from '@/utils';
 import {
   useAccount,
   useBalance,
@@ -213,7 +213,7 @@ const Header = () => {
           <div className='flex items-center gap-[1rem] max-md:hidden'>
             <div className='max-md:hidden border border-[#DCFC36] text-[16px] font-[400] text-[#DCFC36] px-[12px] py-[6px] rounded-[32px] flex items-center '>
               <div /* className=' mt-[0.3rem]' */>
-                {blingTba || 0} BLING
+                {formatDecimal(blingTba) || 0} BLING
                 {/*   {ethBalance?.data && address
                 ? formatToken(ethBalance?.data?.value as any, 18) + ' '
                 : '0'}{' '}

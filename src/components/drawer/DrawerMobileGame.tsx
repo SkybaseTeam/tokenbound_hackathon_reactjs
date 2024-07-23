@@ -87,7 +87,7 @@ const DrawerMobileGame = ({
 
                 <div className='text-center border-l ml-[1rem] border-[#DCFC36]'>
                   {' '}
-                  {blingTba || 0} BLING
+                  {formatDecimal(blingTba) || 0} BLING
                 </div>
 
                 {/*   {ethBalance?.data && address
