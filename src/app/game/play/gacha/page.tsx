@@ -30,6 +30,7 @@ const Menu = () => {
     tbaLoginData,
     setShowModalWaitTransaction,
     blingTba,
+    getBlingOfTba,
   } = useStore();
   const { provider } = useProvider();
   const [loading, setLoading] = useState(false);
@@ -105,6 +106,7 @@ const Menu = () => {
           token_id: tokenId,
           collection_address: process.env.NEXT_PUBLIC_ERC721_ITEM,
         }),
+        getBlingOfTba(),
         // getDcoin(),
         // getRemainingPool(),
       ]);
