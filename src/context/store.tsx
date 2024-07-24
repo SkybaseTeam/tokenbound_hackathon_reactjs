@@ -25,6 +25,7 @@ const StoreProvider = ({ children }: any) => {
   const [blingTba, setBlingTba] = useState(0);
   const [showModalWaitTransaction, setShowModalWaitTransaction] =
     useState(false);
+  const [listedTba, setListedTba] = useState();
 
   const { starknetkitConnectModal } = useStarknetkitConnectModal({
     connectors: connectors as any,
@@ -89,6 +90,8 @@ const StoreProvider = ({ children }: any) => {
         setShowModalWaitTransaction,
         point,
         setPoint,
+        listedTba,
+        setListedTba,
       }}
     >
       {children}

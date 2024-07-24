@@ -6,15 +6,16 @@ import { useAccount, useProvider } from '@starknet-react/core';
 import { useStore } from '@/context/store';
 import { toastError, toastSuccess } from '@/utils/toast';
 import { cairo, Contract } from 'starknet';
-import { listedNFT, refreshListing } from '@/fetching/client/home';
+import { refreshListing } from '@/fetching/client/home';
 import { usePathname } from 'next/navigation';
 import { formatWallet, tbaPowerBg } from '@/utils';
 import CustomTooltip from '../custom/CustomTooltip';
 import useCopyToClipboard from '@/hook/useCopyToClipboard';
+import { fetchListedTba } from '@/fetching/client/tba';
 
 const ModalCancelListNFT = ({ open, onCancel, data, getUserTbaList }: any) => {
   const { isConnected, account, address } = useAccount();
-  const { connectWallet, setListedNFTData, setShowModalWaitTransaction } =
+  const { connectWallet, setListedTba, setShowModalWaitTransaction } =
     useStore();
   const { provider } = useProvider();
   const [loading, setLoading] = useState(false);
@@ -53,8 +54,9 @@ const ModalCancelListNFT = ({ open, onCancel, data, getUserTbaList }: any) => {
       });
       path.includes('/profile') && (await getUserTbaList());
       if (path === '/market') {
-        const newListedNfts = await listedNFT();
-        setListedNFTData(newListedNfts?.data?.data);
+        fetchListedTba({ page: 1, limit: 7, listing: true }).then((res) => {
+          setListedTba(res.data);
+        });
       }
       toastSuccess('Cancel List success');
       onCancel();

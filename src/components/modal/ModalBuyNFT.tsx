@@ -7,12 +7,9 @@ import { useStore } from '@/context/store';
 import { CallData, Contract, cairo } from 'starknet';
 import { toastError, toastSuccess } from '@/utils/toast';
 import useCopyToClipboard from '@/hook/useCopyToClipboard';
-import {
-  listedNFT,
-  refreshListing,
-  refreshOwner,
-} from '@/fetching/client/home';
+import { refreshListing, refreshOwner } from '@/fetching/client/home';
 import { tbaPowerBg } from '@/utils';
+import { fetchListedTba } from '@/fetching/client/tba';
 
 const ModalBuyNFT = ({ open, onCancel, selectedNFT }: any) => {
   const [text, copy] = useCopyToClipboard();
@@ -21,7 +18,7 @@ const ModalBuyNFT = ({ open, onCancel, selectedNFT }: any) => {
   const { connectWallet, getDcoin, setShowModalWaitTransaction } = useStore();
   const { provider } = useProvider();
   const [loading, setLoading] = useState(false);
-  const { setListedNFTData } = useStore();
+  const { setListedTba } = useStore();
 
   const TOKEN_ID = selectedNFT?.token_id;
   const NFT_PRICE = selectedNFT?.price;
@@ -94,8 +91,9 @@ const ModalBuyNFT = ({ open, onCancel, selectedNFT }: any) => {
         }), // to get newest listed nft
       ]);
 
-      const newListedNfts = await listedNFT();
-      setListedNFTData(newListedNfts?.data?.data);
+      fetchListedTba({ page: 1, limit: 7, listing: true }).then((res) => {
+        setListedTba(res.data);
+      });
       toastSuccess('Buy success!');
       onCancel();
     } catch (err) {

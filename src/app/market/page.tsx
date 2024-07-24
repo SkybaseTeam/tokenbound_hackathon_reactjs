@@ -6,7 +6,6 @@ import CardMint from '@/components/CardMint';
 import ModalBuyNFT from '@/components/modal/ModalBuyNFT';
 import { toastError } from '@/utils/toast';
 import useMounted from '@/hook/useMounted';
-import { listedNFT } from '@/fetching/client/home';
 import NftSkeleton from '@/components/custom/CustomSkeleton/NftSkeleton';
 import CustomImage from '@/components/custom/CustomImage';
 import CustomButton from '@/components/custom/CustomButton';
@@ -19,6 +18,7 @@ import { useAccount } from '@starknet-react/core';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import ListNftSkeleton from '@/components/custom/CustomSkeleton/ListNftSkeleton';
 import { formatStarknet } from '@/utils';
+import { useStore } from '@/context/store';
 
 let page = 2;
 
@@ -28,7 +28,7 @@ const MarketContainer = () => {
   const [openModalCancelListNFT, setOpenModalCancelListNFT] = useState(false);
   const { isMounted } = useMounted();
   const [selectedNFT, setSelectedNFT] = useState<any>(null);
-  const [listedTba, setListedTba] = useState<any>();
+  const { listedTba, setListedTba } = useStore();
   const { address } = useAccount();
 
   useEffect(() => {
@@ -115,30 +115,6 @@ const MarketContainer = () => {
           />
           <CustomButton className='w-[163px] btn-primary'>Search</CustomButton>
         </div>
-
-        {/* <div className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 mt-[40px] gap-[16px]'>
-          <CardMint />
-
-          {listedNFTData !== undefined ? (
-            listedNFTData?.length > 0 ? (
-              listedNFTData?.map((item: any, index: any) => (
-                <div key={item?._id}>
-                  <CardMarketplace
-                    data={item}
-                    setOpenModalTbaDetail={setOpenModalTbaDetail}
-                    setOpenModalBuyNTF={setOpenModalBuyNTF}
-                    setOpenModalCancelListNFT={setOpenModalCancelListNFT}
-                    setSelectedNFT={setSelectedNFT}
-                  />
-                </div>
-              ))
-            ) : (
-              <div className='text-[#031F68]'>No Data!</div>
-            )
-          ) : (
-            [...new Array(7)].map((_, index) => <NftSkeleton key={index} />)
-          )}
-        </div> */}
 
         <div className='mt-[40px] '>
           {listedTba !== undefined ? (

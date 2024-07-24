@@ -6,7 +6,6 @@ import NftSkeleton from '../custom/CustomSkeleton/NftSkeleton';
 import Link from 'next/link';
 import { useStore } from '@/context/store';
 import useMounted from '@/hook/useMounted';
-import { listedNFT } from '@/fetching/client/home';
 import { toastError } from '@/utils/toast';
 import { fetchListedTba } from '@/fetching/client/tba';
 import { useAccount } from '@starknet-react/core';
