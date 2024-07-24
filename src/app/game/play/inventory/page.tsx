@@ -61,7 +61,7 @@ const Inventory = () => {
   const [loadingNft, setLoadingNft] = useState(false);
   const { provider } = useProvider();
   const [selectedNft, setSelectedNft] = useState<any>();
-  const [power, setPower] = useState<any>();
+  const [power, setPower] = useState<any>(0);
 
   useEffect(() => {
     setPower(tbaLoginData?.power);
@@ -387,7 +387,7 @@ const Inventory = () => {
                       onClick={() => {
                         setSelectedNft(item);
                       }}
-                      className={`group relative rounded-2xl`}
+                      className={`group relative rounded-2xl bg-slate-100`}
                     >
                       <div className='group-hover:flex hidden flex-col items-center gap-[0.5rem] absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-[999]'>
                         {!item?.equip && (

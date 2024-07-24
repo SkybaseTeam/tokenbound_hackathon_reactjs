@@ -10,7 +10,10 @@ const EquippedItem = ({ data }: any) => {
         src={data?.nft_image}
         fill
         alt='err'
-        className={`border border-[${rankMapping(data?.nft_rank).bg}] rounded-2xl`}
+        className={`rounded-2xl bg-slate-100`}
+        style={{
+          border: `3px solid ${rankMapping(data?.nft_rank).bg}`,
+        }}
       />
       <div className='absolute top-0 left-0 z-[99]'>
         <RankItem
