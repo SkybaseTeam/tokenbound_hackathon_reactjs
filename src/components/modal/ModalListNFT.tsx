@@ -14,7 +14,8 @@ const ModalListNFT = ({ open, onCancel, data, getUserTbaList }: any) => {
   const [price, setPrice] = useState('');
 
   const { isConnected, account } = useAccount();
-  const { connectWallet, setShowModalWaitTransaction } = useStore();
+  const { connectWallet, setShowModalWaitTransaction, setAccessToken } =
+    useStore();
   const { provider } = useProvider();
   const [loading, setLoading] = useState(false);
 
@@ -79,6 +80,7 @@ const ModalListNFT = ({ open, onCancel, data, getUserTbaList }: any) => {
         collection_address: data?.collection_address,
       });
       await getUserTbaList();
+      setAccessToken(undefined);
       toastSuccess('List for sale success');
       onCancel();
     } catch (err) {
