@@ -24,7 +24,7 @@ Unix is a decentralized application designed to streamline the management and tr
 
 <hr />
 
-# 2. BLING BLING Game
+## 2. BLING BLING Game
 Tokenbound 6551 Game and Marketplace
 
 ## Brief Description
