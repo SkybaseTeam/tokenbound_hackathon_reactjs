@@ -158,11 +158,10 @@ const Menu = () => {
                       className='inline-block mr-[0.3rem]'
                       fill='#031F68'
                     />
-                    Every <span className='font-[400]'>10</span> mint is
-                    guaranteed to include at least one{' '}
-                    <span className='font-[400]'>A rank</span> or higher item,{' '}
-                    <span className='font-[400]'>90</span> mint is{' '}
-                    <span className='font-[400]'>S rank</span> item.
+                    After every <span className='font-[400]'>10</span> mints, an {' '}
+                    <span className='font-[400]'>A rank</span> item will appear,{' '}
+                    <span className='font-[400]'>90</span> mints, an {' '}
+                    <span className='font-[400]'>S rank</span> item will appear.
                   </p>
                   {/* <div className='flex items-center font-glancyr text-[16px] font-[300] text-[#546678] mb-[2px] justify-between'>
                   <p>Minted Item</p>
