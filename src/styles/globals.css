@@ -39,7 +39,7 @@
     }
   }
 
-  @media only screen and (max-width: 1600px) {
+  /* @media only screen and (max-width: 1600px) {
     .scale_element {
       scale: 0.8;
     }
@@ -58,7 +58,7 @@
     .scale_element {
       scale: 1;
     }
-  }
+  } */
 
   html {
     @apply scroll-smooth;

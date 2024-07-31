@@ -264,14 +264,14 @@ const Inventory = () => {
 
   return (
     accessToken && (
-      <div className='layout-container scale_element pb-[7rem] pt-[5rem] sm:py-[6rem]'>
-        <div className='mt-[2rem] flex max-lg:flex-col gap-[5rem]'>
+      <div className='layout-container pb-[7rem] pt-[5rem] sm:py-[6rem]'>
+        <div className='mt-[2rem] flex max-xl:flex-col gap-[5rem]'>
           <div className='basis-1/3'>
             <p className='text-[48px] font-[500] mt-[1rem] flex items-center justify-center gap-[1rem]'>
               <IconPower width={48} height={48} /> {power}
             </p>
             {/* start */}
-            <div className='flex items-center gap-[1rem] max-lg:justify-center max-sm:flex-col'>
+            <div className='flex items-center gap-[1rem] max-xl:justify-center max-sm:flex-col'>
               <div className='flex sm:flex-col gap-[1rem]'>
                 <div className='aspect-square relative w-[7rem] text-[#546678] flex items-center justify-center bg-white rounded-2xl'>
                   {equippedItem?.hair ? (
