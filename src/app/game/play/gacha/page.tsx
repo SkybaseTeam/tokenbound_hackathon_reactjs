@@ -123,7 +123,7 @@ const Menu = () => {
 
   return (
     accessToken && (
-      <div className='layout-container py-[5rem] sm:py-[8rem] flex flex-col items-center'>
+      <div className='layout-container py-[5rem] scale_layout sm:py-[8rem] flex flex-col items-center'>
         <div className='bg-white rounded-[32px] text-[#031F68]  max-sm:mb-[5rem] p-[32px] sm:px-[48px] py-[32px]  mt-[1rem] sm:mt-[5rem]'>
           <div className='layout-container flex flex-col items-center px-0'>
             <h2 className='text-[38px] font-[500] font-glancyr max-lg:text-center '>

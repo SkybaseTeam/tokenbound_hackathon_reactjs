@@ -264,7 +264,7 @@ const Inventory = () => {
 
   return (
     accessToken && (
-      <div className='layout-container pb-[7rem] pt-[5rem] sm:py-[6rem]'>
+      <div className='layout-container scale_element pb-[7rem] pt-[5rem] sm:py-[6rem]'>
         <div className='mt-[2rem] flex max-lg:flex-col gap-[5rem]'>
           <div className='basis-1/3'>
             <p className='text-[48px] font-[500] mt-[1rem] flex items-center justify-center gap-[1rem]'>

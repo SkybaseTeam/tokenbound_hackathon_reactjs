@@ -9,7 +9,7 @@ interface ITab {
 const Tab = ({ tabData, activeTab }: ITab) => {
   const router = useRouter();
   return (
-    <div className={`flex items-center gap-[8px] overflow-x-auto`}>
+    <div className={`flex items-center gap-[8px] overflow-x-auto hide_scrollbar`}>
       {tabData.map((item) => (
         <div
           key={item.id}

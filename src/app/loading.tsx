@@ -5,7 +5,7 @@ import React from 'react';
 
 const Loading = () => {
   return (
-    <div className='fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-[#0538BD]'>
+    <div className='fixed scale_layout inset-0 z-[9999] flex flex-col items-center justify-center bg-[#0538BD]'>
       <CustomImage
         src='/images/token/bling-big.webp'
         alt='loading'

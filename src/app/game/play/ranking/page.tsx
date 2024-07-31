@@ -46,7 +46,7 @@ const Ranking = () => {
 
   return (
     accessToken && (
-      <div className='layout-container max-w-[583px] pb-[7rem] pt-[5rem] sm:py-[6rem]'>
+      <div className='layout-container scale_layout max-w-[583px] pb-[7rem] pt-[5rem] sm:py-[6rem]'>
         <div className='flex justify-between items-center w-full'>
           <h1 className='text-[48px] font-[500] text-[#DCFC36]'>RANKING</h1>
           {loading && (

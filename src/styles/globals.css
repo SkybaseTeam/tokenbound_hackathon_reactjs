@@ -7,7 +7,7 @@
     --100vh: calc(100vh);
   }
   @media only screen and (max-width: 1600px) {
-    html {
+    .scale_layout {
       zoom: 0.8;
     }
     :root {
@@ -15,7 +15,7 @@
     }
   }
   @media only screen and (max-width: 1350px) {
-    html {
+    .scale_layout {
       zoom: 0.7;
     }
     :root {
@@ -23,7 +23,7 @@
     }
   }
   @media only screen and (max-width: 1200px) {
-    html {
+    .scale_layout {
       zoom: 0.6;
     }
     :root {
@@ -31,11 +31,32 @@
     }
   }
   @media only screen and (max-width: 1024px) {
-    html {
+    .scale_layout {
       zoom: 1;
     }
     :root {
       --100vh: 100vh;
+    }
+  }
+
+  @media only screen and (max-width: 1600px) {
+    .scale_element {
+      scale: 0.8;
+    }
+  }
+  @media only screen and (max-width: 1350px) {
+    .scale_element {
+      scale: 0.7;
+    }
+  }
+  @media only screen and (max-width: 1200px) {
+    .scale_element {
+      scale: 0.6;
+    }
+  }
+  @media only screen and (max-width: 1024px) {
+    .scale_element {
+      scale: 1;
     }
   }
 
@@ -90,6 +111,11 @@
     background: #555;
   }
   /* end custom scroll bar */
+
+  .hide_scrollbar {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
 
   .animateIntroPlay {
     animation-name: anchor-swing;

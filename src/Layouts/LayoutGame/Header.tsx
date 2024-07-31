@@ -137,7 +137,7 @@ const Header = () => {
   return (
     <div
       id='header'
-      className={`bg-[#0538BD] bg-opacity-50 transition-all duration-500  flex gap-[9px] lg:grid lg:grid-cols-3 items-center py-[10px] px-[16px] sm:px-[32px] lg:px-[64px] fixed z-[999] w-full top-0 h-[56px] lg:h-[68px]`}
+      className={`bg-[#0538BD] scale_layout bg-opacity-50 transition-all duration-500  flex gap-[9px] lg:grid lg:grid-cols-3 items-center py-[10px] px-[16px] sm:px-[32px] lg:px-[64px] fixed z-[999] w-full top-0 h-[56px] lg:h-[68px]`}
     >
       <DrawerMobileGame
         ethBalance={1}

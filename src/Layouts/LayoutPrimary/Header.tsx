@@ -97,8 +97,7 @@ const Header = () => {
           <div
             onClick={() => {
               if (
-                (item?.link?.includes('/profile') ||
-                  item?.link === '/game') &&
+                (item?.link?.includes('/profile') || item?.link === '/game') &&
                 !isConnected
               ) {
                 connectWallet();
@@ -121,8 +120,7 @@ const Header = () => {
           <div
             onClick={() => {
               if (
-                (item?.link?.includes('/profile') ||
-                  item?.link === '/game') &&
+                (item?.link?.includes('/profile') || item?.link === '/game') &&
                 !isConnected
               ) {
                 connectWallet();
