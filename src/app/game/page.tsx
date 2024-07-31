@@ -160,76 +160,73 @@ const Game = () => {
                   dataLength={userUnlistedTba?.data?.length}
                   next={getMoreUserTbaList}
                   hasMore={userUnlistedTba?.pagination?.hasMore}
-                  loader={<ListNftSkeleton />}
+                  loader={<NftSkeleton />}
+                  className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-[16px]'
                   // scrollThreshold={-10}
                 >
-                  <div className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-[16px]'>
-                    {userUnlistedTba?.data?.map((item: any, index: any) => (
-                      <div key={item?._id || index}>
-                        <div className='p-[12px] rounded-2xl bg-[#fff] text-[#031F68]'>
+                  {userUnlistedTba?.data?.map((item: any, index: any) => (
+                    <div key={item?._id || index}>
+                      <div className='p-[12px] rounded-2xl bg-[#fff] text-[#031F68]'>
+                        <div
+                          className=' group cursor-pointer'
+                          onClick={() => {
+                            setSelectedNFT(item);
+                            setOpenModalTbaDetail(true);
+                          }}
+                        >
                           <div
-                            className=' group cursor-pointer'
-                            onClick={() => {
-                              setSelectedNFT(item);
-                              setOpenModalTbaDetail(true);
+                            style={{
+                              background: tbaPowerBg(item?.power),
                             }}
+                            className='aspect-square w-full relative overflow-hidden rounded-2xl'
                           >
-                            <div
-                              style={{
-                                background: tbaPowerBg(item?.power),
-                              }}
-                              className='aspect-square w-full relative overflow-hidden rounded-2xl'
-                            >
-                              <CustomImage
-                                src={item?.tba_image}
-                                fill
-                                alt='Nft'
-                                className='object-cover w-full rounded-2xl group-hover:scale-110 transition-all duration-500 ease-in-out'
-                              />
-                            </div>
-                            <div className='my-[16px]'>
-                              <p className='text-[18px] uppercase font-[400] truncate'>
-                                {item?.tba_name || 'NFT Name'}
-                              </p>
-                              <div className='grid sm:grid-cols-2 max-sm:gap-[0.5rem] p-[12px] bg-[#FBFDEB] rounded-2xl mt-[12px] '>
-                                <div className='font-[300] text-[16px] max-sm:flex flex-col items-center'>
-                                  <p className='text-[#546678]'>Power</p>
-                                  <p className='text-[18px] font-[400] mt-[4px]'>
-                                    <div className='flex items-center gap-[6px]'>
-                                      <IconPower />
-                                      {item?.power}
-                                    </div>
-                                  </p>
-                                </div>
-                                <div className='font-[300] text-[16px] max-sm:flex flex-col items-center'>
-                                  <p className='text-[#546678] '>
-                                    Total Points
-                                  </p>
-                                  <p className='text-[18px] font-[400] mt-[4px]'>
-                                    <div className='flex items-center gap-[6px]'>
-                                      {formatDecimal(Number(item?.point))}
-                                    </div>
-                                  </p>
-                                </div>
+                            <CustomImage
+                              src={item?.tba_image}
+                              fill
+                              alt='Nft'
+                              className='object-cover w-full rounded-2xl group-hover:scale-110 transition-all duration-500 ease-in-out'
+                            />
+                          </div>
+                          <div className='my-[16px]'>
+                            <p className='text-[18px] uppercase font-[400] truncate'>
+                              {item?.tba_name || 'NFT Name'}
+                            </p>
+                            <div className='grid sm:grid-cols-2 max-sm:gap-[0.5rem] p-[12px] bg-[#FBFDEB] rounded-2xl mt-[12px] '>
+                              <div className='font-[300] text-[16px] max-sm:flex flex-col items-center'>
+                                <p className='text-[#546678]'>Power</p>
+                                <p className='text-[18px] font-[400] mt-[4px]'>
+                                  <div className='flex items-center gap-[6px]'>
+                                    <IconPower />
+                                    {item?.power}
+                                  </div>
+                                </p>
+                              </div>
+                              <div className='font-[300] text-[16px] max-sm:flex flex-col items-center'>
+                                <p className='text-[#546678] '>Total Points</p>
+                                <p className='text-[18px] font-[400] mt-[4px]'>
+                                  <div className='flex items-center gap-[6px]'>
+                                    {formatDecimal(Number(item?.point))}
+                                  </div>
+                                </p>
                               </div>
                             </div>
                           </div>
-
-                          <CustomButton
-                            onClick={() => {
-                              if (!address) return;
-                              setSelectedNFT(item);
-                              onLoginGame(item);
-                            }}
-                            className='btn-primary w-full'
-                            loading={selectedNFT?._id === item?._id && loading}
-                          >
-                            Login Game
-                          </CustomButton>
                         </div>
+
+                        <CustomButton
+                          onClick={() => {
+                            if (!address) return;
+                            setSelectedNFT(item);
+                            onLoginGame(item);
+                          }}
+                          className='btn-primary w-full'
+                          loading={selectedNFT?._id === item?._id && loading}
+                        >
+                          Login Game
+                        </CustomButton>
                       </div>
-                    ))}
-                  </div>
+                    </div>
+                  ))}
                 </InfiniteScroll>
               ) : (
                 <div className='text-[#DCFC36]'>No Data!</div>

@@ -6,6 +6,7 @@ import CustomButton from '@/components/custom/CustomButton';
 import CustomImage from '@/components/custom/CustomImage';
 import CustomInput from '@/components/custom/CustomInput';
 import ListNftSkeleton from '@/components/custom/CustomSkeleton/ListNftSkeleton';
+import NftSkeleton from '@/components/custom/CustomSkeleton/NftSkeleton';
 import ModalCancelListNFT from '@/components/modal/ModalCancelListNFT';
 import ModalListNFT from '@/components/modal/ModalListNFT';
 import ModalTbaDetail from '@/components/modal/ModalTbaDetail';
@@ -176,22 +177,21 @@ const Profile = () => {
                   dataLength={userTbaList?.data?.length}
                   next={getMoreUserTbaList}
                   hasMore={userTbaList?.pagination?.hasMore}
-                  loader={<ListNftSkeleton />}
+                  loader={<NftSkeleton />}
+                  className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-[16px]'
                   // scrollThreshold="5%"
                 >
-                  <div className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-[16px]'>
-                    {userTbaList?.data?.map((item: any, index: any) => (
-                      <div key={item?._id || index}>
-                        <CardProfile
-                          data={item}
-                          setOpenModalListNFT={setOpenModalListNFT}
-                          setOpenModalCancelListNFT={setOpenModalCancelListNFT}
-                          setOpenModalTbaDetail={setOpenModalTbaDetail}
-                          setSelectedNFT={setSelectedNFT}
-                        />
-                      </div>
-                    ))}
-                  </div>
+                  {userTbaList?.data?.map((item: any, index: any) => (
+                    <div key={item?._id || index}>
+                      <CardProfile
+                        data={item}
+                        setOpenModalListNFT={setOpenModalListNFT}
+                        setOpenModalCancelListNFT={setOpenModalCancelListNFT}
+                        setOpenModalTbaDetail={setOpenModalTbaDetail}
+                        setSelectedNFT={setSelectedNFT}
+                      />
+                    </div>
+                  ))}
                 </InfiniteScroll>
               ) : (
                 <div className='text-[#031F68]'>No Data!</div>

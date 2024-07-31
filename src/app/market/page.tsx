@@ -123,22 +123,21 @@ const MarketContainer = () => {
                 dataLength={listedTba?.data?.length}
                 next={getMoreListedTba}
                 hasMore={listedTba?.pagination?.hasMore}
-                loader={<ListNftSkeleton />}
+                loader={<NftSkeleton />}
+                className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-[16px]'
               >
-                <div className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-[16px]'>
-                  <CardMint />
-                  {listedTba?.data?.map((item: any, index: any) => (
-                    <div key={item?._id || index}>
-                      <CardMarketplace
-                        data={item}
-                        setOpenModalTbaDetail={setOpenModalTbaDetail}
-                        setOpenModalBuyNTF={setOpenModalBuyNTF}
-                        setOpenModalCancelListNFT={setOpenModalCancelListNFT}
-                        setSelectedNFT={setSelectedNFT}
-                      />
-                    </div>
-                  ))}
-                </div>
+                <CardMint />
+                {listedTba?.data?.map((item: any, index: any) => (
+                  <div key={item?._id || index}>
+                    <CardMarketplace
+                      data={item}
+                      setOpenModalTbaDetail={setOpenModalTbaDetail}
+                      setOpenModalBuyNTF={setOpenModalBuyNTF}
+                      setOpenModalCancelListNFT={setOpenModalCancelListNFT}
+                      setSelectedNFT={setSelectedNFT}
+                    />
+                  </div>
+                ))}
               </InfiniteScroll>
             ) : (
               <div className='text-[#031F68]'>No Data!</div>
