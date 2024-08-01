@@ -63,7 +63,7 @@ const Play = () => {
 
   return (
     accessToken && (
-      <div className='relative scale_layout'>
+      <div className='relative '>
         {blings.map((bling: any) => (
           <div
             key={bling.id}

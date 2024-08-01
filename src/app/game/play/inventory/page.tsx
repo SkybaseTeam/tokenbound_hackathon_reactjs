@@ -247,6 +247,8 @@ const Inventory = () => {
     try {
       const canvas = await html2canvas(elementRef.current, {
         backgroundColor: null,
+        allowTaint: true,
+        useCORS: true,
       });
       const dataUrl = canvas.toDataURL('image/png');
       const response = await fetch(dataUrl);
@@ -307,6 +309,7 @@ const Inventory = () => {
                     className='rounded-2xl'
                     alt='err'
                     fill
+                    unoptimized
                   />
                   {Object.values(equippedItem)?.map(
                     (item: any) =>
@@ -317,6 +320,7 @@ const Inventory = () => {
                           alt='err'
                           key={item?._id}
                           fill
+                          unoptimized
                         />
                       )
                   )}
